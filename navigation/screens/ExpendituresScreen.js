@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Button, StyleSheet, Text, Platform } from 'react-native';
+import { ScrollView, View, Button, StyleSheet, Text, Platform, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { Box, Container, Tab, Tabs, TextInput, Autocomplete } from "@react-native-material/core";
 // import DateTimePicker from '@react-native-community/datetimepicker';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -21,27 +21,31 @@ export default function ExpendituresScreen({ props }) {
   };
 
   return (
-    <View>
-      <TextInput
-        // onChangeText={(textEntry) => { this.setState({ searchText: textEntry }) }}
-        style={{ backgroundColor: 'transparent', variant: 'outlined' }}
-        label="Price of item"
-      // onSubmitEditing={() => { this.onSubmit(this.state.searchText) }}
-      />
-      {/* <Autocomplete /> */}
-      <Button title="Show Date Picker" onPress={showDatePicker} />
-      <DateTimePickerModal
-        isVisible={isDatePickerVisible}
-        mode="date"
-        onConfirm={handleConfirm}
-        onCancel={hideDatePicker}
-      />
-      <TextInput
-        // onChangeText={(textEntry) => { this.setState({ searchText: textEntry }) }}
-        style={{ backgroundColor: 'transparent', variant: 'outlined' }}
-        label="Title"
-      // onSubmitEditing={() => { this.onSubmit(this.state.searchText) }}
-      />
-    </View>
+    <TouchableWithoutFeedback onPress={() => {
+      Keyboard.dismiss();
+    }}>
+      <ScrollView>
+        <TextInput
+          // onChangeText={(textEntry) => { this.setState({ searchText: textEntry }) }}
+          style={{ backgroundColor: 'transparent', variant: 'filled' }}
+          label="Price of item"
+        // onSubmitEditing={() => { this.onSubmit(this.state.searchText) }}
+        />
+        {/* <Autocomplete /> */}
+        <Button title="Show Date Picker" onPress={showDatePicker} />
+        <DateTimePickerModal
+          isVisible={isDatePickerVisible}
+          mode="date"
+          onConfirm={handleConfirm}
+          onCancel={hideDatePicker}
+        />
+        <TextInput
+          // onChangeText={(textEntry) => { this.setState({ searchText: textEntry }) }}
+          style={{ backgroundColor: 'transparent', variant: 'filled' }}
+          label="Title"
+        // onSubmitEditing={() => { this.onSubmit(this.state.searchText) }}
+        />
+      </ScrollView>
+    </TouchableWithoutFeedback>
   )
 }
