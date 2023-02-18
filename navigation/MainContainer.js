@@ -28,13 +28,13 @@ export default function MainContainer() {
             let rn = route.name;
 
             if (rn === statisticsName) {
-              iconName = focused ? 'home' : 'home-outline'
+              iconName = focused ? 'md-stats-chart' : 'md-stats-chart-outline'
             } else if (rn === categoriesName) {
-              iconName = focused ? 'list' : 'list-outline'
+              iconName = focused ? 'md-grid' : 'md-grid-outline'
             } else if (rn === expendituresName) {
-              iconName = focused ? 'settings' : 'settings-outline';
+              iconName = focused ? 'wallet' : 'wallet-outline';
             } else if (rn === converterName) {
-              iconName = focused ? 'settings' : 'settings-outline';
+              iconName = focused ? 'sync-circle' : 'sync-circle-outline';
             }
 
             return <Ionicons 
