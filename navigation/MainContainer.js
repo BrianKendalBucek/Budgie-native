@@ -5,7 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { AppBar, HStack, IconButton } from "@react-native-material/core";
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 
 
 // Screens
@@ -27,25 +27,26 @@ export default function MainContainer() {
   return (
     <>
       <AppBar
-      style={styles.header}
-      title="Budgie"
-      leading={props => (
-        <IconButton icon={props => <Icon name="menu" {...props} />} {...props} />
-      )}
-      trailing={props => (
-        <HStack>
-          <IconButton
-            icon={props => <Icon name="magnify" {...props} />}
-            {...props}
+        style={styles.header}
+        title="Budgie"
+        tintColor='grey'
+
+        leading={props => (
+          <Image
+            style={{width: 40, height: 40 }}
+            source={require('../assets/budgie-icon.png')}
           />
-          <IconButton
-            icon={props => <Icon name="dots-vertical" {...props} />}
-            {...props}
-          />
-        </HStack>
-      )}
-    />
-      
+        )}
+        trailing={props => (
+          <HStack>
+            <IconButton
+              icon={props => <MaterialCommunityIcons name="logout" {...props} />}
+              {...props}
+            />
+          </HStack>
+        )}
+      />
+
       <NavigationContainer>
         <Tab.Navigator
           initialRouteName="Feed"
@@ -59,7 +60,7 @@ export default function MainContainer() {
             options={{
               tabBarLabel: 'Statistics',
               tabBarIcon: ({ color }) => (
-                <MaterialCommunityIcons name="chart-box" color={color} size={26} />
+                <MaterialCommunityIcons name="chart-box" color={"grey"} size={26} />
               ),
             }}
           />
@@ -69,7 +70,7 @@ export default function MainContainer() {
             options={{
               tabBarLabel: 'Categories',
               tabBarIcon: ({ color }) => (
-                <MaterialIcons name="category" color={color} size={26} />
+                <MaterialIcons name="category" color={"grey"} size={26} />
               ),
             }}
           />
@@ -79,7 +80,7 @@ export default function MainContainer() {
             options={{
               tabBarLabel: 'Expenditures',
               tabBarIcon: ({ color }) => (
-                <MaterialCommunityIcons name="wallet" color={color} size={26} />
+                <MaterialCommunityIcons name="wallet" color={"grey"} size={26} />
               ),
             }}
           />
@@ -89,7 +90,7 @@ export default function MainContainer() {
             options={{
               tabBarLabel: 'Converter',
               tabBarIcon: ({ color }) => (
-                <Ionicons name="sync-circle" color={color} size={26} />
+                <Ionicons name="sync-circle" color={"grey"} size={26} />
               ),
             }}
           />
@@ -101,7 +102,8 @@ export default function MainContainer() {
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: "red",
+    backgroundColor: "lightblue",
+    tintColor: "grey",
     height: 100,
     paddingTop: 40
   }
