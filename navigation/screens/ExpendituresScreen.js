@@ -33,7 +33,7 @@ export default function ExpendituresScreen({ props }) {
       <View>
         <TextInput
           // onChangeText={(textEntry) => { this.setState({ searchText: textEntry }) }}
-          style={{ backgroundColor: 'transparent', variant: 'filled', margin: 20 }}
+          style={{ backgroundColor: 'transparent', variant: 'filled', margin: 20, paddingTop: 260 }}
           label="Price of item"
           color="grey"
           variant='outlined'
@@ -58,7 +58,7 @@ export default function ExpendituresScreen({ props }) {
 
         </SafeAreaView>
 
-        <Button title="Date" tintColor='grey' style={{ alignItems: 'left', width: 145, margin: 20, backgroundColor: 'lightblue', color: 'grey' }} onPress={showDatePicker} />
+        <Button title="Date" tintColor='grey' style={{ alignItems: 'left', width: 75, margin: 20, backgroundColor: 'lightblue', color: 'grey' }} onPress={showDatePicker} />
         <DateTimePickerModal
           isVisible={isDatePickerVisible}
           mode="date"

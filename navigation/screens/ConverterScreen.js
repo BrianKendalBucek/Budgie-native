@@ -1,12 +1,64 @@
-import * as React from 'react';
-import { View, Text } from 'react-native';
+import React, {useState} from 'react';
+import { View, Text, ScrollView, SafeAreaView } from 'react-native';
+import { Box, Container, Tab, Tabs, TextInput, Autocomplete, Button } from "@react-native-material/core";
+
 
 export default function ConverterScreen({ navigation }) {
+  const [currency, setCurrency] = useState('');
+
+  const onChangeText = async (text = '') => {
+    setCategory(text)
+  }
+
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text
-        onPress={() => navigation.nativate('Statistics')}
-        style={{ fontSize: 26, fontWeight: 'bold' }}>Converter Screen</Text>
-    </View>
+    <ScrollView
+      style={{
+        padding: 30
+      }}
+      >
+      <Box
+        style={{height: 100, with: 100, backgroundColor: 'lightgrey', borderRadius: 10, margin: 22 }}
+      />
+      <SafeAreaView style={{ flex: 1 }}>
+        <TextInput
+          variant='outlined'
+          placeholder='Primary Currency'
+          placeholderTextColor="grey"
+          color='grey'
+          value={currency}
+          onChangeText={onChangeText}
+          style={{
+            marginHorizontal: 12,
+            paddingHorizontal: 8,
+            paddingBottom: 20,
+            paddingTop: 160
+          }}
+        />
+      </SafeAreaView>
+      <SafeAreaView style={{ flex: 1 }}>
+        <TextInput
+          variant='outlined'
+          placeholder='Secondary Currency'
+          placeholderTextColor="grey"
+          color='grey'
+          value={currency}
+          onChangeText={onChangeText}
+          style={{
+            marginHorizontal: 12,
+            paddingHorizontal: 8,
+          }}
+        />
+                <TextInput
+          // onChangeText={(textEntry) => { this.setState({ searchText: textEntry }) }}
+          style={{ backgroundColor: 'transparent', variant: 'filled', margin: 20 }}
+          label="Price of item"
+          color="grey"
+          variant='outlined'
+        // onSubmitEditing={() => { this.onSubmit(this.state.searchText) }}
+        />
+        <Button title="Convert" tintColor='grey' style={{ alignItems: 'left', width: 110, margin: 20, backgroundColor: 'lightblue', color: 'grey' }} />
+
+      </SafeAreaView>
+    </ScrollView>
   )
 }
