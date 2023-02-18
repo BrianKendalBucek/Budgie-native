@@ -1,8 +1,7 @@
 import * as React from 'react';
-// import { NavigationContainer } from '@react-navigation/native';
-// import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Icons from '@react-navigation/material-bottom-tabs'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
 // Screens
@@ -23,11 +22,52 @@ const Tab = createMaterialBottomTabNavigator();
 export default function MainContainer() {
   return (
     <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen name={statisticsName} component={StatisticsScreen} />
-        <Tab.Screen name={categoriesName} component={CategoriesScreen} />
-        <Tab.Screen name={expendituresName} component={ExpendituresScreen} />
-        <Tab.Screen name={converterName} component={ConverterScreen} />
+      <Tab.Navigator
+        initialRouteName="Feed"
+        activeColor="#1976d2"
+        barStyle={{ backgroundColor: 'lightblue' }}
+    
+      >
+        <Tab.Screen
+          name={statisticsName}
+          component={StatisticsScreen}
+          options={{
+            tabBarLabel: 'Statistics',
+            tabBarIcon: ({ color }) => (
+              <MaterialCommunityIcons name="chart-box" color={color} size={26} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name={categoriesName}
+          component={CategoriesScreen}
+          options={{
+            tabBarLabel: 'Categories',
+            tabBarIcon: ({ color }) => (
+              <MaterialIcons name="category" color={color} size={26} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name={expendituresName}
+          component={ExpendituresScreen}
+          options={{
+            tabBarLabel: 'Expenditures',
+            tabBarIcon: ({ color }) => (
+              <MaterialCommunityIcons name="wallet" color={color} size={26} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name={converterName}
+          component={ConverterScreen}
+          options={{
+            tabBarLabel: 'Converter',
+            tabBarIcon: ({ color }) => (
+              <Ionicons name="sync-circle" color={color} size={26} />
+            ),
+          }}
+        />
       </Tab.Navigator>
     </NavigationContainer>
   );
