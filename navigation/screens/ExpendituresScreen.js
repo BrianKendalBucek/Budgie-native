@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { ScrollView, View, Button, StyleSheet, Text, Platform, TouchableWithoutFeedback, Keyboard } from 'react-native';
-import { Box, Container, Tab, Tabs, TextInput, Autocomplete } from "@react-native-material/core";
+import { ScrollView, View, SafeAreaView, StyleSheet, Text, Platform } from 'react-native';
+import { Box, Container, Tab, Tabs, TextInput, Autocomplete, Button } from "@react-native-material/core";
 // import DateTimePicker from '@react-native-community/datetimepicker';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
@@ -20,32 +20,77 @@ export default function ExpendituresScreen({ props }) {
     hideDatePicker();
   };
 
+  const [category, setCategory] = useState('');
+  const [data, setData] = useState();
+  const [currency, setCurrency] = useState('');
+
+  const onChangeText = async (text = '') => {
+    setCategory(text)
+  }
+
   return (
-    <TouchableWithoutFeedback onPress={() => {
-      Keyboard.dismiss();
-    }}>
-      <ScrollView>
+    <ScrollView>
+      <View>
         <TextInput
           // onChangeText={(textEntry) => { this.setState({ searchText: textEntry }) }}
-          style={{ backgroundColor: 'transparent', variant: 'filled' }}
+          style={{ backgroundColor: 'transparent', variant: 'filled', margin: 20 }}
           label="Price of item"
+          color="grey"
+          variant='outlined'
         // onSubmitEditing={() => { this.onSubmit(this.state.searchText) }}
         />
         {/* <Autocomplete /> */}
-        <Button title="Show Date Picker" onPress={showDatePicker} />
+        <SafeAreaView style={{ flex: 1 }}>
+
+          <TextInput
+            variant='outlined'
+            placeholder='Category'
+            placeholderTextColor="grey"
+            color='grey'
+            value={category}
+            onChangeText={onChangeText}
+            style={{
+              marginHorizontal: 12,
+              paddingHorizontal: 8,
+            }}
+
+          />
+
+        </SafeAreaView>
+
+        <Button title="Date" tintColor='grey' style={{ alignItems: 'left', width: 145, margin: 20, backgroundColor: 'lightblue', color: 'grey' }} onPress={showDatePicker} />
         <DateTimePickerModal
           isVisible={isDatePickerVisible}
           mode="date"
           onConfirm={handleConfirm}
           onCancel={hideDatePicker}
         />
+
+        <SafeAreaView style={{ flex: 1 }}>
+          <TextInput
+            variant='outlined'
+
+            placeholder='Currency'
+            placeholderTextColor="grey"
+            color='grey'
+            value={currency}
+            onChangeText={onChangeText}
+            style={{
+              marginHorizontal: 12,
+              paddingHorizontal: 8,
+            }}
+          />
+        </SafeAreaView>
+
         <TextInput
           // onChangeText={(textEntry) => { this.setState({ searchText: textEntry }) }}
-          style={{ backgroundColor: 'transparent', variant: 'filled' }}
+          style={{ backgroundColor: 'transparent', variant: 'filled', margin: 20 }}
           label="Title"
+          color="grey"
+          variant='outlined'
         // onSubmitEditing={() => { this.onSubmit(this.state.searchText) }}
         />
-      </ScrollView>
-    </TouchableWithoutFeedback>
+      </View>
+    </ScrollView>
   )
 }

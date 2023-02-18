@@ -1,24 +1,26 @@
 import * as React from 'react';
-import { View, Text } from 'react-native';
+import { ScrollView, View, Text } from 'react-native';
 import { TextInput, ListItem, Button } from "@react-native-material/core";
 import { AppBar, HStack, IconButton } from "@react-native-material/core";
 
 
 export default function CategoriesScreen({ props }) {
   return (
-    <View
+    <ScrollView
     // style={{
     //   flex: 1,
     //   alignItems: 'center',
     //   justifyContent: 'center'
     // }}
     >
-      <View style={{ flexDirection: 'row', width: window.width, margin: 10, padding: 4, alignItems: 'center', justifyContent: 'center', borderWidth: 4, borderColor: 'lightgrey', borderRadius: 10, backgroundColor: '#fff' }}>
+      <View style={{ flexDirection: 'row', width: window.width, margin: 10, padding: 4, alignItems: 'center', justifyContent: 'center', borderWidth: 0, borderColor: 'lightgrey', borderRadius: 10, backgroundColor: '#fff' }}>
         <View style={{ flex: 4 }}>
           <TextInput
             // onChangeText={(textEntry) => { this.setState({ searchText: textEntry }) }}
             style={{ backgroundColor: 'transparent', variant: 'outlined' }}
             label="Add New Category"
+            variant='outlined'
+            color='grey'
           // onSubmitEditing={() => { this.onSubmit(this.state.searchText) }}
           />
         </View>
@@ -43,6 +45,6 @@ export default function CategoriesScreen({ props }) {
       <ListItem title="Utilities" />
 
 
-    </View>
+    </ScrollView>
   )
 }
