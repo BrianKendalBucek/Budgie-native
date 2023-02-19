@@ -33,7 +33,7 @@ export default function ExpendituresScreen({ props }) {
       <View>
         <TextInput
           // onChangeText={(textEntry) => { this.setState({ searchText: textEntry }) }}
-          style={{ backgroundColor: 'transparent', variant: 'filled', margin: 20, paddingTop: 260 }}
+          style={{ backgroundColor: 'transparent', variant: 'filled', margin: 20, paddingTop: 50 }}
           label="Price of item"
           color="grey"
           variant='outlined'

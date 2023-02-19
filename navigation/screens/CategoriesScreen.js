@@ -13,7 +13,7 @@ export default function CategoriesScreen({ props }) {
     //   justifyContent: 'center'
     // }}
     >
-      <View style={{ flexDirection: 'row', width: window.width, margin: 10, padding: 4, alignItems: 'center', justifyContent: 'center', borderWidth: 0, borderColor: 'lightgrey', borderRadius: 10, backgroundColor: '#fff' }}>
+      <View style={{ flexDirection: 'row', width: window.width, margin: 10, padding: 4, paddingTop: 10, alignItems: 'center', justifyContent: 'center', borderWidth: 0, borderColor: 'lightgrey', borderRadius: 10, backgroundColor: '#fff' }}>
         <View style={{ flex: 4 }}>
           <TextInput
             // onChangeText={(textEntry) => { this.setState({ searchText: textEntry }) }}

@@ -17,7 +17,7 @@ export default function ConverterScreen({ navigation }) {
       }}
       >
       <Box
-        style={{height: 100, with: 100, backgroundColor: 'lightgrey', borderRadius: 10, margin: 22 }}
+        style={{ display: 'flex', alignItems: 'center', height: 50, width: 200, backgroundColor: 'lightgrey', borderRadius: 10, paddingTop: 22, marginLeft: 80 }}
       />
       <SafeAreaView style={{ flex: 1 }}>
         <TextInput
@@ -31,7 +31,7 @@ export default function ConverterScreen({ navigation }) {
             marginHorizontal: 12,
             paddingHorizontal: 8,
             paddingBottom: 20,
-            paddingTop: 160
+            paddingTop: 30
           }}
         />
       </SafeAreaView>
@@ -56,7 +56,7 @@ export default function ConverterScreen({ navigation }) {
           variant='outlined'
         // onSubmitEditing={() => { this.onSubmit(this.state.searchText) }}
         />
-        <Button title="Convert" tintColor='grey' style={{ alignItems: 'left', width: 110, margin: 20, backgroundColor: 'lightblue', color: 'grey' }} />
+        <Button title="Convert" tintColor='grey' style={{ alignItems: 'left', width: 110, marginLeft: 20, backgroundColor: 'lightblue', color: 'grey' }} />
 
       </SafeAreaView>
     </ScrollView>
