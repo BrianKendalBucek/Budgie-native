@@ -17,9 +17,7 @@ export default function StatisticsScreen({ navigation }) {
   const [value, setValue] = useState(0);
 
   return (
-    <ScrollView
-    // style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
-    >
+    <ScrollView>
       <Text
         style={{ paddingTop: 10, paddingLeft: 20, color: 'grey' }}
       >Budget spent</Text>
@@ -81,73 +79,6 @@ export default function StatisticsScreen({ navigation }) {
       <Text
         style={{ paddingLeft: 20, color: 'grey' }}
       >Monthly by Category</Text>
-      {/* <PieChart
-        data={[
-          {
-            name: 'Groceries',
-            population: 21500000,
-            color: '#008ffb',
-            legendFontColor: '#7F7F7F',
-            legendFontSize: 10,
-          },
-          {
-            name: 'Rent',
-            population: 2800000,
-            color: '#00e396',
-            legendFontColor: '#7F7F7F',
-            legendFontSize: 10,
-          },
-          {
-            name: 'Fun',
-            population: 8538000,
-            color: '#feb019',
-            legendFontColor: '#7F7F7F',
-            legendFontSize: 10,
-          },
-          {
-            name: 'Utilities',
-            population: 11920000,
-            color: '#ff4560',
-            legendFontColor: '#7F7F7F',
-            legendFontSize: 10,
-          },
-          {
-            name: 'School',
-            population: 11920000,
-            color: '#775dd0',
-            legendFontColor: '#7F7F7F',
-            legendFontSize: 10,
-          },
-          {
-            name: 'Other',
-            population: 11920000,
-            color: '#3f51b5',
-            legendFontColor: '#7F7F7F',
-            legendFontSize: 10,
-          },
-        ]}
-        width={Dimensions.get('window').width - 16}
-        height={220}
-        chartConfig={{
-          backgroundColor: '#1cc910',
-          backgroundGradientFrom: '#eff3ff',
-          backgroundGradientTo: '#efefef',
-          decimalPlaces: 2,
-          color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-          style: {
-            borderRadius: 16,
-          },
-        }}
-        style={{
-          marginVertical: 1,
-          borderRadius: 16,
-        }}
-        accessor="population"
-        backgroundColor="transparent"
-        paddingLeft="15"
-        absolute //for the absolute number remove if you want percentage
-      /> */}
-
 
       <BarChart
         data={{
