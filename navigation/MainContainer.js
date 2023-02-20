@@ -51,7 +51,8 @@ export default function MainContainer() {
         <Tab.Navigator
           initialRouteName="Feed"
           activeColor="#1976d2"
-          barStyle={{ backgroundColor: 'lightblue' }}
+          barStyle={{ backgroundColor: 'lightblue', height: 100 }}
+
 
         >
           <Tab.Screen
@@ -104,7 +105,7 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: "lightblue",
     tintColor: "grey",
-    height: 100,
+    height: 90,
     paddingTop: 40
   }
 })
