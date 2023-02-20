@@ -39,41 +39,43 @@ export default function StatisticsScreen({ navigation }) {
       <Text
         style={{ paddingTop: 0, paddingLeft: 20, color: 'grey' }}
       >Weekly</Text>
-      <LineChart
-        data={{
-          labels: ['1', '7', '14', '21', '28', '30'],
-          datasets: [
-            {
-              data: [
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-              ],
+      <View style={styles.container}>
+        <LineChart
+          data={{
+            labels: ['1', '7', '14', '21', '28', '30'],
+            datasets: [
+              {
+                data: [
+                  Math.random() * 100,
+                  Math.random() * 100,
+                  Math.random() * 100,
+                  Math.random() * 100,
+                  Math.random() * 100,
+                  Math.random() * 100,
+                ],
+              },
+            ],
+          }}
+          width={Dimensions.get('window').width - 16} // from react-native
+          height={220}
+          // yAxisLabel={'Rs'}
+          chartConfig={{
+            backgroundColor: '#black',
+            backgroundGradientFrom: '#eff3ff',
+            backgroundGradientTo: '#efefef',
+            decimalPlaces: 2, // optional, defaults to 2dp
+            color: (opacity = 255) => `rgba(0,143,251, ${opacity})`,
+            style: {
+              borderRadius: 16,
             },
-          ],
-        }}
-        width={Dimensions.get('window').width - 16} // from react-native
-        height={220}
-        // yAxisLabel={'Rs'}
-        chartConfig={{
-          backgroundColor: '#black',
-          backgroundGradientFrom: '#eff3ff',
-          backgroundGradientTo: '#efefef',
-          decimalPlaces: 2, // optional, defaults to 2dp
-          color: (opacity = 255) => `rgba(0,143,251, ${opacity})`,
-          style: {
+          }}
+          bezier
+          style={{
+            marginVertical: 1,
             borderRadius: 16,
-          },
-        }}
-        bezier
-        style={{
-          marginVertical: 1,
-          borderRadius: 16,
-        }}
-      />
+          }}
+        />
+      </View>
 
 
       <Text
@@ -100,6 +102,15 @@ export default function StatisticsScreen({ navigation }) {
                 (opacity = 1) => '#ff4560',
                 (opacity = 1) => '#775dd0',
                 (opacity = 1) => '#3f51b5',
+                (opacity = 1) => '#3f51b5',
+                (opacity = 1) => '#03A9F4',
+                (opacity = 1) => '#4CAF50',
+                (opacity = 1) => '#F9CE1D',
+                (opacity = 1) => '#FF9800',
+                (opacity = 1) => '#33B2DF',
+                (opacity = 1) => '#546E7A',
+                (opacity = 1) => '#D4526E',
+                (opacity = 1) => '#13D8AA',
               ]
             },
           ],
@@ -112,7 +123,7 @@ export default function StatisticsScreen({ navigation }) {
           backgroundGradientFrom: '#eff3ff',
           backgroundGradientTo: '#efefef',
           decimalPlaces: 2,
-          color: (opacity = 1) => `grey`,
+          color: (opacity = 1) => `rgba(0,143,251, ${opacity})`,
           style: {
             borderRadius: 16,
           },
