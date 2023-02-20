@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { View, Text, Dimensions, ScrollView } from 'react-native';
-// import Header from '../../components/Header';
 import {
   LineChart,
   BarChart,
