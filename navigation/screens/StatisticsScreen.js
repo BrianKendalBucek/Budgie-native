@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { View, Text, Dimensions, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, View, Text, Dimensions, ScrollView } from 'react-native';
 import {
   LineChart,
   BarChart,
@@ -8,56 +8,52 @@ import {
   ContributionGraph,
   StackedBarChart
 } from "react-native-chart-kit";
+import CircularProgress from 'react-native-circular-progress-indicator';
+
+
 
 export default function StatisticsScreen({ navigation }) {
 
-  const data = [
-    Math.random() * 100,
-    Math.random() * 100,
-    Math.random() * 100,
-    Math.random() * 100,
-    Math.random() * 100,
-    Math.random() * 100,
-  ]
+  const [value, setValue] = useState(0);
 
   return (
-
     <ScrollView
     // style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
     >
       <Text
-        style={{ paddingLeft: 20, color: 'grey' }}
-      >Expenditures to Budget</Text>
-      <ProgressChart
-        data={[0.4]}
-        width={Dimensions.get('window').width - 16}
-        height={16ture 0}
-        chartConfig={{
-          backgroundColor: '#1cc910',
-          backgroundGradientFrom: '#eff3ff',
-          backgroundGradientTo: '#efefef',
-          decimalPlaces: 2,
-          color: (opacity = 1) => `rgba(0,143,251, ${opacity})`,
-          style: {
-            borderRadius: 16,
-          },
-        }}
-        style={{
-          marginVertical: 1,
-          borderRadius: 16,
-        }}
-      />
+        style={{ paddingTop: 10, paddingLeft: 20, color: 'grey' }}
+      >Budget spent</Text>
+      <View style={styles.container}>
+        <CircularProgress
+          radius={90}
+          value={85}
+          textColor='#222'
+          fontSize={20}
+          valueSuffix={'%'}
+          activeStrokeColor={'#008ffb'}
+          inActiveStrokeColor={'#008ffb'}
+          inActiveStrokeOpacity={0.2}
+          duration={3000}
+        />
+      </View>
 
 
       <Text
-        style={{ paddingTop: 10, paddingLeft: 20, color: 'grey' }}
+        style={{ paddingTop: 0, paddingLeft: 20, color: 'grey' }}
       >Weekly</Text>
       <LineChart
         data={{
           labels: ['1', '7', '14', '21', '28', '30'],
           datasets: [
             {
-              data,
+              data: [
+                Math.random() * 100,
+                Math.random() * 100,
+                Math.random() * 100,
+                Math.random() * 100,
+                Math.random() * 100,
+                Math.random() * 100,
+              ],
             },
           ],
         }}
@@ -65,7 +61,7 @@ export default function StatisticsScreen({ navigation }) {
         height={220}
         // yAxisLabel={'Rs'}
         chartConfig={{
-          backgroundColor: '#1cc910',
+          backgroundColor: '#black',
           backgroundGradientFrom: '#eff3ff',
           backgroundGradientTo: '#efefef',
           decimalPlaces: 2, // optional, defaults to 2dp
@@ -91,42 +87,42 @@ export default function StatisticsScreen({ navigation }) {
             name: 'Groceries',
             population: 21500000,
             color: '#008ffb',
-            legendFontColor: 'grey',
+            legendFontColor: '#7F7F7F',
             legendFontSize: 10,
           },
           {
             name: 'Rent',
             population: 2800000,
             color: '#00e396',
-            legendFontColor: 'grey',
+            legendFontColor: '#7F7F7F',
             legendFontSize: 10,
           },
           {
             name: 'Fun',
             population: 8538000,
             color: '#feb019',
-            legendFontColor: 'grey',
+            legendFontColor: '#7F7F7F',
             legendFontSize: 10,
           },
           {
             name: 'Utilities',
             population: 11920000,
             color: '#ff4560',
-            legendFontColor: 'grey',
+            legendFontColor: '#7F7F7F',
             legendFontSize: 10,
           },
           {
             name: 'School',
             population: 11920000,
             color: '#775dd0',
-            legendFontColor: 'grey',
+            legendFontColor: '#7F7F7F',
             legendFontSize: 10,
           },
           {
             name: 'Other',
             population: 11920000,
             color: '#3f51b5',
-            legendFontColor: 'grey',
+            legendFontColor: '#7F7F7F',
             legendFontSize: 10,
           },
         ]}
@@ -148,8 +144,8 @@ export default function StatisticsScreen({ navigation }) {
         }}
         accessor="population"
         backgroundColor="transparent"
-        paddingLeft="30"
-      // absolute //for the absolute number remove if you want percentage
+        paddingLeft="15"
+        absolute //for the absolute number remove if you want percentage
       /> */}
 
 
@@ -165,7 +161,7 @@ export default function StatisticsScreen({ navigation }) {
           ],
           datasets: [
             {
-              data,
+              data: [20, 45, 28, 80, 99, 43],
               colors: [
                 (opacity = 1) => '#008ffb',
                 (opacity = 1) => '#00e396',
@@ -201,3 +197,11 @@ export default function StatisticsScreen({ navigation }) {
     </ScrollView>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+});

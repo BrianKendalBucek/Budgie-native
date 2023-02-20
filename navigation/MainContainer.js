@@ -66,22 +66,22 @@ export default function MainContainer() {
             }}
           />
           <Tab.Screen
-            name={categoriesName}
-            component={CategoriesScreen}
-            options={{
-              tabBarLabel: 'Categories',
-              tabBarIcon: ({ color }) => (
-                <MaterialIcons name="category" color={"grey"} size={26} />
-              ),
-            }}
-          />
-          <Tab.Screen
             name={expendituresName}
             component={ExpendituresScreen}
             options={{
               tabBarLabel: 'Expenditures',
               tabBarIcon: ({ color }) => (
                 <MaterialCommunityIcons name="wallet" color={"grey"} size={26} />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name={categoriesName}
+            component={CategoriesScreen}
+            options={{
+              tabBarLabel: 'Categories',
+              tabBarIcon: ({ color }) => (
+                <MaterialIcons name="category" color={"grey"} size={26} />
               ),
             }}
           />
