@@ -10,26 +10,54 @@ import {
 } from "react-native-chart-kit";
 
 export default function StatisticsScreen({ navigation }) {
+
+  const data = [
+    Math.random() * 100,
+    Math.random() * 100,
+    Math.random() * 100,
+    Math.random() * 100,
+    Math.random() * 100,
+    Math.random() * 100,
+  ]
+
   return (
+
     <ScrollView
     // style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
     >
       <Text
-        style={{paddingTop: 10, paddingLeft: 20, color: 'grey' }}
+        style={{ paddingLeft: 20, color: 'grey' }}
+      >Expenditures to Budget</Text>
+      <ProgressChart
+        data={[0.4]}
+        width={Dimensions.get('window').width - 16}
+        height={16ture 0}
+        chartConfig={{
+          backgroundColor: '#1cc910',
+          backgroundGradientFrom: '#eff3ff',
+          backgroundGradientTo: '#efefef',
+          decimalPlaces: 2,
+          color: (opacity = 1) => `rgba(0,143,251, ${opacity})`,
+          style: {
+            borderRadius: 16,
+          },
+        }}
+        style={{
+          marginVertical: 1,
+          borderRadius: 16,
+        }}
+      />
+
+
+      <Text
+        style={{ paddingTop: 10, paddingLeft: 20, color: 'grey' }}
       >Weekly</Text>
       <LineChart
         data={{
           labels: ['1', '7', '14', '21', '28', '30'],
           datasets: [
             {
-              data: [
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-              ],
+              data,
             },
           ],
         }}
@@ -57,48 +85,48 @@ export default function StatisticsScreen({ navigation }) {
       <Text
         style={{ paddingLeft: 20, color: 'grey' }}
       >Monthly by Category</Text>
-      <PieChart
+      {/* <PieChart
         data={[
           {
             name: 'Groceries',
             population: 21500000,
             color: '#008ffb',
-            legendFontColor: '#7F7F7F',
+            legendFontColor: 'grey',
             legendFontSize: 10,
           },
           {
             name: 'Rent',
             population: 2800000,
             color: '#00e396',
-            legendFontColor: '#7F7F7F',
+            legendFontColor: 'grey',
             legendFontSize: 10,
           },
           {
             name: 'Fun',
             population: 8538000,
             color: '#feb019',
-            legendFontColor: '#7F7F7F',
+            legendFontColor: 'grey',
             legendFontSize: 10,
           },
           {
             name: 'Utilities',
             population: 11920000,
             color: '#ff4560',
-            legendFontColor: '#7F7F7F',
+            legendFontColor: 'grey',
             legendFontSize: 10,
           },
           {
             name: 'School',
             population: 11920000,
             color: '#775dd0',
-            legendFontColor: '#7F7F7F',
+            legendFontColor: 'grey',
             legendFontSize: 10,
           },
           {
             name: 'Other',
             population: 11920000,
             color: '#3f51b5',
-            legendFontColor: '#7F7F7F',
+            legendFontColor: 'grey',
             legendFontSize: 10,
           },
         ]}
@@ -120,9 +148,9 @@ export default function StatisticsScreen({ navigation }) {
         }}
         accessor="population"
         backgroundColor="transparent"
-        paddingLeft="15"
-        absolute //for the absolute number remove if you want percentage
-      />
+        paddingLeft="30"
+      // absolute //for the absolute number remove if you want percentage
+      /> */}
 
 
       <BarChart
@@ -137,7 +165,7 @@ export default function StatisticsScreen({ navigation }) {
           ],
           datasets: [
             {
-              data: [20, 45, 28, 80, 99, 43],
+              data,
               colors: [
                 (opacity = 1) => '#008ffb',
                 (opacity = 1) => '#00e396',

@@ -22,6 +22,7 @@
     "react-native-date-picker": "^4.2.8",
     "react-native-modal-datetime-picker": "^14.0.1",
     "react-native-paper": "^5.2.0",
+    "react-native-textinput-material-autocomplete": "^1.0.6",
     "react-native-vector-icons": "^9.2.0"
   },
   "devDependencies": {
