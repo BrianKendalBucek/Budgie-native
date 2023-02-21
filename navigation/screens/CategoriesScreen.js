@@ -1,11 +1,26 @@
-import React from 'react';
-import { ScrollView, View, Text } from 'react-native';
+import React, { useState } from 'react';
+import { ScrollView, View, Text, TouchableOpacity, Keyboard, StyleSheet } from 'react-native';
 import { TextInput, ListItem, Button } from "@react-native-material/core";
 import { AppBar, HStack, IconButton } from "@react-native-material/core";
-import Category from '../Components/CategoryItem';
 
 
 export default function CategoriesScreen({ props }) {
+
+  const [category, setCategory] = useState();
+  const [categoryItems, setCategoryItems] = useState([]);
+
+  const handleAddCategory = () => {
+    Keyboard.dismiss();
+    setCategoryItems([...categoryItems, category])
+    setCategory(null);
+  }
+
+  const deleteCategory = (index) => {
+    let itemsCopy = [...categoryItems];
+    itemsCopy.splice(index, 1);
+    setCategoryItems(itemsCopy);
+  }
+
   return (
     <ScrollView
     // style={{
@@ -17,7 +32,8 @@ export default function CategoriesScreen({ props }) {
       <View style={{ flexDirection: 'row', width: window.width, margin: 10, padding: 4, paddingTop: 10, alignItems: 'center', justifyContent: 'center', borderWidth: 0, borderColor: 'lightgrey', borderRadius: 10, backgroundColor: '#fff' }}>
         <View style={{ flex: 4 }}>
           <TextInput
-            // onChangeText={(textEntry) => { this.setState({ searchText: textEntry }) }}
+            value={category}
+            onChangeText={text => setCategory(text)}
             style={{ backgroundColor: 'transparent', variant: 'outlined' }}
             label="Add New Category"
             variant='outlined'
@@ -26,25 +42,50 @@ export default function CategoriesScreen({ props }) {
           />
         </View>
         <View style={{ flex: 1 }}>
-          <Button
-            style={{ width: 70, margin: 5, backgroundColor: "lightblue" }}
-            title="Add"
-          // onPress={
-          //   () => this.onSubmit(this.state.searchText)
-          // }
-          >
-            <IconButton
-              icon={props => <MaterialCommunityIcons name="logout" {...props} />}
-              {...props}
+          <TouchableOpacity>
+            <Button
+              onPress={() => handleAddCategory()}
+              style={{ width: 70, margin: 5, backgroundColor: "lightblue" }}
+              title="Add"
             />
-          </Button>
+          </TouchableOpacity>
         </View>
       </View>
       <View>
-        <Category />
+        {
+          categoryItems.map((item, index) => {
+            return (
+              <>
+                <View style={{ flexDirection: 'row', width: window.width, margin: 5, padding: 4, paddingTop: 10, borderColor: 'lightgrey', borderRadius: 10, backgroundColor: '#fff' }}>
+                  <View style={{ flex: 1 }}>
+                    <ListItem
+                      title={item}
+                    />
+                  </View>
+                  <View>
+                    <Button
+                      style={styles.button}
+                      title="Delete"
+                      onPress={() => deleteCategory(index)}
+                    />
+                  </View>
+                  <View />
+                </View>
+              </>
+            )
+          })
+        }
       </View>
-
-
     </ScrollView>
   )
 }
+
+const styles = StyleSheet.create({
+  button: {
+    width: 100,
+    height: 35,
+    marginRight: 10,
+    marginLeft: 10,
+    backgroundColor: 'lightblue'
+  }
+});
