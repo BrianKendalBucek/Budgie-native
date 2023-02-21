@@ -12,7 +12,7 @@ export default function ConverterScreen({ navigation }) {
 
   return (
     <ScrollView 
-      keyboardShouldPersistTaps='always'
+      keyboardShouldPersistTaps='handled'
       style={{
         padding: 30
       }}

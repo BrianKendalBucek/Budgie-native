@@ -29,7 +29,7 @@ export default function ExpendituresScreen({ props }) {
   }
 
   return (
-    <ScrollView keyboardShouldPersistTaps='always'> 
+    <ScrollView keyboardShouldPersistTaps='handled'> 
       <View>
         <TextInput
           // onChangeText={(textEntry) => { this.setState({ searchText: textEntry }) }}
