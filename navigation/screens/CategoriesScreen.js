@@ -22,13 +22,7 @@ export default function CategoriesScreen({ props }) {
   }
 
   return (
-    <ScrollView
-    // style={{
-    //   flex: 1,
-    //   alignItems: 'center',
-    //   justifyContent: 'center'
-    // }}
-    >
+    <ScrollView keyboardShouldPersistTaps='always'>
       <View style={{ flexDirection: 'row', width: window.width, margin: 10, padding: 4, paddingTop: 10, alignItems: 'center', justifyContent: 'center', borderWidth: 0, borderColor: 'lightgrey', borderRadius: 10, backgroundColor: '#fff' }}>
         <View style={{ flex: 4 }}>
           <TextInput

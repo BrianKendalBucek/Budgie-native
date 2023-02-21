@@ -17,7 +17,7 @@ export default function StatisticsScreen({ navigation }) {
   const [value, setValue] = useState(0);
 
   return (
-    <ScrollView>
+    <ScrollView keyboardShouldPersistTaps='always'> 
       <Text
         style={{ paddingTop: 10, paddingLeft: 20, color: 'grey' }}
       >Budget spent</Text>
