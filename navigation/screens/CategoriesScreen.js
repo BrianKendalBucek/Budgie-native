@@ -1,7 +1,8 @@
-import * as React from 'react';
+import React from 'react';
 import { ScrollView, View, Text } from 'react-native';
 import { TextInput, ListItem, Button } from "@react-native-material/core";
 import { AppBar, HStack, IconButton } from "@react-native-material/core";
+import Category from '../Components/CategoryItem';
 
 
 export default function CategoriesScreen({ props }) {
@@ -26,12 +27,12 @@ export default function CategoriesScreen({ props }) {
         </View>
         <View style={{ flex: 1 }}>
           <Button
-            style={{ width: 70, margin: 5, backgroundColor: "lightblue"}}
+            style={{ width: 70, margin: 5, backgroundColor: "lightblue" }}
             title="Add"
-            // onPress={
-            //   () => this.onSubmit(this.state.searchText)
-            // }
-            >
+          // onPress={
+          //   () => this.onSubmit(this.state.searchText)
+          // }
+          >
             <IconButton
               icon={props => <MaterialCommunityIcons name="logout" {...props} />}
               {...props}
@@ -39,10 +40,9 @@ export default function CategoriesScreen({ props }) {
           </Button>
         </View>
       </View>
-      <ListItem title="Groceries" />
-      <ListItem title="Rent" />
-      <ListItem title="Entertainment" />
-      <ListItem title="Utilities" />
+      <View>
+        <Category />
+      </View>
 
 
     </ScrollView>
