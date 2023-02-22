@@ -4,6 +4,7 @@ import { Box, Container, Tab, Tabs, TextInput, Autocomplete, Button } from "@rea
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 export default function ExpendituresScreen({ props }) {
+
   const [expenditure, setExpenditure] = useState({
     price: '',
     currency: '',
@@ -11,7 +12,7 @@ export default function ExpendituresScreen({ props }) {
     category: '',
     title: ''
   })
-console.log("Expenditure", expenditure);
+  console.log("Expenditure", expenditure);
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
@@ -28,12 +29,30 @@ console.log("Expenditure", expenditure);
   //   hideDatePicker();
   // };
 
-  const handleOnchange = (text, input) => {
+  const handleChange = (inputName, inputValue) => {
     // Keyboard.dismiss();
-    setExpenditure(prevState => ({ ...prevState, [input]: text }));
+    setExpenditure(prevState => ({ ...prevState, [inputName]: inputValue }));
     hideDatePicker();
+    // setExpenditure({
+    //   price: '',
+    //   currency: '',
+    //   date: '',
+    //   category: '',
+    //   title: ''
+    // })
+    // this.textInput.clear();
     // setExpenditure(null);
   };
+
+  const handleSubmit = () => {
+    setExpenditure({
+      price: '',
+      currency: '',
+      date: '',
+      category: '',
+      title: ''
+    });
+  }
 
   // const handleError = (error, input) => {
   //   setErrors(prevState => ({...prevState, [input]: error}));
@@ -45,7 +64,8 @@ console.log("Expenditure", expenditure);
     <ScrollView keyboardShouldPersistTaps='handled'>
       <View>
         <TextInput
-          onChangeText={text => handleOnchange(text, 'price')}
+          value={expenditure.price}
+          onChangeText={value => handleChange('price', value)}
           style={{ backgroundColor: 'transparent', variant: 'filled', margin: 20, paddingTop: 10 }}
           placeholder="Price of item"
           color="grey"
@@ -55,12 +75,13 @@ console.log("Expenditure", expenditure);
         {/* <Autocomplete /> */}
         <SafeAreaView style={{ flex: 1 }}>
           <TextInput
+            value={expenditure.currency}
             variant='outlined'
             placeholder='Currency'
             placeholderTextColor="grey"
             color='grey'
             // value={currency}
-            onChangeText={text => handleOnchange(text, 'currency')}
+            onChangeText={value => handleChange('currency', value)}
             style={{
               marginHorizontal: 12,
               paddingHorizontal: 8,
@@ -72,19 +93,20 @@ console.log("Expenditure", expenditure);
         <DateTimePickerModal
           isVisible={isDatePickerVisible}
           mode="date"
-          // onChangeText={text => handleOnchange(text, 'date')}
-          onConfirm={text => handleOnchange(text, 'date')}
+          // onChangeText={text => handleChange(text, 'date')}
+          onConfirm={value => handleChange('date', value)}
           onCancel={hideDatePicker}
         />
 
         <SafeAreaView style={{ flex: 1 }}>
           <TextInput
+            value={expenditure.category}
             variant='outlined'
             placeholder='Category'
             placeholderTextColor="grey"
             color='grey'
             // value={category}
-            onChangeText={text => handleOnchange(text, 'category')}
+            onChangeText={value => handleChange('category', value)}
             style={{
               marginHorizontal: 12,
               paddingHorizontal: 8,
@@ -93,7 +115,9 @@ console.log("Expenditure", expenditure);
         </SafeAreaView>
 
         <TextInput
-          onChangeText={text => handleOnchange(text, 'title')}
+          // ref={input => { this.textInput = input }}
+          value={expenditure.title}
+          onChangeText={value => handleChange('title', value)}
           style={{ backgroundColor: 'transparent', variant: 'filled', margin: 20 }}
           placeholder="Title"
           color="grey"
@@ -105,7 +129,7 @@ console.log("Expenditure", expenditure);
           title="Submit"
           tintColor='grey'
           style={{ alignItems: 'left', width: 95, marginHorizontal: 20, backgroundColor: 'lightblue', color: 'grey' }}
-          onPress={() => handleOnchange()}
+          onPress={handleSubmit}
         />
 
       </View>
