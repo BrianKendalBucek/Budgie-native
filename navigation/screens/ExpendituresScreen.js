@@ -52,18 +52,6 @@ export default function ExpendituresScreen({ props }) {
     setTitle('');
   };
 
-  // const [expenditure, setExpenditure] = useState({
-  //   price: '',
-  //   currency: '',
-  //   date: '',
-  //   category: '',
-  //   title: ''
-  // })
-  // console.log("Expenditure", expenditure);
-
-  // const expenditureArray = Object.entries(expenditure);
-  // console.log("ExpenditureArray", expenditureArray);
-
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
   const showDatePicker = () => {
@@ -80,44 +68,6 @@ export default function ExpendituresScreen({ props }) {
     setObjects(itemsCopy);
     setSelectedItem(null);
   }
-  // const handleConfirm = (date, input) => {
-  //   setExpenditure(prevState => ({ ...prevState, [input]: date }));
-  //   hideDatePicker();
-  // // };
-
-  // const handleChange = (inputName, inputValue) => {
-  //   // Keyboard.dismiss();
-  //   // setExpenditure(prevState => ({ ...prevState, [inputName]: inputValue }));
-  //   // setExpenditure({
-  //   //   price: '',
-  //   //   currency: '',
-  //   //   date: '',
-  //   //   category: '',
-  //   //   title: ''
-  //   // })
-  //   // this.textInput.clear();
-  //   // setExpenditure(null);
-  // };
-
-  // const handleSubmit = () => {
-  //   // setExpenditure({
-  //   //   price: '',
-  //   //   currency: '',
-  //   //   date: '',
-  //   //   category: '',
-  //   //   title: ''
-  //   // });
-  // }
-
-  // const deleteCategory = (index) => {
-  //   let itemsCopy = [...categoryItems];
-  //   itemsCopy.splice(index, 1);
-  //   setCategoryItems(itemsCopy);
-  // }
-
-  // const handleError = (error, input) => {
-  //   setErrors(prevState => ({...prevState, [input]: error}));
-  // };
 
   return (
     <ScrollView keyboardShouldPersistTaps='handled'>
@@ -131,10 +81,6 @@ export default function ExpendituresScreen({ props }) {
             placeholderTextColor="grey"
             color='grey'
             onChangeText={handleCurrencyChange}
-          // style={{
-          //   marginHorizontal: 12,
-          //   paddingHorizontal: 8,
-          // }}
           />
         </SafeAreaView>
 
@@ -145,15 +91,12 @@ export default function ExpendituresScreen({ props }) {
           placeholder="Price of item"
           color="grey"
           variant='outlined'
-        // onSubmitEditing={() => { this.onSubmit(this.state.searchText) }}
         />
-        {/* <Autocomplete /> */}
 
         <Button title="Date" tintColor='grey' style={{ alignItems: 'left', width: 75, margin: 20, backgroundColor: 'lightblue', color: 'grey' }} onPress={showDatePicker} />
         <DateTimePickerModal
           isVisible={isDatePickerVisible}
           mode="date"
-          // onChangeText={text => handleChange(text, 'date')}
           onConfirm={handleDateChange}
           onCancel={hideDatePicker}
         />
@@ -165,7 +108,6 @@ export default function ExpendituresScreen({ props }) {
             placeholder='Category'
             placeholderTextColor="grey"
             color='grey'
-            // value={category}
             onChangeText={handleCategoryChange}
             style={{
               marginHorizontal: 12,
@@ -175,14 +117,12 @@ export default function ExpendituresScreen({ props }) {
         </SafeAreaView>
 
         <TextInput
-          // ref={input => { this.textInput = input }}
           value={title}
           onChangeText={handleTitleChange}
           style={{ backgroundColor: 'transparent', variant: 'filled', margin: 20 }}
           placeholder="Title"
           color="grey"
           variant='outlined'
-        // onSubmitEditing={() => { this.onSubmit(this.state.searchText) }}
         />
 
         <Button
