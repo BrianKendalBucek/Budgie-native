@@ -63,7 +63,6 @@ export default function CategoriesScreen({ props }) {
                       onPress={() => deleteCategory(index)}
                     />
                   </View>
-                  <View />
                 </View>
               </>
             )
