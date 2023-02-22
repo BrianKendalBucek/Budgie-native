@@ -23,14 +23,15 @@ console.log("Expenditure", expenditure);
     setDatePickerVisibility(false);
   };
 
-  const handleConfirm = (date, input) => {
-    setExpenditure(prevState => ({ ...prevState, [input]: date }));
-    hideDatePicker();
-  };
+  // const handleConfirm = (date, input) => {
+  //   setExpenditure(prevState => ({ ...prevState, [input]: date }));
+  //   hideDatePicker();
+  // };
 
   const handleOnchange = (text, input) => {
     // Keyboard.dismiss();
     setExpenditure(prevState => ({ ...prevState, [input]: text }));
+    hideDatePicker();
     // setExpenditure(null);
   };
 
@@ -72,7 +73,7 @@ console.log("Expenditure", expenditure);
           isVisible={isDatePickerVisible}
           mode="date"
           // onChangeText={text => handleOnchange(text, 'date')}
-          onConfirm={text => handleConfirm(text, 'date')}
+          onConfirm={text => handleOnchange(text, 'date')}
           onCancel={hideDatePicker}
         />
 

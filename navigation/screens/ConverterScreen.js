@@ -26,7 +26,7 @@ export default function ConverterScreen({ navigation }) {
           placeholder='Primary Currency'
           placeholderTextColor="grey"
           color='grey'
-          value={currency}
+          // value={currency}
           onChangeText={onChangeText}
           style={{
             marginHorizontal: 12,
@@ -42,7 +42,7 @@ export default function ConverterScreen({ navigation }) {
           placeholder='Secondary Currency'
           placeholderTextColor="grey"
           color='grey'
-          value={currency}
+          // value={currency}
           onChangeText={onChangeText}
           style={{
             marginHorizontal: 12,
@@ -52,7 +52,7 @@ export default function ConverterScreen({ navigation }) {
                 <TextInput
           // onChangeText={(textEntry) => { this.setState({ searchText: textEntry }) }}
           style={{ backgroundColor: 'transparent', variant: 'filled', margin: 20 }}
-          label="Price of item"
+          placeholder="Price of item"
           color="grey"
           variant='outlined'
         // onSubmitEditing={() => { this.onSubmit(this.state.searchText) }}
