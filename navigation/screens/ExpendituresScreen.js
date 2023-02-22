@@ -104,7 +104,7 @@ console.log("Expenditure", expenditure);
         <Button
           title="Submit"
           tintColor='grey'
-          style={{ alignItems: 'left', width: 95, margin: 20, backgroundColor: 'lightblue', color: 'grey' }}
+          style={{ alignItems: 'left', width: 95, marginHorizontal: 20, backgroundColor: 'lightblue', color: 'grey' }}
           onPress={() => handleOnchange()}
         />
 
