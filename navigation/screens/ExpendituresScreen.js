@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { ScrollView, View, SafeAreaView, StyleSheet, Text, Platform, TouchableWithoutFeedback, Keyboard, Alert, Modal, Pressable } from 'react-native';
 import { Box, Container, Tab, Tabs, TextInput, Autocomplete, Button, List, ListItemText, ListItem } from "@react-native-material/core";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { Flex, Spacer } from 'react-native-flex-layout';
+import moment from 'moment';
 
 export default function ExpendituresScreen({ props }) {
 
@@ -92,8 +94,12 @@ export default function ExpendituresScreen({ props }) {
           color="grey"
           variant='outlined'
         />
-
-        <Button title="Date" tintColor='grey' style={{ alignItems: 'left', width: 75, margin: 20, backgroundColor: 'lightblue', color: 'grey' }} onPress={showDatePicker} />
+        <Flex inline justifyContent='space-between' center styles={{backgroundColor: 'red'}}>
+          <Button title="Date" tintColor='grey' style={{ alignItems: 'left', width: 75, margin: 20, backgroundColor: 'lightblue', color: 'grey' }} onPress={showDatePicker} />
+          <Text
+            style={{ paddingRight: 210, color: 'grey' }}
+          >{moment(date).format('MMM Do YY')}</Text>
+        </Flex>
         <DateTimePickerModal
           isVisible={isDatePickerVisible}
           mode="date"
