@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import { View, Text, ScrollView, SafeAreaView } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, ScrollView, SafeAreaView, StyleSheet } from 'react-native';
 import { Box, Container, Tab, Tabs, TextInput, Button, Autocomplete } from "@react-native-material/core";
 
 
@@ -11,55 +11,72 @@ export default function ConverterScreen({ navigation }) {
   }
 
   return (
-    <ScrollView 
-      keyboardShouldPersistTaps='handled'
-      style={{
-        padding: 30
-      }}
-      >
-      <Box
-        style={{ display: 'flex', alignItems: 'center', height: 50, width: 200, backgroundColor: 'lightgrey', borderRadius: 10, paddingTop: 22, marginLeft: 80 }}
-      />
-      <SafeAreaView style={{ flex: 1 }}>
+    <ScrollView keyboardShouldPersistTaps='handled'>
+      <View style={styles.boxposition}>
+        <Box
+          style={styles.box}
+        />
+      </View>
+      <SafeAreaView>
         <TextInput
+          style={styles.input}
           variant='outlined'
           placeholder='Primary Currency'
           placeholderTextColor="grey"
           color='grey'
           // value={currency}
           onChangeText={onChangeText}
-          style={{
-            marginHorizontal: 12,
-            paddingHorizontal: 8,
-            paddingBottom: 20,
-            paddingTop: 30
-          }}
         />
       </SafeAreaView>
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView>
         <TextInput
+          style={styles.input}
           variant='outlined'
           placeholder='Secondary Currency'
           placeholderTextColor="grey"
           color='grey'
           // value={currency}
           onChangeText={onChangeText}
-          style={{
-            marginHorizontal: 12,
-            paddingHorizontal: 8,
-          }}
         />
-                <TextInput
+        <TextInput
           // onChangeText={(textEntry) => { this.setState({ searchText: textEntry }) }}
-          style={{ backgroundColor: 'transparent', variant: 'filled', margin: 20 }}
+          style={styles.input}
           placeholder="Price of item"
           color="grey"
           variant='outlined'
         // onSubmitEditing={() => { this.onSubmit(this.state.searchText) }}
         />
-        <Button title="Convert" tintColor='grey' style={{ alignItems: 'left', width: 110, marginLeft: 20, backgroundColor: 'lightblue', color: 'grey' }} />
+        <Button title="Convert" tintColor='grey' style={styles.bluebutton} />
 
       </SafeAreaView>
     </ScrollView>
   )
 }
+
+const styles = StyleSheet.create({
+  input: {
+    backgroundColor: 'transparent',
+    variant: 'filled',
+    marginHorizontal: 20,
+    marginVertical: 5
+  },
+  bluebutton: {
+    backgroundColor: 'lightblue',
+    color: 'grey',
+    marginHorizontal: 20,
+    marginVertical: 10,
+  },
+  box: {
+    height: 50,
+    width: 200,
+    backgroundColor: 'lightgrey',
+    borderRadius: 10,
+  },
+  boxposition: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 20,
+    marginBottom: 10,
+  }
+})
