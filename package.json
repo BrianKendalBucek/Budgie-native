@@ -30,6 +30,7 @@
     "react-native-svg": "^13.8.0",
     "react-native-swipeout": "^2.3.6",
     "react-native-textinput-material-autocomplete": "^1.0.6",
+    "react-native-uuid": "^2.0.1",
     "react-native-vector-icons": "^9.2.0"
   },
   "devDependencies": {

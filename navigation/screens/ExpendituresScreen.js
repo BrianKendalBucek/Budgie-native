@@ -14,52 +14,44 @@ export default function ExpendituresScreen({ props }) {
   const [category, setCategory] = useState('');
   const [title, setTitle] = useState('');
 
+  console.log(objects)
+
   const [modalVisible, setModalVisible] = useState(false);
 
   const [selectedItem, setSelectedItem] = useState(null);
 
-
-  console.log("objects", objects);
-
-  // const objectArray = Object.entries(objects);
-  // console.log("ObjectArray", objectArray);
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
   const handlePriceChange = (text) => {
     setPrice(text);
   };
-
   const handleCurrencyChange = (text) => {
     setCurrency(text);
   };
-
   const handleDateChange = (text) => {
     setDate(String(text));
     hideDatePicker();
   };
-
   const handleCategoryChange = (text) => {
     setCategory(text);
   };
-
   const handleTitleChange = (text) => {
     setTitle(text);
   };
 
-  const handleSubmit = () => {
-    setObjects([...objects, { price, currency, date, category, title }]);
-    setCurrency('');
+  const handleSubmit = ({ price, currency, date, category, title }) => {
+    const newObject = { key: Date.now(), price, currency, date, category, title };
+    setObjects([...objects, newObject]);
     setPrice('');
+    setCurrency('');
     setDate('');
     setCategory('');
     setTitle('');
   };
 
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-
   const showDatePicker = () => {
     setDatePickerVisibility(true);
   };
-
   const hideDatePicker = () => {
     setDatePickerVisibility(false);
   };
@@ -94,11 +86,12 @@ export default function ExpendituresScreen({ props }) {
           color="grey"
           variant='outlined'
         />
-        <Flex inline justifyContent='space-between' center styles={{backgroundColor: 'red'}}>
+
+        <Flex inline justifyContent='space-between' center>
           <Button title="Date" tintColor='grey' style={{ alignItems: 'left', width: 75, margin: 20, backgroundColor: 'lightblue', color: 'grey' }} onPress={showDatePicker} />
-          <Text
-            style={{ paddingRight: 210, color: 'grey' }}
-          >{moment(date).format('MMM Do YY')}</Text>
+        <View>
+          { date === ''? null : <Text style={{ paddingRight: 210, color: 'grey', fontSize: 20}}>{moment(date).format('LL')}</Text>}
+        </View>
         </Flex>
         <DateTimePickerModal
           isVisible={isDatePickerVisible}
@@ -135,7 +128,7 @@ export default function ExpendituresScreen({ props }) {
           title="Submit"
           tintColor='grey'
           style={{ alignItems: 'left', width: 95, marginHorizontal: 20, marginBottom: 10, backgroundColor: 'lightblue', color: 'grey' }}
-          onPress={handleSubmit}
+          onPress={() => handleSubmit({ price, currency, date, category, title })}
         />
 
       </View>
@@ -151,7 +144,6 @@ export default function ExpendituresScreen({ props }) {
                       onPress={() => setSelectedItem(object)}
                     />
                   </View>
-
                 </View>
               </>
             )
@@ -169,33 +161,30 @@ export default function ExpendituresScreen({ props }) {
           }}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              {
-                objects.map((object, index) => {
-                  return (
-                    <>
-                      <Text style={styles.modalText}>{selectedItem?.title}</Text>
-                      <Text style={styles.modalText}>{selectedItem?.price}</Text>
-                      <Text style={styles.modalText}>{selectedItem?.currency}</Text>
-                      <Text style={styles.modalText}>{selectedItem?.category}</Text>
-                      <Text style={styles.modalText}>{selectedItem?.date}</Text>
-                      <View
-                        sytle={styles.buttonBox}
-                      >
-                        <Pressable
-                          style={[styles.button, styles.buttonClose]}
-                          onPress={() => setSelectedItem(null)}>
-                          <Text style={styles.textStyle}>Close</Text>
-                        </Pressable>
-                        <Pressable
-                          style={[styles.button, styles.buttonDelete]}
-                          onPress={() => deleteCategory()}>
-                          <Text style={styles.textStyle}>Delete</Text>
-                        </Pressable>
-                      </View>
-                    </>
-                  )
-                })
-              }
+              {selectedItem && (
+                <>
+                  <Text style={styles.modalText}>{selectedItem.title}</Text>
+                  <Text style={styles.modalText}>{selectedItem.price}</Text>
+                  <Text style={styles.modalText}>{selectedItem.currency}</Text>
+                  <Text style={styles.modalText}>{selectedItem.category}</Text>
+                  <Text style={styles.modalText}>{selectedItem.date}</Text>
+                </>
+              )}
+              <>
+                <View>
+                  <Pressable
+                    style={[styles.button, styles.buttonClose]}
+                    onPress={() => setSelectedItem(null)}>
+                    <Text style={styles.textStyle}>Close</Text>
+                  </Pressable>
+                  <Pressable
+                    style={[styles.button, styles.buttonDelete]}
+                    onPress={() => deleteCategory()}>
+                    <Text style={styles.textStyle}>Delete</Text>
+                  </Pressable>
+                </View>
+              </>
+
             </View>
           </View>
         </Modal>
