@@ -128,7 +128,10 @@ export default function ExpendituresScreen({ props }) {
           title="Submit"
           tintColor='grey'
           style={{ alignItems: 'left', width: 95, marginHorizontal: 20, marginBottom: 10, backgroundColor: 'lightblue', color: 'grey' }}
-          onPress={() => handleSubmit({ price, currency, date, category, title })}
+          onPress={() => {
+            handleSubmit({ price, currency, date, category, title });
+            Keyboard.dismiss();
+          }}
         />
 
       </View>
@@ -179,7 +182,7 @@ export default function ExpendituresScreen({ props }) {
                   </Pressable>
                   <Pressable
                     style={[styles.button, styles.buttonDelete]}
-                    onPress={() => deleteCategory()}>
+                    onPress={() => deleteCategory(objects.indexOf(selectedItem))}>
                     <Text style={styles.textStyle}>Delete</Text>
                   </Pressable>
                 </View>
