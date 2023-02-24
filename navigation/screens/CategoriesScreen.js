@@ -19,6 +19,9 @@ export default function CategoriesScreen({ props }) {
 
   const handleAddCategory = () => {
     Keyboard.dismiss();
+    if (!category) {
+      return;
+    }
     setCategoryItems([...categoryItems, category])
     setCategory(null);
   }
@@ -32,46 +35,36 @@ export default function CategoriesScreen({ props }) {
 
   return (
     <ScrollView keyboardShouldPersistTaps='handled'>
-      <View style={{ flexDirection: 'row', width: window.width, margin: 10, padding: 4, paddingTop: 10, alignItems: 'center', justifyContent: 'center', borderWidth: 0, borderColor: 'lightgrey', borderRadius: 10, backgroundColor: '#fff' }}>
-        <View style={{ flex: 4 }}>
-          <TextInput
-            value={category}
-            onChangeText={text => setCategory(text)}
-            style={{ backgroundColor: 'transparent', variant: 'outlined' }}
-            placeholder="Add New Category"
-            variant='outlined'
-            color='grey'
-          // onSubmitEditing={() => { this.onSubmit(this.state.searchText) }}
+      <View style={styles.input}>
+        <TextInput
+          value={category}
+          onChangeText={text => setCategory(text)}
+          style={{ backgroundColor: 'transparent', variant: 'outlined' }}
+          placeholder="Add New Category"
+          variant='outlined'
+          color='grey'
+        // onSubmitEditing={() => { this.onSubmit(this.state.searchText) }}
+        />
+      </View>
+      <View>
+        <TouchableOpacity>
+          <Button
+            style={styles.bluebutton}
+            onPress={() => handleAddCategory()}
+            title="Add"
+            tintColor='grey'
           />
-        </View>
-        <View style={{ flex: 1 }}>
-          <TouchableOpacity>
-            <Button
-              onPress={() => handleAddCategory()}
-              style={{ width: 70, margin: 5, backgroundColor: "lightblue" }}
-              title="Add"
-              tintColor='grey'
-            />
-          </TouchableOpacity>
-        </View>
+        </TouchableOpacity>
       </View>
       <View>
         {
           categoryItems.map((item, index) => {
             return (
               <View key={index}>
-                <View style={{ flexDirection: 'row', width: window.width, margin: 5, padding: 4, paddingTop: 10, borderColor: 'lightgrey', borderRadius: 10, backgroundColor: '#fff' }}>
-                  <View style={{ flex: 1 }}>
+                <View style={styles.listcontainer}>
+                  <View style={{ flex: 1}}>
                     <ListItem
                       title={item}
-                    />
-                  </View>
-                  <View>
-                    <Button
-                      style={styles.buttonFirst}
-                      title="Delete"
-              tintColor='grey'
-
                       onPress={() => setSelectedItem(item)}
                     />
                   </View>
@@ -92,7 +85,8 @@ export default function CategoriesScreen({ props }) {
           }}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-                  <Text style={styles.modalText}>Are you sure you want to delete?</Text>
+              <Text style={styles.modalText}>Are you sure you want to delete?</Text>
+
               <>
                 <View>
                   <Pressable
@@ -117,6 +111,30 @@ export default function CategoriesScreen({ props }) {
 }
 
 const styles = StyleSheet.create({
+  listcontainer: {
+    flexDirection: 'row', 
+    width: window.width, 
+    marginTop: 10, 
+    padding: 4, 
+    paddingTop: 10, 
+    borderColor: 'lightgrey', 
+    borderRadius: 10, 
+    backgroundColor: '#fff'
+  },
+  input: {
+    backgroundColor: 'transparent',
+    variant: 'filled',
+    marginHorizontal: 20,
+    marginVertical: 5,
+    paddingTop: 15,
+  },
+  bluebutton: {
+    backgroundColor: 'lightblue',
+    color: 'grey',
+    marginTop: 20,
+    marginHorizontal: 20,
+    marginBottom: 35,
+  },
   buttonFirst: {
     width: 100,
     height: 35,
@@ -164,9 +182,11 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
+    fontSize: 20,
   },
   modalText: {
     marginBottom: 15,
     textAlign: 'center',
+    fontSize: 20,
   },
 });

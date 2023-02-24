@@ -38,6 +38,9 @@ export default function ExpendituresScreen({ props }) {
   };
 
   const handleSubmit = ({ price, currency, date, category, title }) => {
+    if (!title) {
+      return;
+    }
     const newObject = { key: Date.now(), price, currency, date, category, title };
     setObjects([...objects, newObject]);
     setPrice('');
@@ -146,7 +149,7 @@ export default function ExpendituresScreen({ props }) {
           objects.map((object, index) => {
             return (
               <>
-                <View style={{ flexDirection: 'row', width: window.width, marginTop: 20, padding: 4, paddingTop: 10, borderColor: 'lightgrey', borderRadius: 10, backgroundColor: '#fff' }}>
+                <View style={styles.listcontainer}>
                   <View style={{ flex: 1 }}>
                     <ListItem
                       title={object.title}
@@ -204,6 +207,16 @@ export default function ExpendituresScreen({ props }) {
 }
 
 const styles = StyleSheet.create({
+  listcontainer: {
+    flexDirection: 'row', 
+    width: window.width, 
+    marginTop: 20, 
+    padding: 4, 
+    paddingTop: 10, 
+    borderColor: 'lightgrey', 
+    borderRadius: 10, 
+    backgroundColor: '#fff',
+  },
   buttonboxtop: {
     marginTop: 10,
     flexDirection: 'row',
