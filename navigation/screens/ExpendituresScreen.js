@@ -14,8 +14,6 @@ export default function ExpendituresScreen({ props }) {
   const [category, setCategory] = useState('');
   const [title, setTitle] = useState('');
 
-  console.log(objects)
-
   const [modalVisible, setModalVisible] = useState(false);
 
   const [selectedItem, setSelectedItem] = useState(null);
@@ -66,75 +64,83 @@ export default function ExpendituresScreen({ props }) {
   return (
     <ScrollView keyboardShouldPersistTaps='handled'>
       <View>
-        <SafeAreaView>
-          <TextInput
-            style={{ backgroundColor: 'transparent', variant: 'filled', margin: 20, paddingTop: 10 }}
-            value={currency}
-            variant='outlined'
-            placeholder='Currency'
-            placeholderTextColor="grey"
-            color='grey'
-            onChangeText={handleCurrencyChange}
-          />
-        </SafeAreaView>
 
-        <TextInput
-          value={price}
-          onChangeText={handlePriceChange}
-          style={{ backgroundColor: 'transparent', variant: 'filled', marginHorizontal: 20, paddingTop: 0 }}
-          placeholder="Price of item"
-          color="grey"
-          variant='outlined'
-        />
-
-        <Flex inline justifyContent='space-between' center>
-          <Button title="Date" tintColor='grey' style={{ alignItems: 'left', width: 75, margin: 20, backgroundColor: 'lightblue', color: 'grey' }} onPress={showDatePicker} />
-        <View>
-          { date === ''? null : <Text style={{ paddingRight: 210, color: 'grey', fontSize: 20}}>{moment(date).format('LL')}</Text>}
+        <View style={styles.buttonboxtop}>
+          <Button title="Cash" tintColor='grey' style={styles.bluebutton} onPress={showDatePicker} />
+          <Button title="Debit" tintColor='grey' style={styles.bluebutton} onPress={showDatePicker} />
+          <Button title="Credit" tintColor='grey' style={styles.bluebutton} onPress={showDatePicker} />
         </View>
-        </Flex>
-        <DateTimePickerModal
-          isVisible={isDatePickerVisible}
-          mode="date"
-          onConfirm={handleDateChange}
-          onCancel={hideDatePicker}
-        />
 
-        <SafeAreaView style={{ flex: 1 }}>
+        <View style={{ paddingTop: 10 }}>
+          <SafeAreaView>
+            <TextInput
+              style={styles.input}
+              value={currency}
+              variant='outlined'
+              placeholder='Currency'
+              placeholderTextColor="grey"
+              color='grey'
+              onChangeText={handleCurrencyChange}
+            />
+          </SafeAreaView>
+
           <TextInput
-            value={category}
+            style={styles.input}
+            value={price}
+            onChangeText={handlePriceChange}
+            placeholder="Price of item"
+            color="grey"
             variant='outlined'
-            placeholder='Category'
-            placeholderTextColor="grey"
-            color='grey'
-            onChangeText={handleCategoryChange}
-            style={{
-              marginHorizontal: 12,
-              paddingHorizontal: 8,
+          />
+          <SafeAreaView>
+
+            <TextInput
+              style={styles.input}
+              value={category}
+              variant='outlined'
+              placeholder='Category'
+              placeholderTextColor="grey"
+              color='grey'
+              onChangeText={handleCategoryChange}
+            />
+          </SafeAreaView>
+
+          <TextInput
+            style={styles.input}
+            value={title}
+            onChangeText={handleTitleChange}
+            placeholder="Title"
+            color="grey"
+            variant='outlined'
+          />
+        </View>
+
+        <View style={styles.buttonbox}>
+          <Flex inline justifyContent='space-between' center>
+            <Button title="Date" tintColor='grey' style={styles.bluebutton} onPress={showDatePicker} />
+            <View>
+              {date === '' ? null : <Text style={{ paddingLeft: 20, color: 'grey', fontSize: 20 }}>{moment(date).format('LL')}</Text>}
+            </View>
+          </Flex>
+          <DateTimePickerModal
+            isVisible={isDatePickerVisible}
+            mode="date"
+            onConfirm={handleDateChange}
+            onCancel={hideDatePicker}
+          />
+          <Button
+            title="Submit"
+            tintColor='grey'
+            style={styles.bluebutton}
+            onPress={() => {
+              handleSubmit({ price, currency, date, category, title });
+              Keyboard.dismiss();
             }}
           />
-        </SafeAreaView>
-
-        <TextInput
-          value={title}
-          onChangeText={handleTitleChange}
-          style={{ backgroundColor: 'transparent', variant: 'filled', margin: 20 }}
-          placeholder="Title"
-          color="grey"
-          variant='outlined'
-        />
-
-        <Button
-          title="Submit"
-          tintColor='grey'
-          style={{ alignItems: 'left', width: 95, marginHorizontal: 20, marginBottom: 10, backgroundColor: 'lightblue', color: 'grey' }}
-          onPress={() => {
-            handleSubmit({ price, currency, date, category, title });
-            Keyboard.dismiss();
-          }}
-        />
+        </View>
 
       </View>
+
       <View>
         {
           objects.map((object, index) => {
@@ -153,6 +159,7 @@ export default function ExpendituresScreen({ props }) {
           })
         }
       </View>
+
       <View style={styles.centeredView}>
         <Modal
           animationType="slide"
@@ -187,16 +194,33 @@ export default function ExpendituresScreen({ props }) {
                   </Pressable>
                 </View>
               </>
-
             </View>
           </View>
         </Modal>
       </View>
+
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  buttonboxtop: {
+    marginTop: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginHorizontal: 20,
+    paddingTop: 5
+  },
+  buttonbox: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginHorizontal: 20,
+    paddingTop: 5
+  },
+  bluebutton: {
+    backgroundColor: 'lightblue',
+    color: 'grey'
+  },
   buttonFirst: {
     width: 100,
     height: 35,
@@ -249,4 +273,10 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     textAlign: 'center',
   },
+  input: {
+    backgroundColor: 'transparent',
+    variant: 'filled',
+    marginHorizontal: 20,
+    marginVertical: 5
+  }
 });

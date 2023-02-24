@@ -17,22 +17,62 @@ export default function StatisticsScreen({ navigation }) {
   const [value, setValue] = useState(0);
 
   return (
-    <ScrollView keyboardShouldPersistTaps='handled'> 
-      <Text
-        style={{ paddingTop: 10, paddingLeft: 20, color: 'grey' }}
-      >Budget spent</Text>
+    <ScrollView keyboardShouldPersistTaps='handled'>
       <View style={styles.container}>
-        <CircularProgress
-          radius={90}
-          value={85}
-          textColor='#222'
-          fontSize={20}
-          valueSuffix={'%'}
-          activeStrokeColor={'#008ffb'}
-          inActiveStrokeColor={'#008ffb'}
-          inActiveStrokeOpacity={0.2}
-          duration={3000}
-        />
+        <View>
+          <Text
+            style={styles.circle}
+          >Primary Account</Text>
+          <View>
+            <CircularProgress
+              radius={50}
+              value={85}
+              textColor='#222'
+              fontSize={20}
+              valueSuffix={'%'}
+              activeStrokeColor={'#008ffb'}
+              inActiveStrokeColor={'#008ffb'}
+              inActiveStrokeOpacity={0.2}
+              duration={3000}
+            />
+          </View>
+        </View>
+        <View>
+          <Text
+            style={styles.circle}
+          >Every Expense</Text>
+          <View>
+            <CircularProgress
+              radius={50}
+              value={50}
+              textColor='#222'
+              fontSize={20}
+              valueSuffix={'%'}
+              activeStrokeColor={'#FF4560'}
+              inActiveStrokeColor={'#FF4560'}
+              inActiveStrokeOpacity={0.2}
+              duration={3000}
+            />
+          </View>
+        </View>
+        <View>
+          <Text
+            style={styles.circle}
+          >Cash Remaining</Text>
+          <View>
+            <CircularProgress
+              radius={50}
+              value={40}
+              textColor='#222'
+              fontSize={20}
+              valueSuffix={'%'}
+              activeStrokeColor={'#00E396'}
+              inActiveStrokeColor={'#00E396'}
+              inActiveStrokeOpacity={0.2}
+              duration={3000}
+            />
+          </View>
+        </View>
       </View>
 
 
@@ -143,7 +183,13 @@ export default function StatisticsScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginBottom: 30
   },
+  circle: {
+    paddingTop: 20,
+    paddingBottom: 10,
+    color: 'grey'
+  }
 });
