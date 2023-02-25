@@ -244,13 +244,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     marginVertical: 0,
   },
-  buttonFirst: {
-    width: 100,
-    height: 35,
-    marginRight: 10,
-    marginLeft: 10,
-    backgroundColor: 'lightblue'
-  },
   centeredView: {
     flex: 1,
     justifyContent: 'center',
@@ -277,20 +270,6 @@ const styles = StyleSheet.create({
     padding: 30,
     margin: 10,
     elevation: 2,
-  },
-  buttonOpen: {
-    backgroundColor: '#F194FF',
-  },
-  buttonClose: {
-    backgroundColor: 'lightblue',
-  },
-  buttonDelete: {
-    backgroundColor: 'red',
-  },
-  textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
   },
   modalText: {
     marginBottom: 15,

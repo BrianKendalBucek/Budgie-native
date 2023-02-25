@@ -178,13 +178,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightblue',
     marginHorizontal: 20,
   },
-  buttonFirst: {
-    width: 100,
-    height: 35,
-    marginRight: 10,
-    marginLeft: 10,
-    backgroundColor: 'lightblue'
-  },
   centeredView: {
     flex: 1,
     justifyContent: 'center',
@@ -206,18 +199,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
-  },
-  button: {
-    borderRadius: 20,
-    padding: 30,
-    margin: 10,
-    elevation: 2,
-  },
-  buttonOpen: {
-    backgroundColor: '#F194FF',
-  },
-  buttonClose: {
-    backgroundColor: 'lightblue',
   },
   textStyle: {
     color: 'white',

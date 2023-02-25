@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, Dimensions, ScrollView } from 'react-native';
 import { LineChart, BarChart } from "react-native-chart-kit";
 import CircularProgress from 'react-native-circular-progress-indicator';
 
-export default function StatisticsScreen({ navigation }) {
+export default function StatisticsScreen() {
 
   return (
     <ScrollView keyboardShouldPersistTaps='handled'>

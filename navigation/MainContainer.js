@@ -7,7 +7,6 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import { AppBar, HStack, IconButton } from "@react-native-material/core";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 
-
 // Screens
 import StatisticsScreen from './screens/StatisticsScreen'
 import CategoriesScreen from './screens/CategoriesScreen'
