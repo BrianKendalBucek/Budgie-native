@@ -186,16 +186,18 @@ export default function ExpendituresScreen({ props }) {
               )}
               <>
                 <View>
-                  <Pressable
-                    style={[styles.button, styles.buttonClose]}
+                  <Button
+                    style={[styles.bluebutton, {marginHorizontal: 20}]}
+                    title="Close"
+                    tintColor='grey'
                     onPress={() => setSelectedItem(null)}>
-                    <Text style={styles.textStyle}>Close</Text>
-                  </Pressable>
-                  <Pressable
-                    style={[styles.button, styles.buttonDelete]}
+                  </Button>
+                  <Button
+                    style={styles.redbutton}
+                    title="Delete"
+                    tintColor='white'
                     onPress={() => deleteCategory(objects.indexOf(selectedItem))}>
-                    <Text style={styles.textStyle}>Delete</Text>
-                  </Pressable>
+                  </Button>
                 </View>
               </>
             </View>
@@ -233,7 +235,13 @@ const styles = StyleSheet.create({
   },
   bluebutton: {
     backgroundColor: 'lightblue',
-    color: 'grey'
+    marginTop: 20,
+    marginBottom: 35,
+  },
+  redbutton: {
+    backgroundColor: '#FF4560',
+    marginHorizontal: 20,
+    marginVertical: 0,
   },
   buttonFirst: {
     width: 100,
@@ -286,6 +294,7 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: 'center',
+    color: 'grey',
   },
   input: {
     backgroundColor: 'transparent',
