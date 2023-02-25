@@ -3,7 +3,7 @@ import { ScrollView, View, Text, TouchableOpacity, Keyboard, StyleSheet, Modal, 
 import { TextInput, ListItem, Button, select } from "@react-native-material/core";
 
 
-export default function CategoriesScreen({ props }) {
+export default function CategoriesScreen() {
 
   const [category, setCategory] = useState();
   const [categoryItems, setCategoryItems] = useState([]);
