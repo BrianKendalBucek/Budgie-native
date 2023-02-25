@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { ScrollView, View, Text, TouchableOpacity, Keyboard, StyleSheet, Modal, Pressable } from 'react-native';
-import { TextInput, ListItem, Button } from "@react-native-material/core";
-import { AppBar, HStack, IconButton } from "@react-native-material/core";
+import { ScrollView, View, Text, TouchableOpacity, Keyboard, StyleSheet, Modal, KeyboardAvoidingView } from 'react-native';
+import { TextInput, ListItem, Button, select } from "@react-native-material/core";
 
 
 export default function CategoriesScreen({ props }) {
@@ -13,9 +12,19 @@ export default function CategoriesScreen({ props }) {
 
   const [selectedItem, setSelectedItem] = useState(null);
 
-  const toggleModal = () => {
-    setModalVisible(!modalVisible);
-  }
+  const [edit, setEdit] = useState("");
+
+  const onSave = () => {
+    if (!edit) {
+      return;
+    }
+    const updatedItems = categoryItems.map((item) =>
+      item === selectedItem ? edit : item
+    );
+    setCategoryItems(updatedItems);
+    setSelectedItem(null);
+    setEdit("");
+  };
 
   const handleAddCategory = () => {
     Keyboard.dismiss();
@@ -34,12 +43,13 @@ export default function CategoriesScreen({ props }) {
   }
 
   return (
+
     <ScrollView keyboardShouldPersistTaps='handled'>
-      <View style={styles.input}>
+      <View>
         <TextInput
           value={category}
           onChangeText={text => setCategory(text)}
-          style={{ backgroundColor: 'transparent', variant: 'outlined' }}
+          style={styles.input}
           placeholder="Add New Category"
           variant='outlined'
           color='grey'
@@ -62,7 +72,7 @@ export default function CategoriesScreen({ props }) {
             return (
               <View key={index}>
                 <View style={styles.listcontainer}>
-                  <View style={{ flex: 1}}>
+                  <View style={{ flex: 1 }}>
                     <ListItem
                       title={item}
                       onPress={() => setSelectedItem(item)}
@@ -74,7 +84,7 @@ export default function CategoriesScreen({ props }) {
           })
         }
       </View>
-      <View style={styles.centeredView}>
+      <View style={styles.centeredView} >
         <Modal
           animationType="slide"
           transparent={true}
@@ -83,57 +93,90 @@ export default function CategoriesScreen({ props }) {
             Alert.alert('Modal has been closed.');
             setModalVisible(!modalVisible);
           }}>
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <Text style={styles.modalText}>Are you sure you want to delete?</Text>
+          <KeyboardAvoidingView behavior="padding" style={styles.keyboardAvoidingView}>
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <Text
+                  style={styles.modalText}
+                >Edit Category Name</Text>
+                <TextInput
+                  style={styles.input}
+                  variant="outlined"
+                  color="grey"
+                  placeholder={selectedItem}
+                  value={edit}
+                  onChangeText={(text) => setEdit(text)}
+                />
+                <Button
+                  style={[styles.closesavebuttons, { marginTop: 20 }]}
+                  onPress={onSave}
+                  title="Save"
+                  tintColor='grey'
+                />
+                <>
+                  <View>
+                    <Button
+                      style={[styles.redbutton]}
+                      onPress={() => deleteCategory(categoryItems.indexOf(selectedItem))}
+                      title='Delete'
+                      tintColor='white'
+                    >
+                    </Button>
+                    <Button
+                      style={styles.closesavebuttons}
+                      onPress={() => setSelectedItem(null)}
+                      title='Close'
+                      tintColor='grey'
+                    >
+                      <Text style={styles.textStyle}>Close</Text>
+                    </Button>
+                  </View>
+                </>
 
-              <>
-                <View>
-                  <Pressable
-                    style={[styles.button, styles.buttonClose]}
-                    onPress={() => setSelectedItem(null)}>
-                    <Text style={styles.textStyle}>Close</Text>
-                  </Pressable>
-                  <Pressable
-                    style={[styles.button, styles.buttonDelete]}
-                    onPress={() => deleteCategory(categoryItems.indexOf(selectedItem))}>
-                    <Text style={styles.textStyle}>Delete</Text>
-                  </Pressable>
-                </View>
-              </>
-
+              </View>
             </View>
-          </View>
+            </KeyboardAvoidingView>
         </Modal>
       </View>
     </ScrollView>
+
   )
 }
 
 const styles = StyleSheet.create({
+  keyboardAvoidingView: {
+    flex: 1,
+  },
   listcontainer: {
-    flexDirection: 'row', 
-    width: window.width, 
-    marginTop: 10, 
-    padding: 4, 
-    paddingTop: 10, 
-    borderColor: 'lightgrey', 
-    borderRadius: 10, 
+    flexDirection: 'row',
+    width: window.width,
+    marginHorizontal: 20,
+    padding: 4,
+    paddingTop: 10,
+    borderColor: 'lightgrey',
+    borderRadius: 10,
     backgroundColor: '#fff'
   },
   input: {
     backgroundColor: 'transparent',
-    variant: 'filled',
     marginHorizontal: 20,
     marginVertical: 5,
     paddingTop: 15,
   },
   bluebutton: {
     backgroundColor: 'lightblue',
-    color: 'grey',
     marginTop: 20,
     marginHorizontal: 20,
     marginBottom: 35,
+  },
+  redbutton: {
+    backgroundColor: '#FF4560',
+    marginHorizontal: 20,
+    marginVertical: 30
+  },
+  closesavebuttons: {
+    backgroundColor: 'lightblue',
+    marginHorizontal: 20,
   },
   buttonFirst: {
     width: 100,
@@ -149,11 +192,12 @@ const styles = StyleSheet.create({
     marginTop: 22,
   },
   modalView: {
+    width: 320,
     margin: 20,
     backgroundColor: 'white',
     borderRadius: 20,
-    padding: 35,
-    alignItems: 'center',
+    padding: 25,
+    // alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -175,9 +219,6 @@ const styles = StyleSheet.create({
   buttonClose: {
     backgroundColor: 'lightblue',
   },
-  buttonDelete: {
-    backgroundColor: 'red',
-  },
   textStyle: {
     color: 'white',
     fontWeight: 'bold',
@@ -185,7 +226,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   modalText: {
-    marginBottom: 15,
     textAlign: 'center',
     fontSize: 20,
   },

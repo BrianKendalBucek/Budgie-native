@@ -1,20 +1,9 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, Dimensions, ScrollView } from 'react-native';
-import {
-  LineChart,
-  BarChart,
-  PieChart,
-  ProgressChart,
-  ContributionGraph,
-  StackedBarChart
-} from "react-native-chart-kit";
+import { LineChart, BarChart } from "react-native-chart-kit";
 import CircularProgress from 'react-native-circular-progress-indicator';
 
-
-
 export default function StatisticsScreen({ navigation }) {
-
-  const [value, setValue] = useState(0);
 
   return (
     <ScrollView keyboardShouldPersistTaps='handled'>
@@ -77,7 +66,7 @@ export default function StatisticsScreen({ navigation }) {
 
 
       <Text
-        style={{ paddingTop: 0, paddingLeft: 20, color: 'grey' }}
+        style={styles.title}
       >Weekly</Text>
       <View style={styles.container}>
         <LineChart
@@ -119,7 +108,7 @@ export default function StatisticsScreen({ navigation }) {
 
 
       <Text
-        style={{ paddingLeft: 20, color: 'grey' }}
+        style={styles.title}
       >Monthly by Category</Text>
 
       <BarChart
@@ -190,6 +179,10 @@ const styles = StyleSheet.create({
   circle: {
     paddingTop: 20,
     paddingBottom: 10,
+    color: 'grey'
+  },
+  title: {
+    paddingLeft: 20,
     color: 'grey'
   }
 });

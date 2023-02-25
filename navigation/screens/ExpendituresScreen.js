@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { ScrollView, View, SafeAreaView, StyleSheet, Text, Platform, TouchableWithoutFeedback, Keyboard, Alert, Modal, Pressable } from 'react-native';
-import { Box, Container, Tab, Tabs, TextInput, Autocomplete, Button, List, ListItemText, ListItem } from "@react-native-material/core";
+import { ScrollView, View, SafeAreaView, StyleSheet, Text, Keyboard, Alert, Modal, Pressable } from 'react-native';
+import { TextInput, Button, ListItem } from "@react-native-material/core";
+import { Flex } from 'react-native-flex-layout';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { Flex, Spacer } from 'react-native-flex-layout';
 import moment from 'moment';
 
 export default function ExpendituresScreen({ props }) {
@@ -69,9 +69,9 @@ export default function ExpendituresScreen({ props }) {
       <View>
 
         <View style={styles.buttonboxtop}>
-          <Button title="Cash" tintColor='grey' style={styles.bluebutton} onPress={showDatePicker} />
-          <Button title="Debit" tintColor='grey' style={styles.bluebutton} onPress={showDatePicker} />
-          <Button title="Credit" tintColor='grey' style={styles.bluebutton} onPress={showDatePicker} />
+          <Button title="Cash" tintColor='grey' style={styles.bluebutton}/>
+          <Button title="Debit" tintColor='grey' style={styles.bluebutton}/>
+          <Button title="Credit" tintColor='grey' style={styles.bluebutton}/>
         </View>
 
         <View style={{ paddingTop: 10 }}>
@@ -143,24 +143,25 @@ export default function ExpendituresScreen({ props }) {
         </View>
 
       </View>
-
-      <View>
-        {
-          objects.map((object, index) => {
-            return (
-              <>
-                <View style={styles.listcontainer}>
-                  <View style={{ flex: 1 }}>
-                    <ListItem
-                      title={object.title}
-                      onPress={() => setSelectedItem(object)}
-                    />
+      <View style={{marginTop: 20}}>
+        <View>
+          {
+            objects.map((object, index) => {
+              return (
+                <View key={index}>
+                  <View style={styles.listcontainer}>
+                    <View style={{ flex: 1 }}>
+                      <ListItem
+                        title={object.title}
+                        onPress={() => setSelectedItem(object)}
+                      />
+                    </View>
                   </View>
                 </View>
-              </>
-            )
-          })
-        }
+              )
+            })
+          }
+        </View>
       </View>
 
       <View style={styles.centeredView}>
@@ -208,13 +209,13 @@ export default function ExpendituresScreen({ props }) {
 
 const styles = StyleSheet.create({
   listcontainer: {
-    flexDirection: 'row', 
-    width: window.width, 
-    marginTop: 20, 
-    padding: 4, 
-    paddingTop: 10, 
-    borderColor: 'lightgrey', 
-    borderRadius: 10, 
+    flexDirection: 'row',
+    width: window.width,
+    marginHorizontal: 20,
+    padding: 4,
+    paddingTop: 10,
+    borderColor: 'lightgrey',
+    borderRadius: 10,
     backgroundColor: '#fff',
   },
   buttonboxtop: {
