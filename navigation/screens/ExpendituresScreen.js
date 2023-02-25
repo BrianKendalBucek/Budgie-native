@@ -38,7 +38,8 @@ export default function ExpendituresScreen({ props }) {
   };
 
   const handleSubmit = ({ price, currency, date, category, title }) => {
-    if (!title) {
+    if (!price || !currency || !date || !category || !title) {
+      alert("Please fill in all the required fields.");
       return;
     }
     const newObject = { key: Date.now(), price, currency, date, category, title };
@@ -74,7 +75,7 @@ export default function ExpendituresScreen({ props }) {
           <Button title="Credit" tintColor='grey' style={styles.bluebutton}/>
         </View>
 
-        <View style={{ paddingTop: 10 }}>
+        <View>
           <SafeAreaView>
             <TextInput
               style={styles.input}
