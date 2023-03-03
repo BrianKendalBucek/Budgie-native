@@ -2,9 +2,13 @@ import * as React from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { AppBar, HStack, IconButton } from "@react-native-material/core";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { TextInput, ListItem, Button, select } from "@react-native-material/core";
+import { ROUTES } from '../constants';
+import { UsersScreen, ConverterScreen } from '../screens';
 
-function MainContainer() {
-  
+
+function TopBarNavigator({ navigation }) {
+
   return (
     <>
       <AppBar
@@ -13,10 +17,16 @@ function MainContainer() {
         tintColor='grey'
 
         leading={props => (
-          <Image
-            style={{width: 40, height: 40 }}
-            source={require('../assets/budgie-icon.png')}
-          />
+          // <>
+          //   <Button
+          //     onPress={() => navigation.navigate(ROUTES.USER)}
+          //     label='User'
+          //   >User</Button>
+            <Image
+              style={{ width: 40, height: 40 }}
+              source={require('../../assets/budgie-icon.png')}
+            // onPress={() => navigation.navigate(ROUTES.USER)}
+            />
         )}
         trailing={props => (
           <HStack>
@@ -40,4 +50,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default MainContainer;
+export default TopBarNavigator;
