@@ -4,8 +4,14 @@ import { TextInput, Button, ListItem } from "@react-native-material/core";
 import { Flex } from 'react-native-flex-layout';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import moment from 'moment';
+import useCategoryItems from '../categoryItems';
 
-export default function ExpendituresScreen({ props }) {
+
+
+export default function ExpendituresScreen({ categoryItems }) {
+  // const categoryItems = useCategoryItems();
+  console.log("&&&&&&&&&&&&&&&&", categoryItems);
+
 
   const [objects, setObjects] = useState([]);
   const [type, setType] = useState('');
@@ -78,18 +84,18 @@ export default function ExpendituresScreen({ props }) {
         <View style={styles.buttonboxtop}>
           <Button title="Cash" tintColor='grey' style={styles.bluebutton}
             onPress={() => {
-                handleTypeChange('Cash');
-              }
+              handleTypeChange('Cash');
+            }
             } />
           <Button title="Debit" tintColor='grey' style={styles.bluebutton}
             onPress={() => {
-                handleTypeChange('Debit');
-              }
+              handleTypeChange('Debit');
+            }
             } />
           <Button title="Credit" tintColor='grey' style={styles.bluebutton}
             onPress={() => {
-                handleTypeChange('Credit');
-              }
+              handleTypeChange('Credit');
+            }
             } />
         </View>
 
@@ -181,6 +187,22 @@ export default function ExpendituresScreen({ props }) {
             })
           }
         </View>
+        {/* <View>
+          {
+            categoryItems.map((category, index) => {
+              return (
+                <View key={index}>
+                  <View style={styles.listcontainer}>
+                    <View style={{ flex: 1 }}>
+                      <ListItem
+                        title={category} />
+                    </View>
+                  </View>
+                </View>
+              )
+            })
+          }
+        </View> */}
       </View>
 
       <View style={styles.centeredView}>

@@ -19,7 +19,7 @@ export default function User({ navigation }) {
   }
 
   return (
-    <View>
+    <ScrollView>
       <ListItem
         title="Username"
         secondaryText="Briankendalbucek"
@@ -65,7 +65,7 @@ export default function User({ navigation }) {
         }
         onPress={() => setEnabledDark(!enabledDark)}
       />
-    </View>
+    </ScrollView>
   )
 }
 
