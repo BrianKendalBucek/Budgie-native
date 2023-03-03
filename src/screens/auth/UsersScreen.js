@@ -6,7 +6,6 @@ export default function User({ navigation }) {
 
   const [primary, setPrimary] = useState('');
   const [secondary, setSecondary] = useState('');
-  const [checked, setChecked] = useState(true);
   const [enabled, setEnabled] = useState(true);
 
   const onChangeText = async (text = '') => {
@@ -16,22 +15,18 @@ export default function User({ navigation }) {
   return (
     <View>
       <ListItem
-        style={{ color: 'red' }}
         title="Username"
         secondaryText="Briankendalbucek"
       />
       <ListItem
-        style={{ color: 'red' }}
         title="First name"
         secondaryText="Brian"
       />
       <ListItem
-        style={{ color: 'red' }}
         title="Last name"
         secondaryText="Bucek"
       />
       <ListItem
-        style={{ color: 'red' }}
         title="Change password"
       />
       <TextInput
@@ -64,9 +59,6 @@ export default function User({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  listitem: {
-    color: 'red'
-  },
   input: {
     backgroundColor: 'transparent',
     variant: 'filled',
@@ -74,16 +66,3 @@ const styles = StyleSheet.create({
     marginVertical: 5
   },
 })
-
-
-
-// ListItems:
-// Username
-// Firstname
-// Lastname
-
-// Primary Currency
-// Secondary Currency
-
-// Change password
-// Notifications switch
