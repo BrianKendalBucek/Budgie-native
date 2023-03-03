@@ -7,6 +7,8 @@ export default function User({ navigation }) {
   const [primary, setPrimary] = useState('');
   const [secondary, setSecondary] = useState('');
   const [enabled, setEnabled] = useState(true);
+  const [enabledDark, setEnabledDark] = useState(true);
+
 
   const onChangePrimary = async (text = '') => {
     setPrimary(text)
@@ -55,6 +57,13 @@ export default function User({ navigation }) {
           <Switch value={enabled} onValueChange={() => setEnabled(!enabled)} />
         }
         onPress={() => setEnabled(!enabled)}
+      />
+            <ListItem
+        title="Dark mode"
+        trailing={
+          <Switch value={enabledDark} onValueChange={() => setEnabledDark(!enabledDark)} />
+        }
+        onPress={() => setEnabledDark(!enabledDark)}
       />
     </View>
   )
