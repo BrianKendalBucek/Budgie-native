@@ -8,8 +8,12 @@ export default function User({ navigation }) {
   const [secondary, setSecondary] = useState('');
   const [enabled, setEnabled] = useState(true);
 
-  const onChangeText = async (text = '') => {
+  const onChangePrimary = async (text = '') => {
     setPrimary(text)
+  }
+
+  const onChangeSecondary = async (text = '') => {
+    setSecondary(text)
   }
 
   return (
@@ -35,8 +39,7 @@ export default function User({ navigation }) {
         placeholder='Primary Currency: Canadian'
         placeholderTextColor="grey"
         color='grey'
-        // value={currency}
-        onChangeText={onChangeText}
+        onChangeText={onChangePrimary}
       />
       <TextInput
         style={styles.input}
@@ -44,8 +47,7 @@ export default function User({ navigation }) {
         placeholder='Secondary Currency: Costa Rican'
         placeholderTextColor="grey"
         color='grey'
-        // value={currency}
-        onChangeText={onChangeText}
+        onChangeText={onChangeSecondary}
       />
       <ListItem
         title="Notifications"

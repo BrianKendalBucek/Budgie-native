@@ -8,6 +8,7 @@ import moment from 'moment';
 export default function ExpendituresScreen({ props }) {
 
   const [objects, setObjects] = useState([]);
+  const [type, setType] = useState('');
   const [currency, setCurrency] = useState('');
   const [price, setPrice] = useState('');
   const [date, setDate] = useState('');
@@ -20,6 +21,10 @@ export default function ExpendituresScreen({ props }) {
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
+  const handleTypeChange = (text) => {
+    setType('');
+    setType(text);
+  };
   const handlePriceChange = (text) => {
     setPrice(text);
   };
@@ -37,13 +42,14 @@ export default function ExpendituresScreen({ props }) {
     setTitle(text);
   };
 
-  const handleSubmit = ({ price, currency, date, category, title }) => {
-    if (!price || !currency || !date || !category || !title) {
+  const handleSubmit = ({ type, price, currency, date, category, title }) => {
+    if (!type || !price || !currency || !date || !category || !title) {
       alert("Please fill in all the required fields.");
       return;
     }
-    const newObject = { key: Date.now(), price, currency, date, category, title };
+    const newObject = { key: Date.now(), type, price, currency, date, category, title };
     setObjects([...objects, newObject]);
+    setType('');
     setPrice('');
     setCurrency('');
     setDate('');
@@ -70,9 +76,21 @@ export default function ExpendituresScreen({ props }) {
       <View>
 
         <View style={styles.buttonboxtop}>
-          <Button title="Cash" tintColor='grey' style={styles.bluebutton}/>
-          <Button title="Debit" tintColor='grey' style={styles.bluebutton}/>
-          <Button title="Credit" tintColor='grey' style={styles.bluebutton}/>
+          <Button title="Cash" tintColor='grey' style={styles.bluebutton}
+            onPress={() => {
+                handleTypeChange('Cash');
+              }
+            } />
+          <Button title="Debit" tintColor='grey' style={styles.bluebutton}
+            onPress={() => {
+                handleTypeChange('Debit');
+              }
+            } />
+          <Button title="Credit" tintColor='grey' style={styles.bluebutton}
+            onPress={() => {
+                handleTypeChange('Credit');
+              }
+            } />
         </View>
 
         <View>
@@ -137,14 +155,14 @@ export default function ExpendituresScreen({ props }) {
             tintColor='grey'
             style={styles.bluebutton}
             onPress={() => {
-              handleSubmit({ price, currency, date, category, title });
+              handleSubmit({ type, price, currency, date, category, title });
               Keyboard.dismiss();
             }}
           />
         </View>
 
       </View>
-      <View style={{marginTop: 20}}>
+      <View style={{ marginTop: 20 }}>
         <View>
           {
             objects.map((object, index) => {
@@ -178,6 +196,7 @@ export default function ExpendituresScreen({ props }) {
             <View style={styles.modalView}>
               {selectedItem && (
                 <>
+                  <Text style={styles.modalText}>{selectedItem.type}</Text>
                   <Text style={styles.modalText}>{selectedItem.title}</Text>
                   <Text style={styles.modalText}>{selectedItem.price}</Text>
                   <Text style={styles.modalText}>{selectedItem.currency}</Text>
@@ -188,7 +207,7 @@ export default function ExpendituresScreen({ props }) {
               <>
                 <View>
                   <Button
-                    style={[styles.bluebutton, {marginHorizontal: 20}]}
+                    style={[styles.bluebutton, { marginHorizontal: 20 }]}
                     title="Close"
                     tintColor='grey'
                     onPress={() => setSelectedItem(null)}>
