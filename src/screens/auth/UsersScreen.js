@@ -65,6 +65,9 @@ export default function User({ navigation }) {
         }
         onPress={() => setEnabledDark(!enabledDark)}
       />
+            <ListItem
+        title="Logout"
+      />
     </ScrollView>
   )
 }
