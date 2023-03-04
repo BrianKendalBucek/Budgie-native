@@ -27,8 +27,8 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: "lightblue",
     tintColor: "grey",
-    height: 60,
-    paddingTop: 15,
+    height: 80,
+    paddingTop: 30,
     paddingLeft: 5,
   }
 })
