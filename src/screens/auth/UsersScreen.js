@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { ListItem, TextInput, Switch } from "@react-native-material/core";
 import { ScrollView, View, Text, TouchableOpacity, Keyboard, StyleSheet, Modal, KeyboardAvoidingView } from 'react-native';
 
-export default function User({ navigation }) {
+export default function User() {
 
   const [primary, setPrimary] = useState('');
   const [secondary, setSecondary] = useState('');

@@ -3,7 +3,7 @@ import { View, ScrollView, SafeAreaView, StyleSheet } from 'react-native';
 import { Box, TextInput, Button } from "@react-native-material/core";
 
 
-export default function ConverterScreen({ navigation }) {
+export default function ConverterScreen() {
   const [currency, setCurrency] = useState('');
 
   const onChangeText = async (text = '') => {

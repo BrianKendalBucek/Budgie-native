@@ -5,7 +5,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { ROUTES } from '../constants';
-import { StatisticsScreen, ExpendituresScreen, CategoriesScreen, ConverterScreen, UsersScreen } from '../screens';
+import { StatisticsScreen, ExpendituresScreen, CategoriesScreen, ConverterScreen, UsersScreen, Play } from '../screens';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -67,6 +67,17 @@ function BottomTabNavigator() {
           ),
         }}
       />
+            <Tab.Screen
+        // style={styles.tabs}
+        name={ROUTES.PLAY}
+        component={Play}
+        options={{
+          tabBarLabel: false,
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="bird" color={"grey"} size={26} />
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 }
@@ -74,7 +85,5 @@ function BottomTabNavigator() {
 export default BottomTabNavigator;
 
 const styles = StyleSheet.create({
-  tabs: {
-    color: 'red',
-  }
+
 })
