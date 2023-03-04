@@ -7,7 +7,7 @@ import { ROUTES } from '../constants';
 import { UsersScreen, ConverterScreen } from '../screens';
 
 
-function TopBarNavigator({ navigation }) {
+function TopBar() {
 
   return (
     <>
@@ -17,24 +17,10 @@ function TopBarNavigator({ navigation }) {
         tintColor='grey'
 
         leading={props => (
-          // <>
-          //   <Button
-          //     onPress={() => navigation.navigate(ROUTES.USER)}
-          //     label='User'
-          //   >User</Button>
             <Image
-              style={{ width: 40, height: 40 }}
+              style={{ width: 30, height: 30 }}
               source={require('../../assets/budgie-icon.png')}
-            // onPress={() => navigation.navigate(ROUTES.USER)}
             />
-        )}
-        trailing={props => (
-          <HStack>
-            <IconButton
-              icon={props => <MaterialCommunityIcons name="logout" {...props} />}
-              {...props}
-            />
-          </HStack>
         )}
       />
     </>
@@ -45,9 +31,10 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: "lightblue",
     tintColor: "grey",
-    height: 90,
-    paddingTop: 40
+    height: 60,
+    paddingTop: 15,
+    paddingLeft: 5,
   }
 })
 
-export default TopBarNavigator;
+export default TopBar;
