@@ -19,7 +19,6 @@ function BottomTabNavigator() {
         name={ROUTES.STATISTICS}
         component={StatisticsScreen}
         options={{
-          tabBarLabel: 'Statistics',
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="chart-box" color={"grey"} size={26} />
           ),
@@ -29,7 +28,6 @@ function BottomTabNavigator() {
         name={ROUTES.EXPENDITURES}
         component={ExpendituresScreen}
         options={{
-          tabBarLabel: 'Expense',
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="wallet" color={"grey"} size={26} />
           ),
@@ -39,7 +37,6 @@ function BottomTabNavigator() {
         name={ROUTES.CATEGORIES}
         component={CategoriesScreen}
         options={{
-          tabBarLabel: 'Category',
           tabBarIcon: ({ color }) => (
             <MaterialIcons name="category" color={"grey"} size={26} />
           ),
@@ -49,17 +46,15 @@ function BottomTabNavigator() {
         name={ROUTES.CONVERTER}
         component={ConverterScreen}
         options={{
-          tabBarLabel: 'Convert',
           tabBarIcon: ({ color }) => (
             <Ionicons name="sync-circle" color={"grey"} size={26} />
           ),
         }}
       />
-            <Tab.Screen
+      <Tab.Screen
         name={ROUTES.USER}
         component={UsersScreen}
         options={{
-          tabBarLabel: 'User',
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="account" color={"grey"} size={26} />
           ),

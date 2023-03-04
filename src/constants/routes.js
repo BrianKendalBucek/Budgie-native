@@ -9,7 +9,7 @@ export default {
   CATEGORIES: 'Categories',
   // CATEGORIES_TAB: 'CategoriesTab',
 
-  EXPENDITURES: 'Expenditures',
+  EXPENDITURES: 'Expense',
   // EXPENDITURES_TAB: 'ExpendituresTab',
 
   CONVERTER: 'Converter',
