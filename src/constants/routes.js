@@ -17,4 +17,6 @@ export default {
 
   USER: 'User',
   // USER_TAB: 'UserTab',
+
+  PLAY: 'Play',
 }

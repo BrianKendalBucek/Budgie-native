@@ -1,4 +1,5 @@
 import React from 'react';
+import { View, ScrollView, SafeAreaView, StyleSheet } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -13,12 +14,14 @@ function BottomTabNavigator() {
     <Tab.Navigator
       initialRouteName="Feed"
       activeColor="#1976d2"
-      barStyle={{ backgroundColor: 'lightblue', height: 100 }}
+      barStyle={{ backgroundColor: 'lightblue', height: 60 }}
     >
       <Tab.Screen
+        // style={styles.tabs}
         name={ROUTES.STATISTICS}
         component={StatisticsScreen}
         options={{
+          tabBarLabel: false,
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="chart-box" color={"grey"} size={26} />
           ),
@@ -28,6 +31,7 @@ function BottomTabNavigator() {
         name={ROUTES.EXPENDITURES}
         component={ExpendituresScreen}
         options={{
+          tabBarLabel: false,
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="wallet" color={"grey"} size={26} />
           ),
@@ -37,6 +41,7 @@ function BottomTabNavigator() {
         name={ROUTES.CATEGORIES}
         component={CategoriesScreen}
         options={{
+          tabBarLabel: false,
           tabBarIcon: ({ color }) => (
             <MaterialIcons name="category" color={"grey"} size={26} />
           ),
@@ -46,6 +51,7 @@ function BottomTabNavigator() {
         name={ROUTES.CONVERTER}
         component={ConverterScreen}
         options={{
+          tabBarLabel: false,
           tabBarIcon: ({ color }) => (
             <Ionicons name="sync-circle" color={"grey"} size={26} />
           ),
@@ -55,6 +61,7 @@ function BottomTabNavigator() {
         name={ROUTES.USER}
         component={UsersScreen}
         options={{
+          tabBarLabel: false,
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="account" color={"grey"} size={26} />
           ),
@@ -65,3 +72,9 @@ function BottomTabNavigator() {
 }
 
 export default BottomTabNavigator;
+
+const styles = StyleSheet.create({
+  tabs: {
+    color: 'red',
+  }
+})
