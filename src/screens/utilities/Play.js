@@ -1,93 +1,74 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, FlatList, StyleSheet } from 'react-native';
+import { ListItem, Input } from 'react-native-elements';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { contains } from 'lodash';
 
-const dummyData = [
-  'apple',
-  'banana',
-  'cherry',
-  'date',
-  'elderberry',
-  'fig',
-  'grape',
-  'honeydew',
-  'kiwi',
-  'lemon',
+const data = [
+  'Apple',
+  'Banana',
+  'Cherry',
+  'Grape',
+  'Lemon',
+  'Orange',
+  'Peach',
+  'Pear',
+  'Pineapple',
+  'Strawberry',
 ];
 
-export default function Play() {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [filteredData, setFilteredData] = useState([]);
-  // const [primary, setPrimary] = useState("");
-  // const [secondary, setSecondary] = useState("");
-  // const [menuCurr, setMenuCurr] = useState([]);
-  // const [input, setInput] = useState(0);
-  // const [results, setResults] = useState("");
-  // const [error, setError] = useState({ active: false, msg: "" });
+export default function CategoryAuto() {
+  const [search, setSearch] = useState('');
+  const [results, setResults] = useState([]);
 
-  // const reset = () => {
-  //   setError(() => ({ active: false, msg: "" }));
-  // };
-
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:3002/api/currency", { withCredentials: true })
-  //     .then((res) => setMenuCurr(res.data))
-  //     .catch((err) => console.log(err));
-  // }, []);
-
-  // const calculate = () => {
-  //   if (primary && secondary && input) {
-  //     const primaryRate = menuCurr.find((x) => x.id === primary.id).rate_to_usd;
-  //     const secondaryRate = menuCurr.find(
-  //       (x) => x.id === secondary.id
-  //     ).rate_to_usd;
-  //     const calcRate = secondaryRate * (1 / primaryRate);
-
-  //     return setResults(
-  //       (input * calcRate).toFixed(2) + " " + secondary.code.toUpperCase()
-  //     );
-  //   } else {
-  //     setError(() => ({ active: true, msg: "Required" }));
-  //     return;
-  //   }
-  // };
-
-  const handleSearch = (text) => {
-    setSearchQuery(text);
-    const filtered = dummyData.filter((item) =>
-      item.toLowerCase().includes(text.toLowerCase())
-    );
-    setFilteredData(filtered);
+  const handleSearch = text => {
+    const formattedQuery = text.toLowerCase();
+    const filteredData = data.filter(item => {
+      return item.toLowerCase().includes(formattedQuery);
+    });
+    setResults(filteredData);
   };
-
   const renderItem = ({ item }) => (
-    <View style={styles.item}>
-      <Text>{item}</Text>
-    </View>
+    <ListItem
+      title={item}
+      // style={{backgroundColor: 'red'}}
+      onPress={() => {
+        setSearch(item);
+        setResults([]);
+      }}
+      leftIcon={<MaterialIcons name="search" size={20} />}
+      // titleStyle={{ color: 'black' }}
+      containerStyle={styles.container}
+    />
   );
 
   return (
-    <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        onChangeText={handleSearch}
-        value={searchQuery}
-        placeholder="Search for a fruit..."
+    <View>
+      <Input
+        placeholder="Search"
+        value={search}
+        onChangeText={text => {
+          setSearch(text);
+          handleSearch(text);
+        }}
+        leftIcon={<MaterialIcons name="search" size={20} />}
       />
       <FlatList
-        style={styles.list}
-        data={filteredData}
+        data={results}
         renderItem={renderItem}
-        keyExtractor={(item) => item}
+        keyExtractor={item => item}
       />
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
+    // justifyContent: 'center',
+    // alignItems: 'center',
     padding: 20,
+    backgroundColor: 'red',
+    color: 'purple'
   },
   input: {
     height: 40,

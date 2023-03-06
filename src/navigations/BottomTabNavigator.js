@@ -5,11 +5,14 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { ROUTES } from '../constants';
+import useCategoryItems from '../screens/categoryItems';
 import { StatisticsScreen, ExpendituresScreen, CategoriesScreen, ConverterScreen, UsersScreen, Play } from '../screens';
 
 const Tab = createMaterialBottomTabNavigator();
 
-function BottomTabNavigator() {
+function BottomTabNavigator(props) {
+  const { categoryItems, setCategoryItems } = useCategoryItems();
+
   return (
     <Tab.Navigator
       initialRouteName="Feed"
@@ -29,7 +32,15 @@ function BottomTabNavigator() {
       />
       <Tab.Screen
         name={ROUTES.EXPENDITURES}
-        component={ExpendituresScreen}
+        // component={() => <ExpendituresScreen categoryItems={categoryItems} />}
+        component={
+          // props 
+          () => <ExpendituresScreen
+            categoryItems={categoryItems}
+            setCategoryItems={setCategoryItems}
+          // {...props}
+          />}
+        // children={props => <Component user={user} {...props} />
         options={{
           tabBarLabel: false,
           tabBarIcon: ({ color }) => (
@@ -39,7 +50,14 @@ function BottomTabNavigator() {
       />
       <Tab.Screen
         name={ROUTES.CATEGORIES}
-        component={CategoriesScreen}
+        component={
+          // props 
+          () => <CategoriesScreen
+            categoryItems={categoryItems}
+            setCategoryItems={setCategoryItems}
+          // {...props}
+          />}
+        // children={props => <Component user={user} {...props} />
         options={{
           tabBarLabel: false,
           tabBarIcon: ({ color }) => (
@@ -67,7 +85,7 @@ function BottomTabNavigator() {
           ),
         }}
       />
-            <Tab.Screen
+      <Tab.Screen
         // style={styles.tabs}
         name={ROUTES.PLAY}
         component={Play}

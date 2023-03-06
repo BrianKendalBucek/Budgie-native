@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, FlatList, StyleSheet } from 'react-native';
+import { ListItem, Input } from 'react-native-elements';
+import { contains } from 'lodash';
 
 const dummyData = [
   'apple',
@@ -15,36 +17,43 @@ const dummyData = [
 ];
 
 export default function CategoryAuto() {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [filteredData, setFilteredData] = useState([]);
+  const [search, setSearch] = useState('');
+  const [results, setResults] = useState([]);
 
-  const handleSearch = (text) => {
-    setSearchQuery(text);
-    const filtered = dummyData.filter((item) =>
-      item.toLowerCase().includes(text.toLowerCase())
-    );
-    setFilteredData(filtered);
+  const handleSearch = text => {
+    const formattedQuery = text.toLowerCase();
+    const filteredData = dummyData.filter(item => {
+      return item.toLowerCase().includes(formattedQuery);
+    });
+    setResults(filteredData);
   };
 
   const renderItem = ({ item }) => (
-    <View style={styles.item}>
-      <Text>{item}</Text>
-    </View>
+    <ListItem
+      title={item}
+      onPress={() => {
+        setSearch(item);
+        setResults([]);
+      }}
+      leftIcon={<Icon name="search" size={20} />}
+    />
   );
 
   return (
-    <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        onChangeText={handleSearch}
-        value={searchQuery}
-        placeholder="Search for a fruit..."
+    <View>
+      <Input
+        placeholder="Search"
+        value={search}
+        onChangeText={text => {
+          setSearch(text);
+          handleSearch(text);
+        }}
+        leftIcon={<Icon name="search" size={20} />}
       />
       <FlatList
-        style={styles.list}
-        data={filteredData}
+        data={results}
         renderItem={renderItem}
-        keyExtractor={(item) => item}
+        keyExtractor={item => item}
       />
     </View>
   );
