@@ -17,6 +17,40 @@ const dummyData = [
 export default function Play() {
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredData, setFilteredData] = useState([]);
+  // const [primary, setPrimary] = useState("");
+  // const [secondary, setSecondary] = useState("");
+  // const [menuCurr, setMenuCurr] = useState([]);
+  // const [input, setInput] = useState(0);
+  // const [results, setResults] = useState("");
+  // const [error, setError] = useState({ active: false, msg: "" });
+
+  // const reset = () => {
+  //   setError(() => ({ active: false, msg: "" }));
+  // };
+
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:3002/api/currency", { withCredentials: true })
+  //     .then((res) => setMenuCurr(res.data))
+  //     .catch((err) => console.log(err));
+  // }, []);
+
+  // const calculate = () => {
+  //   if (primary && secondary && input) {
+  //     const primaryRate = menuCurr.find((x) => x.id === primary.id).rate_to_usd;
+  //     const secondaryRate = menuCurr.find(
+  //       (x) => x.id === secondary.id
+  //     ).rate_to_usd;
+  //     const calcRate = secondaryRate * (1 / primaryRate);
+
+  //     return setResults(
+  //       (input * calcRate).toFixed(2) + " " + secondary.code.toUpperCase()
+  //     );
+  //   } else {
+  //     setError(() => ({ active: true, msg: "Required" }));
+  //     return;
+  //   }
+  // };
 
   const handleSearch = (text) => {
     setSearchQuery(text);
