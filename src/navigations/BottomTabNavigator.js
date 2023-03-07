@@ -10,7 +10,7 @@ import { StatisticsScreen, ExpendituresScreen, CategoriesScreen, ConverterScreen
 
 const Tab = createMaterialBottomTabNavigator();
 
-function BottomTabNavigator(props) {
+function BottomTabNavigator() {
   const { categoryItems, setCategoryItems } = useCategoryItems();
 
   return (
@@ -32,39 +32,31 @@ function BottomTabNavigator(props) {
       />
       <Tab.Screen
         name={ROUTES.EXPENDITURES}
-        // component={() => <ExpendituresScreen categoryItems={categoryItems} />}
-        component={
-          // props 
-          () => <ExpendituresScreen
-            categoryItems={categoryItems}
-            setCategoryItems={setCategoryItems}
-          // {...props}
-          />}
-        // children={props => <Component user={user} {...props} />
         options={{
           tabBarLabel: false,
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="wallet" color={"grey"} size={26} />
           ),
         }}
-      />
+      >
+        {() => <ExpendituresScreen
+          categoryItems={categoryItems}
+        />}
+      </Tab.Screen>
       <Tab.Screen
         name={ROUTES.CATEGORIES}
-        component={
-          // props 
-          () => <CategoriesScreen
-            categoryItems={categoryItems}
-            setCategoryItems={setCategoryItems}
-          // {...props}
-          />}
-        // children={props => <Component user={user} {...props} />
         options={{
           tabBarLabel: false,
           tabBarIcon: ({ color }) => (
             <MaterialIcons name="category" color={"grey"} size={26} />
           ),
         }}
-      />
+      >
+        {() => <CategoriesScreen
+          categoryItems={categoryItems}
+          setCategoryItems={setCategoryItems}
+        />}
+      </Tab.Screen>
       <Tab.Screen
         name={ROUTES.CONVERTER}
         component={ConverterScreen}

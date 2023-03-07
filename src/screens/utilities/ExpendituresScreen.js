@@ -4,13 +4,9 @@ import { TextInput, Button, ListItem } from "@react-native-material/core";
 import { Flex } from 'react-native-flex-layout';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import moment from 'moment';
-// import useCategoryItems from '../categoryItems';
-// import { categoryItems } from '../utilities/CategoriesScreen';
 
-// console.log("outside", categoryItems)
 
 export default function ExpendituresScreen({categoryItems}) {
-  // const { categoryItems } = useCategoryItems();
 
   console.log("ExpendituresScreen:", categoryItems); 
  
