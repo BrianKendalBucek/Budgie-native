@@ -3,77 +3,78 @@ import {StyleSheet, Text, View} from 'react-native';
 // import RNPickerDialog from './picker/new';
 import RNPickerDialog from 'rn-modal-picker';
 
+
+const data = [
+  {
+    id: 1,
+    name: 'Afghanistan',
+  },
+  {
+    id: 2,
+    name: 'Bahrain',
+  },
+  {
+    id: 3,
+    name: 'Canada',
+  },
+  {
+    id: 4,
+    name: 'Denmark',
+  },
+  {
+    id: 5,
+    name: 'Egypt',
+  },
+  {
+    id: 6,
+    name: 'France',
+  },
+  {
+    id: 7,
+    name: 'Greece',
+  },
+  {
+    id: 8,
+    name: 'Hong Kong',
+  },
+  {
+    id: 9,
+    name: 'India',
+  },
+  {
+    id: 10,
+    name: 'Japan',
+  },
+  {
+    id: 11,
+    name: 'Kenya',
+  },
+  {
+    id: 12,
+    name: 'Liberia',
+  },
+  {
+    id: 13,
+    name: 'Malaysia',
+  },
+  {
+    id: 14,
+    name: 'Nepal',
+  },
+  {
+    id: 15,
+    name: 'Oman',
+  },
+  {
+    id: 16,
+    name: 'Poland',
+  },
+]
+
 export default class Play extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [
-        {
-          id: 1,
-          name: 'Afghanistan',
-        },
-        {
-          id: 2,
-          name: 'Bahrain',
-        },
-        {
-          id: 3,
-          name: 'Canada',
-        },
-        {
-          id: 4,
-          name: 'Denmark',
-        },
-        {
-          id: 5,
-          name: 'Egypt',
-        },
-        {
-          id: 6,
-          name: 'France',
-        },
-        {
-          id: 7,
-          name: 'Greece',
-        },
-        {
-          id: 8,
-          name: 'Hong Kong',
-        },
-        {
-          id: 9,
-          name: 'India',
-        },
-        {
-          id: 10,
-          name: 'Japan',
-        },
-        {
-          id: 11,
-          name: 'Kenya',
-        },
-        {
-          id: 12,
-          name: 'Liberia',
-        },
-        {
-          id: 13,
-          name: 'Malaysia',
-        },
-        {
-          id: 14,
-          name: 'Nepal',
-        },
-        {
-          id: 15,
-          name: 'Oman',
-        },
-        {
-          id: 16,
-          name: 'Poland',
-        },
-      ],
-      placeHolderText: 'Please Select Country',
       selectedText: '',
       defaultValue: true,
       select: '',
@@ -83,13 +84,13 @@ export default class Play extends React.Component {
 
   selectedValue(index, item) {
     this.setState({selectedText: item.name});
+    // console.log(item.name);
   }
-
   render() {
     return (
       <View style={Styles.container}>
         <RNPickerDialog
-          data={this.state.data}
+          data={data}
           pickerTitle={'Sort by'}
           // labelText={'testss'}
           showSearchBar={true}
@@ -97,7 +98,7 @@ export default class Play extends React.Component {
           listTextStyle={Styles.listTextStyle}
           pickerStyle={Styles.pickerStyle}
           selectedText={this.state.selectedText}
-          placeHolderText={this.state.placeHolderText}
+          placeHolderText={"Please select country"}
           searchBarPlaceHolder={'Search.....'}
           searchBarPlaceHolderColor={'#9d9d9d'}
           selectedTextStyle={Styles.selectedTextStyle}

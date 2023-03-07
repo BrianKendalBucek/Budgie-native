@@ -4,6 +4,10 @@ import { TextInput, ListItem, Button, select } from "@react-native-material/core
 
 export default function CategoriesScreen({categoryItems, setCategoryItems}) {
 
+// Need to have categoryItems be an array of objects
+// Key being id: with a unique number
+// value being name: with each categoryItem as the value
+
   const [category, setCategory] = useState();
 
   console.log("CategoriesScreen:", categoryItems);

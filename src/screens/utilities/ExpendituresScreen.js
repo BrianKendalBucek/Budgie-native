@@ -4,12 +4,25 @@ import { TextInput, Button, ListItem } from "@react-native-material/core";
 import { Flex } from 'react-native-flex-layout';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import moment from 'moment';
+import { create } from 'lodash';
+import CategoryAuto from '../components/categoryAuto';
 
 
-export default function ExpendituresScreen({categoryItems}) {
+export default function ExpendituresScreen({ categoryItems }) {
 
-  console.log("ExpendituresScreen:", categoryItems); 
- 
+  
+  function createObjectArray(array) {
+    return array.map((item, index) => {
+      return {
+        id: index + 1, // adding 1 to index to avoid zero-based indexing
+        name: item
+      };
+    });
+  }
+  
+  const data = createObjectArray(categoryItems);
+  console.log("ExpendituresScreen:", data);
+
 
   const [objects, setObjects] = useState([]);
   const [type, setType] = useState('');
@@ -120,7 +133,10 @@ export default function ExpendituresScreen({categoryItems}) {
           />
           <SafeAreaView>
 
-            <TextInput
+            <CategoryAuto 
+              data={data}
+            />
+            {/* <TextInput
               style={styles.input}
               value={category}
               variant='outlined'
@@ -128,7 +144,7 @@ export default function ExpendituresScreen({categoryItems}) {
               placeholderTextColor="grey"
               color='grey'
               onChangeText={handleCategoryChange}
-            />
+            /> */}
           </SafeAreaView>
 
           <TextInput
@@ -164,7 +180,7 @@ export default function ExpendituresScreen({categoryItems}) {
             }}
           />
         </View>
-
+ 
       </View>
       <View style={{ marginTop: 20 }}>
         <View>

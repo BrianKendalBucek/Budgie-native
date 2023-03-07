@@ -1,83 +1,145 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, FlatList, StyleSheet } from 'react-native';
-import { ListItem, Input } from 'react-native-elements';
-import { contains } from 'lodash';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+// import RNPickerDialog from './picker/new';
+import RNPickerDialog from 'rn-modal-picker';
 
-const dummyData = [
-  'apple',
-  'banana',
-  'cherry',
-  'date',
-  'elderberry',
-  'fig',
-  'grape',
-  'honeydew',
-  'kiwi',
-  'lemon',
-];
 
-export default function CategoryAuto() {
-  const [search, setSearch] = useState('');
-  const [results, setResults] = useState([]);
+export default class CategoryAuto extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: props.data,
+      selectedText: '',
+      defaultValue: true,
+      select: '',
+      value: '',
 
-  const handleSearch = text => {
-    const formattedQuery = text.toLowerCase();
-    const filteredData = dummyData.filter(item => {
-      return item.toLowerCase().includes(formattedQuery);
-    });
-    setResults(filteredData);
-  };
+    };
 
-  const renderItem = ({ item }) => (
-    <ListItem
-      title={item}
-      onPress={() => {
-        setSearch(item);
-        setResults([]);
-      }}
-      leftIcon={<Icon name="search" size={20} />}
-    />
-  );
+  }
 
-  return (
-    <View>
-      <Input
-        placeholder="Search"
-        value={search}
-        onChangeText={text => {
-          setSearch(text);
-          handleSearch(text);
-        }}
-        leftIcon={<Icon name="search" size={20} />}
-      />
-      <FlatList
-        data={results}
-        renderItem={renderItem}
-        keyExtractor={item => item}
-      />
-    </View>
-  );
+  selectedValue(index, item) {
+    this.setState({ selectedText: item.name });
+    // console.log(item.name);
+  }
+
+  render() {
+    return (
+      <View style={Styles.container}>
+        <RNPickerDialog
+          data={this.state.data}
+          pickerTitle={'Sort by'}
+          // labelText={'testss'}
+          showSearchBar={true}
+          showPickerTitle={true}
+          listTextStyle={Styles.listTextStyle}
+          pickerStyle={Styles.pickerStyle}
+          selectedText={this.state.selectedText}
+          placeHolderText={"Please select country"}
+          searchBarPlaceHolder={'Search.....'}
+          searchBarPlaceHolderColor={'#9d9d9d'}
+          selectedTextStyle={Styles.selectedTextStyle}
+          placeHolderTextColor={'gray'}
+          dropDownIconStyle={Styles.dropDownIconStyle}
+          searchBarStyle={Styles.searchBarStyle}
+          //dropDownIcon={require('../assets/pin.png')}
+          selectedValue={(index, item) => this.selectedValue(index, item)}
+        />
+      </View>
+    );
+  }
 }
 
-const styles = StyleSheet.create({
+const Styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginHorizontal: 10,
   },
-  input: {
+  selectedTextStyle: {
+    height: 50,
+    borderColor: 'gray',
+    backgroundColor: 'transparent',
+    justifyContent: 'center',
+    width: '100%',
+    color: 'black',
+    fontSize: 20,
+    paddingLeft: 10,
+    marginTop: -2,
+  },
+  selectedTextStyle1: {
+    height: 50,
+    borderColor: 'gray',
+    backgroundColor: 'transparent',
+    justifyContent: 'center',
+    width: '100%',
+    color: 'black',
+    fontSize: 20,
+    paddingLeft: 10,
+    marginTop: 15,
+  },
+  listTextStyle: {
+    color: '#000',
+    marginVertical: 10,
+    flex: 0.9,
+    marginLeft: 20,
+    marginHorizontal: 10,
+    textAlign: 'left',
+  },
+  searchBarStyle: {
+    marginBottom: 10,
+    flexDirection: 'row',
     height: 40,
+    shadowRadius: 1,
+    shadowOpacity: 1.0,
     borderWidth: 1,
-    borderColor: '#ddd',
+    shadowOffset: {
+      width: 1,
+      height: 1,
+    },
+    borderColor: '#303030',
+    shadowColor: '#303030',
     borderRadius: 5,
-    paddingHorizontal: 10,
-    marginBottom: 20,
+    elevation: 1,
+    marginHorizontal: 10,
   },
-  list: {
-    flex: 1,
-  },
-  item: {
+  placeHolderTextStyle: {
+    color: 'red',
     padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
+    textAlign: 'left',
+    width: '99%',
+    flexDirection: 'row',
+  },
+  dropDownIconStyle: {
+    width: 10,
+    height: 10,
+    left: -40,
+    // marginTop: 20,
+  },
+  dropDownIconStyle1: {
+    width: 10,
+    height: 10,
+    left: -40,
+    marginTop: 15,
+  },
+  pickerStyle: {
+    shadowRadius: 0.5,
+    shadowOpacity: 0.5,
+    borderWidth: 0.5,
+    shadowOffset: {
+      width: 0.5,
+      height: 0.5,
+    },
+    height: 60,
+    borderColor: '#303030',
+    shadowColor: '#303030',
+    borderRadius: 2,
+    elevation: 0.5,
+  },
+  pickerStyle1: {
+    height: 60,
+    borderBottomColor: 'dodgerblue',
+    borderBottomWidth: 2,
   },
 });
