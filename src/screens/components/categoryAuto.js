@@ -13,8 +13,8 @@ export default class CategoryAuto extends React.Component {
       defaultValue: true,
       select: '',
       value: '',
-
     };
+    console.log('CategoryAuto: ', props.data)
 
   }
 
@@ -35,7 +35,7 @@ export default class CategoryAuto extends React.Component {
           listTextStyle={Styles.listTextStyle}
           pickerStyle={Styles.pickerStyle}
           selectedText={this.state.selectedText}
-          placeHolderText={"Please select country"}
+          placeHolderText={"Category"}
           searchBarPlaceHolder={'Search.....'}
           searchBarPlaceHolderColor={'#9d9d9d'}
           selectedTextStyle={Styles.selectedTextStyle}
