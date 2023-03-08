@@ -6,13 +6,11 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 // import {Picker} from '@react-native-picker/picker';
 // import DropDownPicker from 'react-native-dropdown-picker';
 import { Picker, onOpen } from 'react-native-actions-sheet-picker';
+import { SelectList } from 'react-native-dropdown-select-list'
 import moment from 'moment';
 import { create } from 'lodash';
 import CategoryAuto from '../components/categoryAuto';
-// import countries from './countries.json';
-
-
-// import countries from './countries.json';
+import countries from './countries.json';
 
 
 export default function ExpendituresScreen({ categoryItems }) {
@@ -21,8 +19,8 @@ export default function ExpendituresScreen({ categoryItems }) {
   function createObjectArray(array) {
     return array.map((item, index) => {
       return {
-        id: index + 1, // adding 1 to index to avoid zero-based indexing
-        name: item
+        key: index + 1, // adding 1 to index to avoid zero-based indexing
+        value: item
       };
     });
   }
@@ -46,47 +44,74 @@ export default function ExpendituresScreen({ categoryItems }) {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
   // FOR CATEGORY PICKER
-  const [categoryData, setCategoryData] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(undefined);
-  console.log("SELECTED", selectedCategory)
-  const [categoryQuery, setCategoryQuery] = useState('');
+  // const [categoryData, setCategoryData] = useState([]);
+  // const [selectedCategory, setSelectedCategory] = useState(undefined);
+  // console.log("SELECTED", selectedCategory)
+  // const [categoryQuery, setCategoryQuery] = useState('');
 
+  // useEffect(() => {
+  //   setCategoryData(dataCateg);
+  // }, []);
+
+  // const filteredData = useMemo(() => {
+  //   if (categoryData && categoryData.length > 0) {
+  //     return categoryData.filter((item) =>
+  //       item.name
+  //         .toLocaleLowerCase('en')
+  //         .includes(categoryQuery.toLocaleLowerCase('en'))
+  //     );
+  //   }
+  // }, [categoryData, categoryQuery]);
+  // const onSearch = (text) => {
+  //   setCategoryQuery(text);
+  // };
   // FOR CATEGORY PICKER
+
+  // FOR CURRENCY PICKER
+  // const [currencyData, setCurrencyData] = useState([]);
+  // const [selectedCurrency, setSelectedCurrency] = useState(undefined);
+  // // console.log("SELECTED CURRENCY", selectedCurrency)
+  // const [currencyQuery, setCurrencyQuery] = useState('');
+
+  // const filteredCurrencyData = useMemo(() => {
+  //   if (currencyData && currencyData.length > 0) {
+  //     return currencyData.filter((item) =>
+  //       item.name
+  //         .toLocaleLowerCase('en')
+  //         .includes(currencyQuery.toLocaleLowerCase('en'))
+  //     );
+  //   }
+  // }, [currencyData, currencyQuery]);
+  // FOR CURRENCY PICKER
+
+  // CURRENCY PICKER
+  const [data, setData] = useState([]);
+  const [selected, setSelected] = useState(undefined);
+  const [query, setQuery] = useState('');
+
   useEffect(() => {
-    setCategoryData(dataCateg);
+    setData(countries);
   }, []);
 
-  // FOR CATEGORY PICKER
   const filteredData = useMemo(() => {
-    if (categoryData && categoryData.length > 0) {
-      return categoryData.filter((item) =>
+    if (data && data.length > 0) {
+      return data.filter((item) =>
         item.name
           .toLocaleLowerCase('en')
-          .includes(categoryQuery.toLocaleLowerCase('en'))
+          .includes(query.toLocaleLowerCase('en'))
       );
     }
-  }, [categoryData, categoryQuery]);
-  // FOR CATEGORY PICKER
+  }, [data, query]);
+
   const onSearch = (text) => {
-    setCategoryQuery(text);
+    setQuery(text);
   };
+  // CURRENCY PICKER 
 
-  // FOR CURRENCY PICKER
-  const [currencyData, setCurrencyData] = useState([]);
-  const [selectedCurrency, setSelectedCurrency] = useState(undefined);
-  // console.log("SELECTED CURRENCY", selectedCurrency)
-  const [currencyQuery, setCurrencyQuery] = useState('');
+  // CATEGORY PICKER
+  const [categorySelected, setCategorySelected] = useState("");
+  // CATEGORY PICKER
 
-  // FOR CURRENCY PICKER
-  const filteredCurrencyData = useMemo(() => {
-    if (currencyData && currencyData.length > 0) {
-      return currencyData.filter((item) =>
-        item.name
-          .toLocaleLowerCase('en')
-          .includes(currencyQuery.toLocaleLowerCase('en'))
-      );
-    }
-  }, [currencyData, currencyQuery]);
 
   const handleTypeChange = (text) => {
     setType('');
@@ -138,6 +163,16 @@ export default function ExpendituresScreen({ categoryItems }) {
     setSelectedItem(null);
   }
 
+  const testData = [
+    {key:'1', value:'Mobiles', disabled:true},
+    {key:'2', value:'Appliances'},
+    {key:'3', value:'Cameras'},
+    {key:'4', value:'Computers', disabled:true},
+    {key:'5', value:'Vegetables'},
+    {key:'6', value:'Diary Products'},
+    {key:'7', value:'Drinks'},
+]
+
   return (
     <ScrollView keyboardShouldPersistTaps='handled'>
       <View>
@@ -162,9 +197,17 @@ export default function ExpendituresScreen({ categoryItems }) {
 
         {/* CATEGORY PICKER */}
         <SafeAreaView style={styles.pickerContainer}>
+          {/* <DropDownPicker
+      open={open}
+      value={value}
+      items={items}
+      setOpen={setOpen}
+      setValue={setValue}
+      setItems={setItems}
+    /> */}
           <Button
-            title={"Category"
-              // + String(selectedCategory.name)
+            title={"Currency"
+              // + String(selectedCurrency.name)
             }
             tintColor='grey'
             style={styles.bluebutton}
@@ -172,30 +215,44 @@ export default function ExpendituresScreen({ categoryItems }) {
               onOpen('country');
             }}>
           </Button>
+          {/* <Text style={{ padding: 10 }}>Chosen : {JSON.stringify(selected.name)}</Text> */}
           <Picker
             id="country"
             data={filteredData}
-            inputValue={categoryQuery}
+            inputValue={query}
             searchable={true}
-            label="Select Category"
-            setSelected={setSelectedCategory}
+            label="Currency"
+            setSelected={setSelected}
             onSearch={onSearch}
           />
         </SafeAreaView>
 
         {/* CURRENCY PICKER */}
-        <SafeAreaView style={styles.pickerContainer}>
-          <Button
+        <SafeAreaView
+        //  style={styles.pickerContainer}
+            style={{marginHorizontal: 20, marginVertical: 10, borderRadius: 20}}
+        >
+          <SelectList
+            placeholder='Category'
+            boxStyles={{borderRadius: 5, height: 52, backgroundColor: 'white'}}
+            inputStyles={{fontSize: 17, color: 'grey', marginLeft: -8}}
+            dropdownStyles={{borderRadius: 5, backgroundColor: 'lightgrey'}}
+            dropdownTextStyles={{fontSize: 17, color: 'black'}}
+            setSelected={(val) => setSelected(val)}
+            data={dataCateg}
+            save="value"
+          />
+          {/* <Button
             title={"Currency"
               // + String(selectedCategory.name)
             }
             tintColor='grey'
             style={styles.bluebutton}
-            // onPress={() => {
-            //   onOpen('country');
-            // }}
-            >
-          </Button>
+          // onPress={() => {
+          //   onOpen('country');
+          // }}
+          >
+          </Button> */}
           {/* <Picker
             id="country"
             data={filteredCurrencyData}
@@ -361,7 +418,7 @@ const styles = StyleSheet.create({
   },
   bluebutton: {
     backgroundColor: 'lightblue',
-    marginTop: 20,
+    marginTop: 10,
     marginBottom: 15,
   },
   redbutton: {
