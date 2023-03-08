@@ -1,16 +1,23 @@
-import React, { useState } from 'react';
-import { ScrollView, View, SafeAreaView, StyleSheet, Text, Keyboard, Alert, Modal, Pressable } from 'react-native';
+import React, { useState, useMemo, useEffect } from 'react';
+import { ScrollView, View, SafeAreaView, StyleSheet, Text, Keyboard, Alert, Modal, Pressable, TouchableOpacity } from 'react-native';
 import { TextInput, Button, ListItem } from "@react-native-material/core";
 import { Flex } from 'react-native-flex-layout';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+// import {Picker} from '@react-native-picker/picker';
+// import DropDownPicker from 'react-native-dropdown-picker';
+import { Picker, onOpen } from 'react-native-actions-sheet-picker';
 import moment from 'moment';
 import { create } from 'lodash';
 import CategoryAuto from '../components/categoryAuto';
+// import countries from './countries.json';
+
+
+// import countries from './countries.json';
 
 
 export default function ExpendituresScreen({ categoryItems }) {
 
-  
+
   function createObjectArray(array) {
     return array.map((item, index) => {
       return {
@@ -19,9 +26,9 @@ export default function ExpendituresScreen({ categoryItems }) {
       };
     });
   }
-  
-  const data = createObjectArray(categoryItems);
-  console.log("ExpendituresScreen:", data);
+
+  const dataCateg = createObjectArray(categoryItems);
+  console.log("ExpendituresScreen:", dataCateg);
 
 
   const [objects, setObjects] = useState([]);
@@ -38,6 +45,41 @@ export default function ExpendituresScreen({ categoryItems }) {
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
+  // FOR CATEGORY PICKER
+  const [data, setCategoryData] = useState([]);
+  const [selected, setSelected] = useState(undefined);
+  console.log("SELECTED", selected)
+  const [query, setQuery] = useState('');
+
+  // FOR CATEGORY PICKER
+  useEffect(() => {
+    setCategoryData(dataCateg);
+  }, []);
+
+console.log("setData/data", data)
+  // FOR CATEGORY PICKER
+  const filteredData = useMemo(() => {
+    if (data && data.length > 0) {
+      return data.filter((item) =>
+      item.name
+      .toLocaleLowerCase('en')
+      .includes(query.toLocaleLowerCase('en'))
+      );
+    }
+  }, [data, query]);
+
+  const onSearch = (text) => {
+    setQuery(text);
+  };
+
+  // const [selectedValue, setSelectedValue] = useState("java");
+  // const [open, setOpen] = useState(false);
+  // const [value, setValue] = useState(null);
+  // const [items, setItems] = useState([
+  //   { label: 'Apple', value: 'apple' },
+  //   { label: 'Banana', value: 'banana' }
+  // ]);
+
   const handleTypeChange = (text) => {
     setType('');
     setType(text);
@@ -52,9 +94,9 @@ export default function ExpendituresScreen({ categoryItems }) {
     setDate(String(text));
     hideDatePicker();
   };
-  const handleCategoryChange = (text) => {
-    setCategory(text);
-  };
+  // const handleCategoryChange = (text) => {
+  //   setCategory(text);
+  // };
   const handleTitleChange = (text) => {
     setTitle(text);
   };
@@ -110,6 +152,29 @@ export default function ExpendituresScreen({ categoryItems }) {
             } />
         </View>
 
+        {/* CATEGORY PICKER */}
+        <SafeAreaView style={styles.pickerContainer}>
+          <Button
+            title={"CATEGORY" 
+            // + String(selected.name)
+            }
+            tintColor='grey'
+            style={styles.bluebutton}
+            onPress={() => {
+              onOpen('country');
+            }}
+          />
+          <Picker
+            id="country"
+            data={filteredData}
+            inputValue={query}
+            searchable={true}
+            label="Select Category"
+            setSelected={setSelected}
+            onSearch={onSearch}
+          />
+        </SafeAreaView>
+
         <View>
           <SafeAreaView>
             <TextInput
@@ -131,21 +196,6 @@ export default function ExpendituresScreen({ categoryItems }) {
             color="grey"
             variant='outlined'
           />
-          <SafeAreaView>
-
-            <CategoryAuto 
-              data={data}
-            />
-            {/* <TextInput
-              style={styles.input}
-              value={category}
-              variant='outlined'
-              placeholder='Category'
-              placeholderTextColor="grey"
-              color='grey'
-              onChangeText={handleCategoryChange}
-            /> */}
-          </SafeAreaView>
 
           <TextInput
             style={styles.input}
@@ -180,7 +230,7 @@ export default function ExpendituresScreen({ categoryItems }) {
             }}
           />
         </View>
- 
+
       </View>
       <View style={{ marginTop: 20 }}>
         <View>
@@ -287,12 +337,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginHorizontal: 20,
-    paddingTop: 5
   },
   bluebutton: {
     backgroundColor: 'lightblue',
     marginTop: 20,
-    marginBottom: 35,
+    marginBottom: 15,
   },
   redbutton: {
     backgroundColor: '#FF4560',
@@ -336,5 +385,18 @@ const styles = StyleSheet.create({
     variant: 'filled',
     marginHorizontal: 20,
     marginVertical: 5
-  }
+  },
+  pickerContainer: {
+    marginHorizontal: 20,
+    // color: 'lightblue'
+    // flex: 1,
+    // alignItems: 'center',
+  },
+  pickerButton: {
+    backgroundColor: 'lightblue',
+    color: 'grey',
+    padding: 10,
+    borderRadius: 6,
+    // marginTop: 50,
+  },
 });
