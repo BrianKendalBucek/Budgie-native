@@ -46,39 +46,47 @@ export default function ExpendituresScreen({ categoryItems }) {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
   // FOR CATEGORY PICKER
-  const [data, setCategoryData] = useState([]);
-  const [selected, setSelected] = useState(undefined);
-  console.log("SELECTED", selected)
-  const [query, setQuery] = useState('');
+  const [categoryData, setCategoryData] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(undefined);
+  console.log("SELECTED", selectedCategory)
+  const [categoryQuery, setCategoryQuery] = useState('');
 
   // FOR CATEGORY PICKER
   useEffect(() => {
     setCategoryData(dataCateg);
   }, []);
 
-console.log("setData/data", data)
   // FOR CATEGORY PICKER
   const filteredData = useMemo(() => {
-    if (data && data.length > 0) {
-      return data.filter((item) =>
-      item.name
-      .toLocaleLowerCase('en')
-      .includes(query.toLocaleLowerCase('en'))
+    if (categoryData && categoryData.length > 0) {
+      return categoryData.filter((item) =>
+        item.name
+          .toLocaleLowerCase('en')
+          .includes(categoryQuery.toLocaleLowerCase('en'))
       );
     }
-  }, [data, query]);
-
+  }, [categoryData, categoryQuery]);
+  // FOR CATEGORY PICKER
   const onSearch = (text) => {
-    setQuery(text);
+    setCategoryQuery(text);
   };
 
-  // const [selectedValue, setSelectedValue] = useState("java");
-  // const [open, setOpen] = useState(false);
-  // const [value, setValue] = useState(null);
-  // const [items, setItems] = useState([
-  //   { label: 'Apple', value: 'apple' },
-  //   { label: 'Banana', value: 'banana' }
-  // ]);
+  // FOR CURRENCY PICKER
+  const [currencyData, setCurrencyData] = useState([]);
+  const [selectedCurrency, setSelectedCurrency] = useState(undefined);
+  // console.log("SELECTED CURRENCY", selectedCurrency)
+  const [currencyQuery, setCurrencyQuery] = useState('');
+
+  // FOR CURRENCY PICKER
+  const filteredCurrencyData = useMemo(() => {
+    if (currencyData && currencyData.length > 0) {
+      return currencyData.filter((item) =>
+        item.name
+          .toLocaleLowerCase('en')
+          .includes(currencyQuery.toLocaleLowerCase('en'))
+      );
+    }
+  }, [currencyData, currencyQuery]);
 
   const handleTypeChange = (text) => {
     setType('');
@@ -155,38 +163,51 @@ console.log("setData/data", data)
         {/* CATEGORY PICKER */}
         <SafeAreaView style={styles.pickerContainer}>
           <Button
-            title={"CATEGORY" 
-            // + String(selected.name)
+            title={"Category"
+              // + String(selectedCategory.name)
             }
             tintColor='grey'
             style={styles.bluebutton}
             onPress={() => {
               onOpen('country');
-            }}
-          />
+            }}>
+          </Button>
           <Picker
             id="country"
             data={filteredData}
-            inputValue={query}
+            inputValue={categoryQuery}
             searchable={true}
             label="Select Category"
-            setSelected={setSelected}
+            setSelected={setSelectedCategory}
             onSearch={onSearch}
           />
         </SafeAreaView>
 
+        {/* CURRENCY PICKER */}
+        <SafeAreaView style={styles.pickerContainer}>
+          <Button
+            title={"Currency"
+              // + String(selectedCategory.name)
+            }
+            tintColor='grey'
+            style={styles.bluebutton}
+            // onPress={() => {
+            //   onOpen('country');
+            // }}
+            >
+          </Button>
+          {/* <Picker
+            id="country"
+            data={filteredCurrencyData}
+            inputValue={currencyQuery}
+            searchable={true}
+            label="Select Currency"
+            setSelected={setSelectedCurrency}
+            onSearch={onSearch}
+          /> */}
+        </SafeAreaView>
+
         <View>
-          <SafeAreaView>
-            <TextInput
-              style={styles.input}
-              value={currency}
-              variant='outlined'
-              placeholder='Currency'
-              placeholderTextColor="grey"
-              color='grey'
-              onChangeText={handleCurrencyChange}
-            />
-          </SafeAreaView>
 
           <TextInput
             style={styles.input}
