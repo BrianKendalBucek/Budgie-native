@@ -25,10 +25,6 @@ export default function Play() {
     setSecondaryCountryData(countries);
   }, []);
 
-  /*
-   **Example filter function
-   * @param {string} filter
-   */
   const filteredPrimaryData = useMemo(() => {
     if (primaryCountryData && primaryCountryData.length > 0) {
       return primaryCountryData.filter((item) =>
@@ -48,10 +44,7 @@ export default function Play() {
       );
     }
   }, [secondaryCountryData, secondaryQuery]);
-  /*
-   **Input search
-   *@param {string} text
-   */
+
   const onPrimarySearch = (text) => {
     setPrimaryQuery(text);
   };

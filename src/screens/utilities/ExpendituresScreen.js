@@ -15,7 +15,7 @@ export default function ExpendituresScreen({ categoryItems }) {
   function createObjectArray(array) {
     return array.map((item, index) => {
       return {
-        key: index + 1, // adding 1 to index to avoid zero-based indexing
+        key: index + 1,
         value: item
       };
     });
@@ -23,23 +23,14 @@ export default function ExpendituresScreen({ categoryItems }) {
 
 // STORES OBJECT IN VARIABLE
   const dataCateg = createObjectArray(categoryItems);
-  // console.log("ExpendituresScreen:", dataCateg);
-
 
   const [objects, setObjects] = useState([]);
-  // console.log("objects", objects);
   const [type, setType] = useState('');
-  // console.log("type", type);
   const [currency, setCurrency] = useState('');
-  // console.log("currency", currency);
   const [price, setPrice] = useState('');
-  // console.log("price", price);
   const [date, setDate] = useState('');
-  // console.log("date", date);
   const [category, setCategory] = useState('');
-  // console.log("category", category);
   const [title, setTitle] = useState('');
-  // console.log("title", title);
 
 // MODAL
   const [modalVisible, setModalVisible] = useState(false);
@@ -74,7 +65,6 @@ export default function ExpendituresScreen({ categoryItems }) {
   };
 
 // PAYMENT TYPE
-
 const [cashButton, setCashButton] = useState(false);
 const [creditButton, setCreditButton] = useState(false);
 const [debitButton, setDebitButton] = useState(false);
@@ -99,27 +89,16 @@ const [debitButton, setDebitButton] = useState(false);
     }
   };
 
-// const handleCashPress = () => {
-
-// }
-
 // PRICE
   const handlePriceChange = (text) => {
     setPrice(text);
   };
-
-  // const handleCurrencyChange = (text) => {
-  //   setCurrency(text);
-  // };
 
 // DATE
   const handleDateChange = (text) => {
     setDate(String(text));
     hideDatePicker();
   };
-  // const handleCategoryChange = (text) => {
-  //   setCategory(text);
-  // };
 
 // TITLE
   const handleTitleChange = (text) => {

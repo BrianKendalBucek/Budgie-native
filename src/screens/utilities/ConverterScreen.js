@@ -1,70 +1,149 @@
-import React, { useState } from 'react';
-import { View, ScrollView, SafeAreaView, StyleSheet } from 'react-native';
+import React, { useState, useMemo, useEffect } from 'react';
+import { View, ScrollView, SafeAreaView, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { Box, TextInput, Button } from "@react-native-material/core";
+import { Picker, onOpen } from 'react-native-actions-sheet-picker';
 
+
+import countries from './countries.json';
 
 export default function ConverterScreen() {
-  const [currency, setCurrency] = useState('');
+  const [primaryCountryData, setPrimaryCountryData] = useState([]);
+  const [primarySelected, setPrimarySelected] = useState(undefined);
+  const [primaryQuery, setPrimaryQuery] = useState('');
 
-  const onChangeText = async (text = '') => {
-    setCategory(text)
+  const [secondaryCountryData, setSecondaryCountryData] = useState([]);
+  const [secondarySelected, setSecondarySelected] = useState(undefined);
+  const [secondaryQuery, setSecondaryQuery] = useState('');
+
+  const [price, setPrice] = useState('');
+
+  useEffect(() => {
+    setPrimaryCountryData(countries);
+  }, []);
+
+  useEffect(() => {
+    setSecondaryCountryData(countries);
+  }, []);
+
+  const filteredPrimaryData = useMemo(() => {
+    if (primaryCountryData && primaryCountryData.length > 0) {
+      return primaryCountryData.filter((item) =>
+        item.name
+          .toLocaleLowerCase('en')
+          .includes(primaryQuery.toLocaleLowerCase('en'))
+      );
+    }
+  }, [primaryCountryData, primaryQuery]);
+
+  const filteredSecondaryData = useMemo(() => {
+    if (secondaryCountryData && secondaryCountryData.length > 0) {
+      return secondaryCountryData.filter((item) =>
+        item.name
+          .toLocaleLowerCase('en')
+          .includes(secondaryQuery.toLocaleLowerCase('en'))
+      );
+    }
+  }, [secondaryCountryData, secondaryQuery]);
+
+  const onPrimarySearch = (text) => {
+    setPrimaryQuery(text);
+  };
+
+  const onSecondarySearch = (text) => {
+    setSecondaryQuery(text);
   }
 
-  return (
-    <ScrollView keyboardShouldPersistTaps='handled'>
-      <View style={styles.boxposition}>
-        <Box
-          style={styles.box}
-        />
-      </View>
-      <SafeAreaView>
-        <TextInput
-          style={styles.input}
-          variant='outlined'
-          placeholder='Primary Currency'
-          placeholderTextColor="grey"
-          color='grey'
-          // value={currency}
-          onChangeText={onChangeText}
-        />
-      </SafeAreaView>
-      <SafeAreaView>
-        <TextInput
-          style={styles.input}
-          variant='outlined'
-          placeholder='Secondary Currency'
-          placeholderTextColor="grey"
-          color='grey'
-          // value={currency}
-          onChangeText={onChangeText}
-        />
-        <TextInput
-          // onChangeText={(textEntry) => { this.setState({ searchText: textEntry }) }}
-          style={styles.input}
-          placeholder="Price of item"
-          color="grey"
-          variant='outlined'
-        // onSubmitEditing={() => { this.onSubmit(this.state.searchText) }}
-        />
-        <Button title="Convert" tintColor='grey' style={styles.bluebutton} />
+  const handlePriceChange = (text) => {
+    setPrice(text);
+  };
 
-      </SafeAreaView>
-    </ScrollView>
+  return (
+    <SafeAreaView style={styles.pickerContainer}>
+      <View style={styles.boxposition}>
+        <Box style={styles.box} />
+      </View>
+      <TextInput
+        style={styles.input}
+        value={price}
+        onChangeText={handlePriceChange}
+        placeholder="Price of item"
+        color="grey"
+        variant='outlined'
+      />
+      <Button
+        title={"Primary Currency:  \n" + String(primarySelected)}
+        tintColor='grey'
+        style={styles.bluebutton}
+        onPress={() => {
+          onOpen('country');
+        }}
+      />
+      {/* <Text style={{ padding: 10 }}>Chosen : {JSON.stringify(primarySelected)}</Text> */}
+      <Picker
+        id="country"
+        data={filteredPrimaryData}
+        inputValue={primaryQuery}
+        searchable={true}
+        label="Select Primary Currency"
+        setSelected={(val) => setPrimarySelected(val.name)}
+        onSearch={onPrimarySearch}
+      />
+
+      <Button
+        title={"Secondary Currency:  \n" + String(secondarySelected)}
+        tintColor='grey'
+        style={styles.bluebutton}
+        onPress={() => {
+          onOpen('city');
+        }}
+      />
+      {/* <Text style={{ padding: 10 }}>Chosen : {JSON.stringify(secondarySelected)}</Text> */}
+      <Picker
+        id="city"
+        data={filteredSecondaryData}
+        inputValue={secondaryQuery}
+        searchable={true}
+        label="Select Secondary Currency"
+        setSelected={(val) => setSecondarySelected(val.name)}
+        onSearch={onSecondarySearch}
+      />
+      <Button
+        title="Submit"
+        tintColor='grey'
+        style={styles.bluebutton}
+        onPress={() => {
+          // handleSubmit({ type, price, currency, date, category, title });
+          Keyboard.dismiss();
+        }}
+      />
+    </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
+  pickerContainer: {
+    // flex: 1,
+    // alignItems: 'center',
+    // marginHorizontal: 20
+  },
+  pickerButton: {
+    backgroundColor: '#8B93A5',
+    padding: 10,
+    borderRadius: 6,
+    marginTop: 50,
+  },
   input: {
     backgroundColor: 'transparent',
     variant: 'filled',
     marginHorizontal: 20,
-    marginVertical: 5
+    marginTop: 40
   },
   bluebutton: {
+    padding: 10,
     backgroundColor: 'lightblue',
     color: 'grey',
     marginHorizontal: 20,
-    marginVertical: 10,
+    marginTop: 40,
   },
   box: {
     height: 50,
@@ -76,7 +155,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 20,
-    marginBottom: 10,
+    marginTop: 60,
+    marginBottom: 20,
   }
 })
