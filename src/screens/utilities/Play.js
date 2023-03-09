@@ -8,36 +8,57 @@ import { Picker, onOpen } from 'react-native-actions-sheet-picker';
  */
 import countries from './countries.json';
 
-export default function App() {
-  const [data, setData] = useState([]);
-  const [selected, setSelected] = useState(undefined);
-  const [query, setQuery] = useState('');
+export default function Play() {
+  const [primaryCountryData, setPrimaryCountryData] = useState([]);
+  const [primarySelected, setPrimarySelected] = useState(undefined);
+  const [primaryQuery, setPrimaryQuery] = useState('');
+
+  const [secondaryCountryData, setSecondaryCountryData] = useState([]);
+  const [secondarySelected, setSecondarySelected] = useState(undefined);
+  const [secondaryQuery, setSecondaryQuery] = useState('');
 
   useEffect(() => {
-    setData(countries);
+    setPrimaryCountryData(countries);
+  }, []);
+
+  useEffect(() => {
+    setSecondaryCountryData(countries);
   }, []);
 
   /*
    **Example filter function
    * @param {string} filter
    */
-  const filteredData = useMemo(() => {
-    if (data && data.length > 0) {
-      return data.filter((item) =>
+  const filteredPrimaryData = useMemo(() => {
+    if (primaryCountryData && primaryCountryData.length > 0) {
+      return primaryCountryData.filter((item) =>
         item.name
           .toLocaleLowerCase('en')
-          .includes(query.toLocaleLowerCase('en'))
+          .includes(primaryQuery.toLocaleLowerCase('en'))
       );
     }
-  }, [data, query]);
+  }, [primaryCountryData, primaryQuery]);
 
+  const filteredSecondaryData = useMemo(() => {
+    if (secondaryCountryData && secondaryCountryData.length > 0) {
+      return secondaryCountryData.filter((item) =>
+        item.name
+          .toLocaleLowerCase('en')
+          .includes(secondaryQuery.toLocaleLowerCase('en'))
+      );
+    }
+  }, [secondaryCountryData, secondaryQuery]);
   /*
    **Input search
    *@param {string} text
    */
-  const onSearch = (text) => {
-    setQuery(text);
+  const onPrimarySearch = (text) => {
+    setPrimaryQuery(text);
   };
+
+  const onSecondarySearch = (text) => {
+    setSecondaryQuery(text);
+  }
 
   return (
     <SafeAreaView style={styles.pickerContainer}>
@@ -49,15 +70,34 @@ export default function App() {
       >
         <Text>Choose Category</Text>
       </TouchableOpacity>
-      <Text style={{ padding: 10 }}>Chosen : {JSON.stringify(selected)}</Text>
+      <Text style={{ padding: 10 }}>Chosen : {JSON.stringify(primarySelected)}</Text>
       <Picker
         id="country"
-        data={filteredData}
-        inputValue={query}
+        data={filteredPrimaryData}
+        inputValue={primaryQuery}
         searchable={true}
         label="Select Category"
-        setSelected={setSelected}
-        onSearch={onSearch}
+        setSelected={setPrimarySelected}
+        onSearch={onPrimarySearch}
+      />
+      
+      <TouchableOpacity
+        style={styles.pickerButton}
+        onPress={() => {
+          onOpen('city');
+        }}
+      >
+        <Text>Choose City</Text>
+      </TouchableOpacity>
+      <Text style={{ padding: 10 }}>Chosen : {JSON.stringify(secondarySelected)}</Text>
+      <Picker
+        id="city"
+        data={filteredSecondaryData}
+        inputValue={secondaryQuery}
+        searchable={true}
+        label="Select City"
+        setSelected={setSecondarySelected}
+        onSearch={onSecondarySearch}
       />
     </SafeAreaView>
   );

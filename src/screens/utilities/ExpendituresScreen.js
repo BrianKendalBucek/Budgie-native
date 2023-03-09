@@ -27,19 +27,19 @@ export default function ExpendituresScreen({ categoryItems }) {
 
 
   const [objects, setObjects] = useState([]);
-  console.log("objects", objects);
+  // console.log("objects", objects);
   const [type, setType] = useState('');
-  console.log("type", type);
+  // console.log("type", type);
   const [currency, setCurrency] = useState('');
-  console.log("currency", currency);
+  // console.log("currency", currency);
   const [price, setPrice] = useState('');
-  console.log("price", price);
+  // console.log("price", price);
   const [date, setDate] = useState('');
-  console.log("date", date);
+  // console.log("date", date);
   const [category, setCategory] = useState('');
-  console.log("category", category);
+  // console.log("category", category);
   const [title, setTitle] = useState('');
-  console.log("title", title);
+  // console.log("title", title);
 
 // MODAL
   const [modalVisible, setModalVisible] = useState(false);
