@@ -38,6 +38,14 @@ export default function User() {
       <TextInput
         style={styles.input}
         variant='outlined'
+        placeholder='Primary Budget'
+        placeholderTextColor="grey"
+        color='grey'
+        // onChangeText={onChangeSecondary}
+      />
+      <TextInput
+        style={styles.input}
+        variant='outlined'
         placeholder='Primary Currency: Canadian'
         placeholderTextColor="grey"
         color='grey'
@@ -58,14 +66,14 @@ export default function User() {
         }
         onPress={() => setEnabled(!enabled)}
       />
-            <ListItem
+      <ListItem
         title="Dark mode"
         trailing={
           <Switch value={enabledDark} onValueChange={() => setEnabledDark(!enabledDark)} />
         }
         onPress={() => setEnabledDark(!enabledDark)}
       />
-            <ListItem
+      <ListItem
         title="Logout"
       />
     </ScrollView>

@@ -9,7 +9,7 @@ function TopBar() {
     <>
       <AppBar
         style={styles.header}
-        title="Budgie"
+        title="Budgie Abroad"
         tintColor='grey'
 
         leading={props => (
