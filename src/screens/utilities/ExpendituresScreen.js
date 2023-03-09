@@ -1,21 +1,17 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { ScrollView, View, SafeAreaView, StyleSheet, Text, Keyboard, Alert, Modal, Pressable, TouchableOpacity } from 'react-native';
+import { ScrollView, View, SafeAreaView, StyleSheet, Text, Keyboard, Alert, Modal } from 'react-native';
 import { TextInput, Button, ListItem } from "@react-native-material/core";
 import { Flex } from 'react-native-flex-layout';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-// import {Picker} from '@react-native-picker/picker';
-// import DropDownPicker from 'react-native-dropdown-picker';
 import { Picker, onOpen } from 'react-native-actions-sheet-picker';
 import { SelectList } from 'react-native-dropdown-select-list'
 import moment from 'moment';
-import { create } from 'lodash';
-import CategoryAuto from '../components/categoryAuto';
 import countries from './countries.json';
 
 
 export default function ExpendituresScreen({ categoryItems }) {
 
-
+// CATEGORY ARRAY INTO AN OBJECT
   function createObjectArray(array) {
     return array.map((item, index) => {
       return {
@@ -25,69 +21,39 @@ export default function ExpendituresScreen({ categoryItems }) {
     });
   }
 
+// STORES OBJECT IN VARIABLE
   const dataCateg = createObjectArray(categoryItems);
-  console.log("ExpendituresScreen:", dataCateg);
+  // console.log("ExpendituresScreen:", dataCateg);
 
 
   const [objects, setObjects] = useState([]);
+  console.log("objects", objects);
   const [type, setType] = useState('');
+  console.log("type", type);
   const [currency, setCurrency] = useState('');
+  console.log("currency", currency);
   const [price, setPrice] = useState('');
+  console.log("price", price);
   const [date, setDate] = useState('');
+  console.log("date", date);
   const [category, setCategory] = useState('');
+  console.log("category", category);
   const [title, setTitle] = useState('');
+  console.log("title", title);
 
+// MODAL
   const [modalVisible, setModalVisible] = useState(false);
 
+// MODAL AND DELETION
   const [selectedItem, setSelectedItem] = useState(null);
 
+// DATE
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
-  // FOR CATEGORY PICKER
-  // const [categoryData, setCategoryData] = useState([]);
-  // const [selectedCategory, setSelectedCategory] = useState(undefined);
-  // console.log("SELECTED", selectedCategory)
-  // const [categoryQuery, setCategoryQuery] = useState('');
-
-  // useEffect(() => {
-  //   setCategoryData(dataCateg);
-  // }, []);
-
-  // const filteredData = useMemo(() => {
-  //   if (categoryData && categoryData.length > 0) {
-  //     return categoryData.filter((item) =>
-  //       item.name
-  //         .toLocaleLowerCase('en')
-  //         .includes(categoryQuery.toLocaleLowerCase('en'))
-  //     );
-  //   }
-  // }, [categoryData, categoryQuery]);
-  // const onSearch = (text) => {
-  //   setCategoryQuery(text);
-  // };
-  // FOR CATEGORY PICKER
-
-  // FOR CURRENCY PICKER
-  // const [currencyData, setCurrencyData] = useState([]);
-  // const [selectedCurrency, setSelectedCurrency] = useState(undefined);
-  // // console.log("SELECTED CURRENCY", selectedCurrency)
-  // const [currencyQuery, setCurrencyQuery] = useState('');
-
-  // const filteredCurrencyData = useMemo(() => {
-  //   if (currencyData && currencyData.length > 0) {
-  //     return currencyData.filter((item) =>
-  //       item.name
-  //         .toLocaleLowerCase('en')
-  //         .includes(currencyQuery.toLocaleLowerCase('en'))
-  //     );
-  //   }
-  // }, [currencyData, currencyQuery]);
-  // FOR CURRENCY PICKER
-
-  // CURRENCY PICKER
+// CURRENCY
   const [data, setData] = useState([]);
-  const [selected, setSelected] = useState(undefined);
   const [query, setQuery] = useState('');
+  // const [selected, setSelected] = useState(undefined);
 
   useEffect(() => {
     setData(countries);
@@ -106,23 +72,47 @@ export default function ExpendituresScreen({ categoryItems }) {
   const onSearch = (text) => {
     setQuery(text);
   };
-  // CURRENCY PICKER 
 
-  // CATEGORY PICKER
-  const [categorySelected, setCategorySelected] = useState("");
-  // CATEGORY PICKER
+// PAYMENT TYPE
 
+const [cashButton, setCashButton] = useState(false);
+const [creditButton, setCreditButton] = useState(false);
+const [debitButton, setDebitButton] = useState(false);
 
   const handleTypeChange = (text) => {
     setType('');
     setType(text);
+    if (text === 'Cash') {
+      setCreditButton(false);
+      setDebitButton(false);
+      setCashButton(true);
+    }
+    if (text === 'Credit') {
+      setCashButton(false);
+      setDebitButton(false);
+      setCreditButton(true);
+    }
+    if (text === 'Debit') {
+      setCashButton(false);
+      setCreditButton(false);
+      setDebitButton(true);
+    }
   };
+
+// const handleCashPress = () => {
+
+// }
+
+// PRICE
   const handlePriceChange = (text) => {
     setPrice(text);
   };
-  const handleCurrencyChange = (text) => {
-    setCurrency(text);
-  };
+
+  // const handleCurrencyChange = (text) => {
+  //   setCurrency(text);
+  // };
+
+// DATE
   const handleDateChange = (text) => {
     setDate(String(text));
     hideDatePicker();
@@ -130,10 +120,13 @@ export default function ExpendituresScreen({ categoryItems }) {
   // const handleCategoryChange = (text) => {
   //   setCategory(text);
   // };
+
+// TITLE
   const handleTitleChange = (text) => {
     setTitle(text);
   };
 
+// FINAL SUBMIT
   const handleSubmit = ({ type, price, currency, date, category, title }) => {
     if (!type || !price || !currency || !date || !category || !title) {
       alert("Please fill in all the required fields.");
@@ -147,8 +140,13 @@ export default function ExpendituresScreen({ categoryItems }) {
     setDate('');
     setCategory('');
     setTitle('');
+    setCashButton(false);
+    setCreditButton(false);
+    setDebitButton(false);
+
   };
 
+// DATE
   const showDatePicker = () => {
     setDatePickerVisibility(true);
   };
@@ -156,6 +154,7 @@ export default function ExpendituresScreen({ categoryItems }) {
     setDatePickerVisibility(false);
   };
 
+// CATEGORY DELETION
   const deleteCategory = (index) => {
     let itemsCopy = [...objects];
     itemsCopy.splice(index, 1);
@@ -163,51 +162,36 @@ export default function ExpendituresScreen({ categoryItems }) {
     setSelectedItem(null);
   }
 
-  const testData = [
-    {key:'1', value:'Mobiles', disabled:true},
-    {key:'2', value:'Appliances'},
-    {key:'3', value:'Cameras'},
-    {key:'4', value:'Computers', disabled:true},
-    {key:'5', value:'Vegetables'},
-    {key:'6', value:'Diary Products'},
-    {key:'7', value:'Drinks'},
-]
-
   return (
     <ScrollView keyboardShouldPersistTaps='handled'>
       <View>
 
+
+        {/* PAYMENT TYPE BUTTONS */}
         <View style={styles.buttonboxtop}>
-          <Button title="Cash" tintColor='grey' style={styles.bluebutton}
+          <Button title="Cash" tintColor='grey' style={cashButton ? styles.selectedbutton : styles.bluebutton}
             onPress={() => {
               handleTypeChange('Cash');
             }
             } />
-          <Button title="Debit" tintColor='grey' style={styles.bluebutton}
+          <Button title="Debit" tintColor='grey' style={debitButton ? styles.selectedbutton : styles.bluebutton}
             onPress={() => {
               handleTypeChange('Debit');
             }
             } />
-          <Button title="Credit" tintColor='grey' style={styles.bluebutton}
+          <Button title="Credit" tintColor='grey' style={creditButton ? styles.selectedbutton : styles.bluebutton}
             onPress={() => {
               handleTypeChange('Credit');
             }
             } />
         </View>
 
-        {/* CATEGORY PICKER */}
+
+        {/* CURRENCY PICKER */}
         <SafeAreaView style={styles.pickerContainer}>
-          {/* <DropDownPicker
-      open={open}
-      value={value}
-      items={items}
-      setOpen={setOpen}
-      setValue={setValue}
-      setItems={setItems}
-    /> */}
           <Button
-            title={"Currency"
-              // + String(selectedCurrency.name)
+            title={"Currency:  "
+              + String(currency)
             }
             tintColor='grey'
             style={styles.bluebutton}
@@ -222,50 +206,30 @@ export default function ExpendituresScreen({ categoryItems }) {
             inputValue={query}
             searchable={true}
             label="Currency"
-            setSelected={setSelected}
+            setSelected={(val) => setCurrency(val.name)}
             onSearch={onSearch}
           />
         </SafeAreaView>
 
-        {/* CURRENCY PICKER */}
-        <SafeAreaView
-        //  style={styles.pickerContainer}
-            style={{marginHorizontal: 20, marginVertical: 10, borderRadius: 20}}
-        >
+
+        {/* CATEGORY PICKER */}
+        <SafeAreaView style={{ marginHorizontal: 20, marginVertical: 10, borderRadius: 20 }}>
           <SelectList
             placeholder='Category'
-            boxStyles={{borderRadius: 5, height: 52, backgroundColor: 'white'}}
-            inputStyles={{fontSize: 17, color: 'grey', marginLeft: -8}}
-            dropdownStyles={{borderRadius: 5, backgroundColor: 'lightgrey'}}
-            dropdownTextStyles={{fontSize: 17, color: 'black'}}
-            setSelected={(val) => setSelected(val)}
+            boxStyles={{ borderRadius: 5, height: 54, backgroundColor: 'white', borderColor: 'grey' }}
+            inputStyles={{ fontSize: 17, color: 'grey', marginLeft: -8 }}
+            dropdownStyles={{ borderRadius: 5, backgroundColor: 'lightgrey' }}
+            dropdownTextStyles={{ fontSize: 17, color: 'black' }}
+            setSelected={(val) => setCategory(val)}
             data={dataCateg}
             save="value"
+            notFoundText='Please create categories on next tab'
           />
-          {/* <Button
-            title={"Currency"
-              // + String(selectedCategory.name)
-            }
-            tintColor='grey'
-            style={styles.bluebutton}
-          // onPress={() => {
-          //   onOpen('country');
-          // }}
-          >
-          </Button> */}
-          {/* <Picker
-            id="country"
-            data={filteredCurrencyData}
-            inputValue={currencyQuery}
-            searchable={true}
-            label="Select Currency"
-            setSelected={setSelectedCurrency}
-            onSearch={onSearch}
-          /> */}
         </SafeAreaView>
 
-        <View>
 
+        {/* PRICE TEXT INPUT */}
+        <View>
           <TextInput
             style={styles.input}
             value={price}
@@ -275,6 +239,8 @@ export default function ExpendituresScreen({ categoryItems }) {
             variant='outlined'
           />
 
+
+          {/* TITLE TEXT INPUT */}
           <TextInput
             style={styles.input}
             value={title}
@@ -285,6 +251,8 @@ export default function ExpendituresScreen({ categoryItems }) {
           />
         </View>
 
+
+        {/* DATE PICKER */}
         <View style={styles.buttonbox}>
           <Flex inline justifyContent='space-between' center>
             <Button title="Date" tintColor='grey' style={styles.bluebutton} onPress={showDatePicker} />
@@ -308,8 +276,10 @@ export default function ExpendituresScreen({ categoryItems }) {
             }}
           />
         </View>
-
       </View>
+
+
+      {/* COMPLETE RENDERED EXPENSE */}
       <View style={{ marginTop: 20 }}>
         <View>
           {
@@ -329,24 +299,10 @@ export default function ExpendituresScreen({ categoryItems }) {
             })
           }
         </View>
-        {/* <View>
-          {
-            categoryItems.map((category, index) => {
-              return (
-                <View key={index}>
-                  <View style={styles.listcontainer}>
-                    <View style={{ flex: 1 }}>
-                      <ListItem
-                        title={category} />
-                    </View>
-                  </View>
-                </View>
-              )
-            })
-          }
-        </View> */}
       </View>
 
+
+      {/* MODAL */}
       <View style={styles.centeredView}>
         <Modal
           animationType="slide"
@@ -389,6 +345,7 @@ export default function ExpendituresScreen({ categoryItems }) {
         </Modal>
       </View>
 
+
     </ScrollView>
   );
 }
@@ -418,6 +375,11 @@ const styles = StyleSheet.create({
   },
   bluebutton: {
     backgroundColor: 'lightblue',
+    marginTop: 10,
+    marginBottom: 15,
+  },
+  selectedbutton: {
+    backgroundColor: 'white',
     marginTop: 10,
     marginBottom: 15,
   },
