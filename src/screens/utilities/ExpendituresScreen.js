@@ -218,8 +218,8 @@ const [debitButton, setDebitButton] = useState(false);
             placeholder='Category'
             boxStyles={{ borderRadius: 5, height: 54, backgroundColor: 'white', borderColor: 'grey' }}
             inputStyles={{ fontSize: 17, color: 'grey', marginLeft: -8 }}
-            dropdownStyles={{ borderRadius: 5, backgroundColor: 'lightgrey' }}
-            dropdownTextStyles={{ fontSize: 17, color: 'black' }}
+            dropdownStyles={{ borderRadius: 5, backgroundColor: 'lightblue' }}
+            dropdownTextStyles={{ fontSize: 17, color: 'grey' }}
             setSelected={(val) => setCategory(val)}
             data={dataCateg}
             save="value"
