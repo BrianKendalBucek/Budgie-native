@@ -10,7 +10,7 @@ export default function CategoriesScreen({categoryItems, setCategoryItems}) {
 
   const [category, setCategory] = useState();
 
-  console.log("CategoriesScreen:", categoryItems);
+  // console.log("CategoriesScreen:", categoryItems);
 
   const [modalVisible, setModalVisible] = useState(false);
 

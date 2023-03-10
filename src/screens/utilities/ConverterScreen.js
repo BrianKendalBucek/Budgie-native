@@ -45,6 +45,21 @@ export default function ConverterScreen() {
     }
   }, [secondaryCountryData, secondaryQuery]);
 
+  const verifyPrimary = () => {
+    if (primarySelected) {
+      return `From: ${String(primarySelected)}`
+    } else {
+      return "From";
+    }
+  }
+  const verifySecondary = () => {
+    if (secondarySelected) {
+      return `To: ${String(secondarySelected)}`;
+    } else {
+      return "To"
+    }
+  }
+
   const onPrimarySearch = (text) => {
     setPrimaryQuery(text);
   };
@@ -71,7 +86,7 @@ export default function ConverterScreen() {
         variant='outlined'
       />
       <Button
-        title={"Primary Currency:  \n" + String(primarySelected)}
+        title={verifyPrimary(primarySelected)}
         tintColor='grey'
         style={styles.bluebutton}
         onPress={() => {
@@ -90,7 +105,7 @@ export default function ConverterScreen() {
       />
 
       <Button
-        title={"Secondary Currency:  \n" + String(secondarySelected)}
+        title={verifySecondary(secondarySelected)}
         tintColor='grey'
         style={styles.bluebutton}
         onPress={() => {

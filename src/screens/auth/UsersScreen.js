@@ -1,14 +1,30 @@
-import React, { useState } from "react";
-import { ListItem, TextInput, Switch } from "@react-native-material/core";
-import { ScrollView, View, Text, TouchableOpacity, Keyboard, StyleSheet, Modal, KeyboardAvoidingView } from 'react-native';
+import React, { useState, useMemo, useEffect } from "react";
+import { ListItem, TextInput, Switch, Button } from "@react-native-material/core";
+import { ScrollView, View, Text, SafeAreaView, TouchableOpacity, Keyboard, StyleSheet, Modal, KeyboardAvoidingView } from 'react-native';
+import { Picker, onOpen } from 'react-native-actions-sheet-picker';
+
+
+import countries from './countries2.json';
 
 export default function User() {
+  const [primaryCountryData, setPrimaryCountryData] = useState([]);
+  const [primarySelected, setPrimarySelected] = useState(undefined);
+  const [primaryQuery, setPrimaryQuery] = useState('');
 
-  const [primary, setPrimary] = useState('');
-  const [secondary, setSecondary] = useState('');
+  const [secondaryCountryData, setSecondaryCountryData] = useState([]);
+  const [secondarySelected, setSecondarySelected] = useState(undefined);
+  const [secondaryQuery, setSecondaryQuery] = useState('');
+
   const [enabled, setEnabled] = useState(true);
   const [enabledDark, setEnabledDark] = useState(true);
 
+  useEffect(() => {
+    setPrimaryCountryData(countries);
+  }, []);
+
+  useEffect(() => {
+    setSecondaryCountryData(countries);
+  }, []);
 
   const onChangePrimary = async (text = '') => {
     setPrimary(text)
@@ -18,47 +34,117 @@ export default function User() {
     setSecondary(text)
   }
 
+  const filteredPrimaryData = useMemo(() => {
+    if (primaryCountryData && primaryCountryData.length > 0) {
+      return primaryCountryData.filter((item) =>
+        item.name
+          .toLocaleLowerCase('en')
+          .includes(primaryQuery.toLocaleLowerCase('en'))
+      );
+    }
+  }, [primaryCountryData, primaryQuery]);
+
+  const filteredSecondaryData = useMemo(() => {
+    if (secondaryCountryData && secondaryCountryData.length > 0) {
+      return secondaryCountryData.filter((item) =>
+        item.name
+          .toLocaleLowerCase('en')
+          .includes(secondaryQuery.toLocaleLowerCase('en'))
+      );
+    }
+  }, [secondaryCountryData, secondaryQuery]);
+
+  const onPrimarySearch = (text) => {
+    setPrimaryQuery(text);
+  };
+
+  const onSecondarySearch = (text) => {
+    setSecondaryQuery(text);
+  }
+
   return (
     <ScrollView>
+
+
       <ListItem
         title="Username"
         secondaryText="Briankendalbucek"
       />
+
+
       <ListItem
         title="First name"
         secondaryText="Brian"
       />
+
+
       <ListItem
         title="Last name"
         secondaryText="Bucek"
       />
+
+
       <ListItem
         title="Change password"
       />
+
+
       <TextInput
         style={styles.input}
         variant='outlined'
         placeholder='Primary Budget'
         placeholderTextColor="grey"
         color='grey'
-        // onChangeText={onChangeSecondary}
+      // onChangeText={onChangeSecondary}
       />
-      <TextInput
-        style={styles.input}
-        variant='outlined'
-        placeholder='Primary Currency: Canadian'
-        placeholderTextColor="grey"
-        color='grey'
-        onChangeText={onChangePrimary}
+
+      <View style={{ flexDirection: 'row' }}>
+        <Button
+          title={"Primary Currency"}
+          tintColor='grey'
+          style={styles.bluebutton}
+          onPress={() => {
+            onOpen('country');
+          }}
+        />
+        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+          <Text>{String(primarySelected)}</Text>
+        </View>
+        <Picker
+          id="country"
+          data={filteredPrimaryData}
+          inputValue={primaryQuery}
+          searchable={true}
+          label="Select Primary Currency"
+          setSelected={(val) => setPrimarySelected(val.name)}
+          onSearch={onPrimarySearch}
+        />
+      </View>
+
+      <View style={{ flexDirection: 'row' }}>
+        <Button
+          title={"Secondary Currency"}
+          tintColor='grey'
+          style={styles.bluebutton}
+          onPress={() => {
+            onOpen('city');
+          }}
+        />
+        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+          <Text>{String(secondarySelected)}</Text>
+        </View>
+      </View>
+      <Picker
+        id="city"
+        data={filteredSecondaryData}
+        inputValue={secondaryQuery}
+        searchable={true}
+        label="Select Secondary Currency"
+        setSelected={(val) => setSecondarySelected(val.name)}
+        onSearch={onSecondarySearch}
       />
-      <TextInput
-        style={styles.input}
-        variant='outlined'
-        placeholder='Secondary Currency: Costa Rican'
-        placeholderTextColor="grey"
-        color='grey'
-        onChangeText={onChangeSecondary}
-      />
+
+
       <ListItem
         title="Notifications"
         trailing={
@@ -66,6 +152,8 @@ export default function User() {
         }
         onPress={() => setEnabled(!enabled)}
       />
+
+
       <ListItem
         title="Dark mode"
         trailing={
@@ -73,9 +161,13 @@ export default function User() {
         }
         onPress={() => setEnabledDark(!enabledDark)}
       />
+
+
       <ListItem
         title="Logout"
       />
+
+
     </ScrollView>
   )
 }
@@ -87,4 +179,15 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     marginVertical: 5
   },
+  bluebutton: {
+    padding: 10,
+    backgroundColor: 'lightblue',
+    color: 'grey',
+    width: 250
+    // marginHorizontal: 20,
+    // marginTop: 40,
+  },
+  buttonView: {
+    
+  }
 })
