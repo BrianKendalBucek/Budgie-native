@@ -77,7 +77,7 @@ function BottomTabNavigator() {
           ),
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         // style={styles.tabs}
         name={ROUTES.PLAY}
         component={Play}
@@ -87,7 +87,7 @@ function BottomTabNavigator() {
             <MaterialCommunityIcons name="bird" color={"grey"} size={26} />
           ),
         }}
-      />
+      /> */}
     </Tab.Navigator>
   );
 }
