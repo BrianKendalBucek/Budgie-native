@@ -81,7 +81,7 @@ export default function ConverterScreen() {
         style={styles.input}
         value={price}
         onChangeText={handlePriceChange}
-        placeholder="Price of item"
+        placeholder="Amount to convert"
         color="grey"
         variant='outlined'
       />
@@ -154,11 +154,10 @@ const styles = StyleSheet.create({
     marginTop: 40
   },
   bluebutton: {
-    padding: 10,
     backgroundColor: 'lightblue',
     color: 'grey',
     marginHorizontal: 20,
-    marginTop: 40,
+    marginTop: 20,
   },
   box: {
     height: 50,
@@ -170,7 +169,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 60,
-    marginBottom: 20,
+    marginTop: 50,
+    marginBottom: 10,
   }
 })

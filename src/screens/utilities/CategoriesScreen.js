@@ -164,8 +164,8 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: 'transparent',
     marginHorizontal: 20,
-    marginVertical: 5,
-    paddingTop: 15,
+    // marginVertical: 5,
+    paddingTop: 25,
   },
   bluebutton: {
     backgroundColor: 'lightblue',

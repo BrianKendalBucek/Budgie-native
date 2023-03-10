@@ -26,13 +26,13 @@ export default function User() {
     setSecondaryCountryData(countries);
   }, []);
 
-  const onChangePrimary = async (text = '') => {
-    setPrimary(text)
-  }
+  // const onChangePrimary = async (text = '') => {
+  //   setPrimary(text)
+  // }
 
-  const onChangeSecondary = async (text = '') => {
-    setSecondary(text)
-  }
+  // const onChangeSecondary = async (text = '') => {
+  //   setSecondary(text)
+  // }
 
   const filteredPrimaryData = useMemo(() => {
     if (primaryCountryData && primaryCountryData.length > 0) {
@@ -54,6 +54,21 @@ export default function User() {
     }
   }, [secondaryCountryData, secondaryQuery]);
 
+  const verifyPrimary = () => {
+    if (primarySelected) {
+      return `${String(primarySelected)}`
+    } else {
+      return "Select";
+    }
+  }
+  const verifySecondary = () => {
+    if (secondarySelected) {
+      return `${String(secondarySelected)}`;
+    } else {
+      return "Select"
+    }
+  }
+
   const onPrimarySearch = (text) => {
     setPrimaryQuery(text);
   };
@@ -63,7 +78,69 @@ export default function User() {
   }
 
   return (
-    <ScrollView>
+    <ScrollView style={{ backgroundColor: 'white' }}>
+
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 20 }}>
+        <Text
+          style={{ fontSize: 16, marginTop: 18, marginLeft: 15 }}
+        >Primary Budget</Text>
+        <TextInput
+          style={{ width: 220, paddingRight: 20, borderColor: 'lightgrey' }}
+          variant='outlined'
+          placeholder='Enter here'
+          placeholderTextColor="grey"
+          color='grey'
+        // onChangeText={onChangeSecondary}
+        />
+      </View>
+
+
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+        <View style={styles.currencyText}>
+          <Text style={styles.currencyFont}>Primary Currency</Text>
+        </View>
+        <Button
+          title={verifyPrimary(primarySelected)}
+          tintColor='grey'
+          style={styles.bluebutton}
+          onPress={() => {
+            onOpen('country');
+          }}
+        />
+        <Picker
+          id="country"
+          data={filteredPrimaryData}
+          inputValue={primaryQuery}
+          searchable={true}
+          label="Select Primary Currency"
+          setSelected={(val) => setPrimarySelected(val.name)}
+          onSearch={onPrimarySearch}
+        />
+      </View>
+
+
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+        <View style={styles.currencyText}>
+          <Text style={styles.currencyFont}>Secondary Currency</Text>
+        </View>
+        <Button
+          title={verifySecondary(secondarySelected)}
+          tintColor='grey'
+          style={styles.bluebutton}
+          onPress={() => {
+            onOpen('city');
+          }}
+        />
+      </View>
+      <Picker
+        id="city"
+        data={filteredSecondaryData}
+        inputValue={secondaryQuery}
+        searchable={true}
+        label="Select Secondary Currency"
+        setSelected={(val) => setSecondarySelected(val.name)}
+        onSearch={onSecondarySearch}
+      />
 
 
       <ListItem
@@ -88,76 +165,18 @@ export default function User() {
         title="Change password"
       />
 
-
-      <TextInput
-        style={styles.input}
-        variant='outlined'
-        placeholder='Primary Budget'
-        placeholderTextColor="grey"
-        color='grey'
-      // onChangeText={onChangeSecondary}
-      />
-
-      <View style={{ flexDirection: 'row' }}>
-        <Button
-          title={"Primary Currency"}
-          tintColor='grey'
-          style={styles.bluebutton}
-          onPress={() => {
-            onOpen('country');
-          }}
-        />
-        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-          <Text>{String(primarySelected)}</Text>
-        </View>
-        <Picker
-          id="country"
-          data={filteredPrimaryData}
-          inputValue={primaryQuery}
-          searchable={true}
-          label="Select Primary Currency"
-          setSelected={(val) => setPrimarySelected(val.name)}
-          onSearch={onPrimarySearch}
-        />
-      </View>
-
-      <View style={{ flexDirection: 'row' }}>
-        <Button
-          title={"Secondary Currency"}
-          tintColor='grey'
-          style={styles.bluebutton}
-          onPress={() => {
-            onOpen('city');
-          }}
-        />
-        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-          <Text>{String(secondarySelected)}</Text>
-        </View>
-      </View>
-      <Picker
-        id="city"
-        data={filteredSecondaryData}
-        inputValue={secondaryQuery}
-        searchable={true}
-        label="Select Secondary Currency"
-        setSelected={(val) => setSecondarySelected(val.name)}
-        onSearch={onSecondarySearch}
-      />
-
-
       <ListItem
         title="Notifications"
         trailing={
-          <Switch value={enabled} onValueChange={() => setEnabled(!enabled)} />
+          <Switch style={styles.switch} value={enabled} onValueChange={() => setEnabled(!enabled)} />
         }
         onPress={() => setEnabled(!enabled)}
       />
 
-
       <ListItem
         title="Dark mode"
         trailing={
-          <Switch value={enabledDark} onValueChange={() => setEnabledDark(!enabledDark)} />
+          <Switch style={styles.switch} value={enabledDark} onValueChange={() => setEnabledDark(!enabledDark)} />
         }
         onPress={() => setEnabledDark(!enabledDark)}
       />
@@ -180,14 +199,24 @@ const styles = StyleSheet.create({
     marginVertical: 5
   },
   bluebutton: {
-    padding: 10,
+    marginVertical: 10,
     backgroundColor: 'lightblue',
     color: 'grey',
-    width: 250
+    width: 200,
+    marginRight: 20
     // marginHorizontal: 20,
     // marginTop: 40,
   },
-  buttonView: {
-    
+  currencyText: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    // fontSize: 20,
+    paddingLeft: 16
+  },
+  currencyFont: {
+    fontSize: 16
+  },
+  switch: {
+    marginRight: 30
   }
 })
