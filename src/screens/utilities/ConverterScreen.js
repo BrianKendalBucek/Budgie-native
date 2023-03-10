@@ -2,11 +2,15 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { View, ScrollView, SafeAreaView, StyleSheet, Text, TouchableOpacity, Keyboard } from 'react-native';
 import { Box, TextInput, Button } from "@react-native-material/core";
 import { Picker, onOpen } from 'react-native-actions-sheet-picker';
+import axios from 'axios';
 
 
-import countries from './countries.json';
+import countries from './currency.json';
 
-export default function ConverterScreen() {
+// const BASE_URL = "https://api.currencyapi.com/v3/latest?apikey=vLzph0kSqJvRoCI7IvIcYhBMgwgV3KkONWlMEmLi&currencies=";
+
+
+export default function Play() {
   const [primaryCountryData, setPrimaryCountryData] = useState([]);
   const [primarySelected, setPrimarySelected] = useState(undefined);
   const [primaryQuery, setPrimaryQuery] = useState('');
@@ -15,11 +19,36 @@ export default function ConverterScreen() {
   const [secondarySelected, setSecondarySelected] = useState(undefined);
   const [secondaryQuery, setSecondaryQuery] = useState('');
 
-  const [price, setPrice] = useState('');
+  const [primaryAmount, setPrimaryAmount] = useState('');
+  const [secondaryAmount, setSecondaryAmount] = useState('');
+
+  // useEffect(() => {
+  //   axios.get(BASE_URL)
+  //     .then(response => {
+  //       console.log(response.data);
+  //     })
+  //     .catch(error => {
+  //       console.error(error);
+  //     });
+  // }, [])
+
+  // console.log("**********countries", countries.data.ADA.code);
 
   useEffect(() => {
-    setPrimaryCountryData(countries);
-    setSecondaryCountryData(countries);
+    function convert_to_objects(data) {
+      const obj_list = [];
+      for (let code in data) {
+        const values = data[code];
+        const obj = { "name": code, "value": values["value"] };
+        obj_list.push(obj);
+      }
+      return obj_list;
+    }
+
+    const arrayOfObj = convert_to_objects(countries.data);
+
+    setPrimaryCountryData(arrayOfObj);
+    setSecondaryCountryData(arrayOfObj);
   }, []);
 
 
@@ -33,7 +62,6 @@ export default function ConverterScreen() {
     }
   }, [primaryCountryData, primaryQuery]);
 
-
   const filteredSecondaryData = useMemo(() => {
     if (secondaryCountryData && secondaryCountryData.length > 0) {
       return secondaryCountryData.filter((item) =>
@@ -46,16 +74,16 @@ export default function ConverterScreen() {
 
   const verifyPrimary = () => {
     if (primarySelected) {
-      return `From: ${String(primarySelected)}`
+      return `Chosen Currency: ${String(primarySelected)}`
     } else {
-      return "From";
+      return "Choose Currency";
     }
   }
   const verifySecondary = () => {
     if (secondarySelected) {
-      return `To: ${String(secondarySelected)}`;
+      return `Chosen Currency: ${String(secondarySelected)}`;
     } else {
-      return "To"
+      return "Choose Currency"
     }
   }
 
@@ -67,29 +95,28 @@ export default function ConverterScreen() {
     setSecondaryQuery(text);
   }
 
-  const handlePriceChange = (text) => {
-    setPrice(text);
+  const handlePrimaryAmountChange = (text) => {
+    setPrimaryAmount(text);
   };
+
+  const handleSecondaryAmountChange = (text) => {
+    setSecondaryAmount(text);
+  }
+
 
   return (
     <SafeAreaView style={styles.pickerContainer}>
+
+      {/* RESULTS BOX
       <View style={styles.boxposition}>
         <Box style={styles.box} />
-      </View>
-      <TextInput
-        style={styles.input}
-        value={price}
-        onChangeText={handlePriceChange}
-        placeholder="Amount to convert"
-        color="grey"
-        variant='outlined'
-      />
+      </View> */}
 
-
+      {/* FIRST BUTTON AND INPUT */}
       <Button
         title={verifyPrimary(primarySelected)}
         tintColor='grey'
-        style={styles.bluebutton}
+        style={styles.topBlueButton}
         onPress={() => {
           onOpen('country');
         }}
@@ -103,8 +130,17 @@ export default function ConverterScreen() {
         setSelected={(val) => setPrimarySelected(val.name)}
         onSearch={onPrimarySearch}
       />
+      <TextInput
+        style={styles.input}
+        value={primaryAmount}
+        onChangeText={handlePrimaryAmountChange}
+        placeholder="Enter amount"
+        color="grey"
+        variant='outlined'
+      />
 
 
+      {/* FIRST BUTTON AND INPUT */}
       <Button
         title={verifySecondary(secondarySelected)}
         tintColor='grey'
@@ -122,6 +158,17 @@ export default function ConverterScreen() {
         setSelected={(val) => setSecondarySelected(val.name)}
         onSearch={onSecondarySearch}
       />
+      <TextInput
+        style={styles.input}
+        value={secondaryAmount}
+        onChangeText={handleSecondaryAmountChange}
+        placeholder="Enter amount"
+        color="grey"
+        variant='outlined'
+      />
+
+
+      {/* SUBMIT BUTTON */}
       <Button
         title="Submit"
         tintColor='grey'
@@ -132,7 +179,7 @@ export default function ConverterScreen() {
         }}
       />
     </SafeAreaView>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -152,13 +199,18 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     variant: 'filled',
     marginHorizontal: 20,
-    marginTop: 40
+    marginBottom: 20,
+  },
+  topBlueButton: {
+    marginTop: 30,
+    backgroundColor: 'lightblue',
+    color: 'grey',
+    marginHorizontal: 20,
   },
   bluebutton: {
     backgroundColor: 'lightblue',
     color: 'grey',
     marginHorizontal: 20,
-    marginTop: 20,
   },
   box: {
     height: 50,
@@ -171,6 +223,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 50,
-    marginBottom: 10,
+    marginBottom: 30,
   }
-})
+});
