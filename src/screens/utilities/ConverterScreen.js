@@ -137,6 +137,7 @@ export default function ConverterScreen() {
 
 const styles = StyleSheet.create({
   pickerContainer: {
+    backgroundColor: '#eee',
     // flex: 1,
     // alignItems: 'center',
     // marginHorizontal: 20

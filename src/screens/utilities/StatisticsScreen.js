@@ -6,8 +6,10 @@ import CircularProgress from 'react-native-circular-progress-indicator';
 export default function StatisticsScreen() {
 
   return (
-    <ScrollView keyboardShouldPersistTaps='handled'>
+    <ScrollView style={{backgroundColor: '#eee'}} keyboardShouldPersistTaps='handled'>
       <View style={styles.container}>
+
+
         <View>
           <Text
             style={styles.circle}
@@ -26,6 +28,8 @@ export default function StatisticsScreen() {
             />
           </View>
         </View>
+
+
         <View>
           <Text
             style={styles.circle}
@@ -44,6 +48,8 @@ export default function StatisticsScreen() {
             />
           </View>
         </View>
+
+
         <View>
           <Text
             style={styles.circle}
@@ -89,9 +95,9 @@ export default function StatisticsScreen() {
           height={220}
           // yAxisLabel={'Rs'}
           chartConfig={{
-            backgroundColor: '#black',
-            backgroundGradientFrom: '#eff3ff',
-            backgroundGradientTo: '#efefef',
+            // backgroundColor: '#black',
+            backgroundGradientFrom: '#eee',
+            backgroundGradientTo: 'lightblue',
             decimalPlaces: 2, // optional, defaults to 2dp
             color: (opacity = 255) => `rgba(0,143,251, ${opacity})`,
             style: {
@@ -100,7 +106,7 @@ export default function StatisticsScreen() {
           }}
           bezier
           style={{
-            marginVertical: 1,
+            marginVertical: 5,
             borderRadius: 16,
           }}
         />
@@ -111,60 +117,64 @@ export default function StatisticsScreen() {
         style={styles.title}
       >Monthly by Category</Text>
 
-      <BarChart
-        data={{
-          labels: [
-            'Groceries',
-            'Rent',
-            'Fun',
-            'Utilities',
-            'School',
-            'Other',
-          ],
-          datasets: [
-            {
-              data: [20, 45, 28, 80, 99, 43],
-              colors: [
-                (opacity = 1) => '#008ffb',
-                (opacity = 1) => '#00e396',
-                (opacity = 1) => '#feb019',
-                (opacity = 1) => '#ff4560',
-                (opacity = 1) => '#775dd0',
-                (opacity = 1) => '#3f51b5',
-                (opacity = 1) => '#3f51b5',
-                (opacity = 1) => '#03A9F4',
-                (opacity = 1) => '#4CAF50',
-                (opacity = 1) => '#F9CE1D',
-                (opacity = 1) => '#FF9800',
-                (opacity = 1) => '#33B2DF',
-                (opacity = 1) => '#546E7A',
-                (opacity = 1) => '#D4526E',
-                (opacity = 1) => '#13D8AA',
-              ]
+      <View style={{flexDirection: 'row'}}>
+          <View style={{width: 8}} />
+        <BarChart
+          data={{
+            labels: [
+              'Groceries',
+              'Rent',
+              'Fun',
+              'Utilities',
+              'School',
+              'Other',
+            ],
+            datasets: [
+              {
+                data: [20, 45, 28, 80, 99, 43],
+                colors: [
+                  (opacity = 1) => '#008ffb',
+                  (opacity = 1) => '#00e396',
+                  (opacity = 1) => '#feb019',
+                  (opacity = 1) => '#ff4560',
+                  (opacity = 1) => '#775dd0',
+                  (opacity = 1) => '#3f51b5',
+                  (opacity = 1) => '#3f51b5',
+                  (opacity = 1) => '#03A9F4',
+                  (opacity = 1) => '#4CAF50',
+                  (opacity = 1) => '#F9CE1D',
+                  (opacity = 1) => '#FF9800',
+                  (opacity = 1) => '#33B2DF',
+                  (opacity = 1) => '#546E7A',
+                  (opacity = 1) => '#D4526E',
+                  (opacity = 1) => '#13D8AA',
+                ]
+              },
+            ],
+          }}
+          width={Dimensions.get('window').width - 16}
+          height={220}
+          // yAxisLabel={'Rs'}
+          chartConfig={{
+            backgroundColor: 'transparent',
+            backgroundGradientFrom: '#eee',
+            backgroundGradientTo: 'lightblue',
+            decimalPlaces: 2,
+            color: (opacity = 1) => `rgba(0,143,251, ${opacity})`,
+            style: {
+              borderRadius: 16,
             },
-          ],
-        }}
-        width={Dimensions.get('window').width - 16}
-        height={220}
-        // yAxisLabel={'Rs'}
-        chartConfig={{
-          backgroundColor: 'transparent',
-          backgroundGradientFrom: '#eff3ff',
-          backgroundGradientTo: '#efefef',
-          decimalPlaces: 2,
-          color: (opacity = 1) => `rgba(0,143,251, ${opacity})`,
-          style: {
+          }}
+          style={{
+            marginVertical: 5,
             borderRadius: 16,
-          },
-        }}
-        style={{
-          marginVertical: 1,
-          borderRadius: 16,
-        }}
-        withCustomBarColorFromData={true}
-        flatColor={true}
-        showBarTops={true}
-      />
+          }}
+          withCustomBarColorFromData={true}
+          flatColor={true}
+          showBarTops={true}
+        />
+      </View>
+
     </ScrollView>
   )
 }
@@ -174,7 +184,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginBottom: 30
+    marginBottom: 30,
   },
   circle: {
     paddingTop: 20,

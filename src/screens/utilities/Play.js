@@ -98,6 +98,7 @@ export default function Play() {
 
 const styles = StyleSheet.create({
   pickerContainer: {
+    backgroundColor: '#eee',
     flex: 1,
     alignItems: 'center',
   },

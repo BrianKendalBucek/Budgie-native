@@ -48,7 +48,7 @@ export default function CategoriesScreen({categoryItems, setCategoryItems}) {
 
   return (
 
-    <ScrollView keyboardShouldPersistTaps='handled'>
+    <ScrollView style={{backgroundColor: '#eee'}} keyboardShouldPersistTaps='handled'>
       <View>
         <TextInput
           value={category}

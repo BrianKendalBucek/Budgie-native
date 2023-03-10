@@ -142,7 +142,7 @@ const [debitButton, setDebitButton] = useState(false);
   }
 
   return (
-    <ScrollView keyboardShouldPersistTaps='handled'>
+    <ScrollView style={{backgroundColor: '#eee'}} keyboardShouldPersistTaps='handled'>
       <View>
 
 

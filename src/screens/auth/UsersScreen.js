@@ -78,7 +78,7 @@ export default function User() {
   }
 
   return (
-    <ScrollView style={{ backgroundColor: 'white' }}>
+    <ScrollView style={{ backgroundColor: '#eee' }}>
 
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 20 }}>
         <Text
@@ -119,7 +119,7 @@ export default function User() {
       </View>
 
 
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 15 }}>
         <View style={styles.currencyText}>
           <Text style={styles.currencyFont}>Secondary Currency</Text>
         </View>
