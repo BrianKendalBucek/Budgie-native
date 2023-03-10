@@ -174,15 +174,6 @@ export default function User() {
       />
 
       <ListItem
-        title="Dark mode"
-        trailing={
-          <Switch style={styles.switch} value={enabledDark} onValueChange={() => setEnabledDark(!enabledDark)} />
-        }
-        onPress={() => setEnabledDark(!enabledDark)}
-      />
-
-
-      <ListItem
         title="Logout"
       />
 
