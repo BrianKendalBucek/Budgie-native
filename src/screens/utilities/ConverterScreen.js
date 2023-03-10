@@ -85,6 +85,8 @@ export default function ConverterScreen() {
         color="grey"
         variant='outlined'
       />
+
+
       <Button
         title={verifyPrimary(primarySelected)}
         tintColor='grey'
@@ -93,7 +95,6 @@ export default function ConverterScreen() {
           onOpen('country');
         }}
       />
-      {/* <Text style={{ padding: 10 }}>Chosen : {JSON.stringify(primarySelected)}</Text> */}
       <Picker
         id="country"
         data={filteredPrimaryData}
@@ -104,6 +105,7 @@ export default function ConverterScreen() {
         onSearch={onPrimarySearch}
       />
 
+
       <Button
         title={verifySecondary(secondarySelected)}
         tintColor='grey'
@@ -112,7 +114,6 @@ export default function ConverterScreen() {
           onOpen('city');
         }}
       />
-      {/* <Text style={{ padding: 10 }}>Chosen : {JSON.stringify(secondarySelected)}</Text> */}
       <Picker
         id="city"
         data={filteredSecondaryData}
