@@ -19,11 +19,9 @@ export default function ConverterScreen() {
 
   useEffect(() => {
     setPrimaryCountryData(countries);
-  }, []);
-
-  useEffect(() => {
     setSecondaryCountryData(countries);
   }, []);
+
 
   const filteredPrimaryData = useMemo(() => {
     if (primaryCountryData && primaryCountryData.length > 0) {
@@ -34,6 +32,7 @@ export default function ConverterScreen() {
       );
     }
   }, [primaryCountryData, primaryQuery]);
+
 
   const filteredSecondaryData = useMemo(() => {
     if (secondaryCountryData && secondaryCountryData.length > 0) {

@@ -35,37 +35,30 @@ export default function Play() {
   // console.log("**********countries", countries.data.ADA.code);
 
   useEffect(() => {
-    setPrimaryCountryData(countries.data);
-  }, []);
-
-  useEffect(() => {
-    setSecondaryCountryData(countries.data);
-  }, []);
-
-  const filterCurrencyObj = (data) => {
-    const codes = [];
-
-    for (const key in data) {
-      if (data.hasOwnProperty(key)) {
-        codes.push(data[key].code);
+    function convert_to_objects(data) {
+      const obj_list = [];
+      for (let code in data) {
+        const values = data[code];
+        const obj = { "name": code, "value": values["value"] };
+        obj_list.push(obj);
       }
+      return obj_list;
     }
 
-    console.log("CODES", codes);
-  }
+    const arrayOfObj = convert_to_objects(countries.data);
 
-  filterCurrencyObj(countries.data);
+    setPrimaryCountryData(arrayOfObj);
+    setSecondaryCountryData(arrayOfObj);
+  }, []);
 
 
   const filteredPrimaryData = useMemo(() => {
     if (primaryCountryData && primaryCountryData.length > 0) {
-
-      // return primaryCountryData.filter((item) =>
-      //   item.name
-      //     // .console.log("FILTRATION", item.name)
-      //     .toLocaleLowerCase('en')
-      //     .includes(primaryQuery.toLocaleLowerCase('en'))
-      // );
+      return primaryCountryData.filter((item) =>
+        item.name
+          .toLocaleLowerCase('en')
+          .includes(primaryQuery.toLocaleLowerCase('en'))
+      );
     }
   }, [primaryCountryData, primaryQuery]);
 
@@ -81,14 +74,14 @@ export default function Play() {
 
   const verifyPrimary = () => {
     if (primarySelected) {
-      return `${String(primarySelected)}`
+      return `Chosen Currency: ${String(primarySelected)}`
     } else {
       return "Choose Currency";
     }
   }
   const verifySecondary = () => {
     if (secondarySelected) {
-      return `${String(secondarySelected)}`;
+      return `Chosen Currency: ${String(secondarySelected)}`;
     } else {
       return "Choose Currency"
     }
