@@ -13,10 +13,10 @@ function TopBar() {
         tintColor='grey'
 
         leading={props => (
-            <Image
-              style={{ width: 30, height: 30 }}
-              source={require('../../assets/budgie-icon.png')}
-            />
+          <Image
+            style={styles.logo}
+            source={require('../../assets/budgie-icon.png')}
+          />
         )}
       />
     </>
@@ -30,6 +30,10 @@ const styles = StyleSheet.create({
     height: 80,
     paddingTop: 30,
     paddingLeft: 5,
+  },
+  logo: {
+    width: 30,
+    height: 30,
   }
 })
 

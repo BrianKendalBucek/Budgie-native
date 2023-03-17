@@ -11,6 +11,68 @@ import countries from './countries.json';
 
 export default function ExpendituresScreen({ categoryItems }) {
 
+// Remember to reference Budgie original for method
+// Budgie-api country code recognition file for search?
+
+// MANAGEMENT OF EXPENDITURE DATA FOR CALCULATIONS
+// Could do backend query addition of expenditures for charts
+// 
+// -FRONTEND METHOD: (But do calculations from looping through objects)
+// With every expenditure, the charts must update immediately
+// 
+// --TOFROM CONVERSION RESULTING IN PRIMARY COST
+// const fromValue = data.____.value
+// const fromInput = input value
+// const usdOfFrom = inputValue/fromValue
+// const toInput = input value
+// 
+// const fromTo = (usdOfFrom, toInput) {
+//    
+//    if (fromInput > 0) {
+//        return usdOfFrom * toInput;
+//    } else {
+//        return 'Input amount';
+//    }
+// }
+// 
+// --PRIMARY ACCOUNT
+// const primaryBudget = (from usersScreen)
+// must subtract every credit and debit purchase including atm withdrawls
+// must not factor in secondary currency cash expenditures
+// BUILD const primaryAccountCalc = object loop function adding 'converted' !cash
+// Parameters: type !cash, converted
+// 
+// const primaryAccountCalc = (type, converted, objects, budget) => {
+  //    forIn ... (Logic to loop through objects) {
+  //      if (objects.type !== cash) {
+  //        setPrimaryAccount += objects.converted;
+//            const primaryChart = budget - primaryAccount;
+//    }
+//    return primaryChart;
+//  }
+// }
+// Then pass primaryChart to StatisticsScreen
+// 
+// 
+// --EVERY EXPENSE
+// Same as PrimaryChart/Account except: doesn't factor atm withdrawls as an expenditure
+// ignore debit atm withdrawls
+// credit, debit, and cash purchases included in calculation
+// credit and debit are in primary, cash 
+// ???How subtract cash expense from budget if exchange rate at time of atm withdrawl???
+// Technically you'd have to subtract by original exchange value
+// Withdrawls at different dates shouldn't be combined???
+// objects will include 'converted' which could be used in this case
+// could create an array of arrays or objects of withdrawls in order including their 'converted' number, and subtract in order of earliest to latest??
+// 
+// 
+// --CASH REMAINING
+// function that recognizes every debit or credit withdrawl, and adds to const secondaryCashAvail
+// function that loops through objects, recognizes cash type, const secondaryCashExp += secondary price
+// function that subtracts secondaryCashExp from secondaryCashAvail resulting in chart data const secondaryCashSpending
+// ALL OF THESE CAN PROBABLY BE DONE IN THE SUBMIT HANDLER
+
+
 // CATEGORY ARRAY INTO AN OBJECT
   function createObjectArray(array) {
     return array.map((item, index) => {
@@ -24,10 +86,16 @@ export default function ExpendituresScreen({ categoryItems }) {
 // STORES OBJECT IN VARIABLE
   const dataCateg = createObjectArray(categoryItems);
 
+// CREATS ARRAY OF EXPENDITURE INFORMATION
   const [objects, setObjects] = useState([]);
   const [type, setType] = useState('');
   const [currency, setCurrency] = useState('');
   const [price, setPrice] = useState('');
+// const [usdOf, setUsdOf] = useState('');
+// const [converted, setConverted] = useState(''); (converted to primary)
+// const [primaryAccount, setPrimaryAccount] = useState('');
+// const [everyExpense, setEveryExpense] = useState('');
+// const [cashRemaining, setCashRemaining] = useState('');
   const [date, setDate] = useState('');
   const [category, setCategory] = useState('');
   const [title, setTitle] = useState('');
@@ -38,10 +106,22 @@ export default function ExpendituresScreen({ categoryItems }) {
 // MODAL AND DELETION
   const [selectedItem, setSelectedItem] = useState(null);
 
-// DATE
+// DATE PICKER
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
-// CURRENCY
+  const handleDateChange = (text) => {
+    setDate(String(text));
+    hideDatePicker();
+  };
+
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+// CURRENCY PICKER
   const [data, setData] = useState([]);
   const [query, setQuery] = useState('');
   // const [selected, setSelected] = useState(undefined);
@@ -94,12 +174,6 @@ const [debitButton, setDebitButton] = useState(false);
     setPrice(text);
   };
 
-// DATE
-  const handleDateChange = (text) => {
-    setDate(String(text));
-    hideDatePicker();
-  };
-
 // TITLE
   const handleTitleChange = (text) => {
     setTitle(text);
@@ -111,6 +185,10 @@ const [debitButton, setDebitButton] = useState(false);
       alert("Please fill in all the required fields.");
       return;
     }
+
+// this is where the conversion function can go, and can setConverted to += ###
+// the converted # must be added to the expenditure object BECAUSE this will be the accurate conversion at time of purchase
+
     const newObject = { key: Date.now(), type, price, currency, date, category, title };
     setObjects([...objects, newObject]);
     setType('');
@@ -125,15 +203,7 @@ const [debitButton, setDebitButton] = useState(false);
 
   };
 
-// DATE
-  const showDatePicker = () => {
-    setDatePickerVisibility(true);
-  };
-  const hideDatePicker = () => {
-    setDatePickerVisibility(false);
-  };
-
-// CATEGORY DELETION
+// CATEGORY DELETION (Change name to expenditure deletion)
   const deleteCategory = (index) => {
     let itemsCopy = [...objects];
     itemsCopy.splice(index, 1);
@@ -258,7 +328,7 @@ const [debitButton, setDebitButton] = useState(false);
       </View>
 
 
-      {/* COMPLETE RENDERED EXPENSE */}
+      {/* COMPLETE RENDERED EXPENSE LIST */}
       <View style={{ marginTop: 20 }}>
         <View>
           {
@@ -281,7 +351,7 @@ const [debitButton, setDebitButton] = useState(false);
       </View>
 
 
-      {/* MODAL */}
+      {/* MODAL OF EACH EXPENDITURES DATA */}
       <View style={styles.centeredView}>
         <Modal
           animationType="slide"

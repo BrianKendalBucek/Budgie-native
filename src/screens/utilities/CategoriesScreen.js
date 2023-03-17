@@ -2,22 +2,25 @@ import React, { useState } from 'react';
 import { ScrollView, View, Text, TouchableOpacity, Keyboard, StyleSheet, Modal, KeyboardAvoidingView } from 'react-native';
 import { TextInput, ListItem, Button, select } from "@react-native-material/core";
 
-export default function CategoriesScreen({categoryItems, setCategoryItems}) {
+export default function CategoriesScreen({ categoryItems, setCategoryItems }) {
 
-// Need to have categoryItems be an array of objects
-// Key being id: with a unique number
-// value being name: with each categoryItem as the value
+  // Need to have categoryItems be an array of objects
+  // Key being id: with a unique number
+  // value being name: with each categoryItem as the value
 
+  // CATEGORY SETTER
   const [category, setCategory] = useState();
 
-  // console.log("CategoriesScreen:", categoryItems);
-
-  const [modalVisible, setModalVisible] = useState(false);
-
+  // SELECTED CATEGORY
   const [selectedItem, setSelectedItem] = useState(null);
 
+  // EDITING CATEGORY NAME
   const [edit, setEdit] = useState("");
 
+  // MODAL TOGGLE
+  const [modalVisible, setModalVisible] = useState(false);
+
+  // MODAL SAVE BUTTON UPDATER FUNCTION
   const onSave = () => {
     if (!edit) {
       return;
@@ -30,6 +33,7 @@ export default function CategoriesScreen({categoryItems, setCategoryItems}) {
     setEdit("");
   };
 
+  // CATEGORY CREATION INPUT HANDLER
   const handleAddCategory = () => {
     Keyboard.dismiss();
     if (!category) {
@@ -39,6 +43,7 @@ export default function CategoriesScreen({categoryItems, setCategoryItems}) {
     setCategory('');
   }
 
+  // CATEGORY DELETION FUNCTION
   const deleteCategory = (index) => {
     let itemsCopy = [...categoryItems];
     itemsCopy.splice(index, 1);
@@ -48,7 +53,9 @@ export default function CategoriesScreen({categoryItems, setCategoryItems}) {
 
   return (
 
-    <ScrollView style={{backgroundColor: '#eee'}} keyboardShouldPersistTaps='handled'>
+    <ScrollView style={styles.scrollViewBackground} keyboardShouldPersistTaps='handled'>
+
+      {/* CATEGORY CREATION INPUT */}
       <View>
         <TextInput
           value={category}
@@ -60,6 +67,8 @@ export default function CategoriesScreen({categoryItems, setCategoryItems}) {
         // onSubmitEditing={() => { this.onSubmit(this.state.searchText) }}
         />
       </View>
+
+      {/* ADD CATEGORY BUTTON */}
       <View>
         <TouchableOpacity>
           <Button
@@ -70,6 +79,8 @@ export default function CategoriesScreen({categoryItems, setCategoryItems}) {
           />
         </TouchableOpacity>
       </View>
+
+      {/* CREATED CATEGORIES LIST */}
       <View>
         {
           categoryItems.map((item, index) => {
@@ -88,6 +99,8 @@ export default function CategoriesScreen({categoryItems, setCategoryItems}) {
           })
         }
       </View>
+
+      {/* CATEGORY EDITING MODAL */}
       <View style={styles.centeredView} >
         <Modal
           animationType="slide"
@@ -97,9 +110,12 @@ export default function CategoriesScreen({categoryItems, setCategoryItems}) {
             Alert.alert('Modal has been closed.');
             setModalVisible(!modalVisible);
           }}>
+
           <KeyboardAvoidingView behavior="padding" style={styles.keyboardAvoidingView}>
             <View style={styles.centeredView}>
               <View style={styles.modalView}>
+
+                {/* EDIT CATEGORY NAME INPUT */}
                 <Text
                   style={styles.modalText}
                 >Edit Category Name</Text>
@@ -111,6 +127,8 @@ export default function CategoriesScreen({categoryItems, setCategoryItems}) {
                   value={edit}
                   onChangeText={(text) => setEdit(text)}
                 />
+
+                {/* SAVE EDITED CATEGORY BUTTON */}
                 <Button
                   style={[styles.closesavebuttons, { marginTop: 20 }]}
                   onPress={onSave}
@@ -119,6 +137,8 @@ export default function CategoriesScreen({categoryItems, setCategoryItems}) {
                 />
                 <>
                   <View>
+
+                    {/* DELETE CATEGORY BUTTON */}
                     <Button
                       style={[styles.redbutton]}
                       onPress={() => deleteCategory(categoryItems.indexOf(selectedItem))}
@@ -126,6 +146,8 @@ export default function CategoriesScreen({categoryItems, setCategoryItems}) {
                       tintColor='white'
                     >
                     </Button>
+
+                    {/* CLOSE MODAL BUTTON */}
                     <Button
                       style={styles.closesavebuttons}
                       onPress={() => setSelectedItem(null)}
@@ -142,12 +164,16 @@ export default function CategoriesScreen({categoryItems, setCategoryItems}) {
           </KeyboardAvoidingView>
         </Modal>
       </View>
+
     </ScrollView>
 
   )
 }
 
 const styles = StyleSheet.create({
+  scrollViewBackground: {
+    backgroundColor: '#eee',
+  },
   keyboardAvoidingView: {
     flex: 1,
   },
@@ -164,7 +190,6 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: 'transparent',
     marginHorizontal: 20,
-    // marginVertical: 5,
     paddingTop: 25,
   },
   bluebutton: {
@@ -194,7 +219,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 20,
     padding: 25,
-    // alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,

@@ -6,10 +6,11 @@ import CircularProgress from 'react-native-circular-progress-indicator';
 export default function StatisticsScreen() {
 
   return (
-    <ScrollView style={{backgroundColor: '#eee'}} keyboardShouldPersistTaps='handled'>
+    <ScrollView style={styles.scrollViewBackground} keyboardShouldPersistTaps='handled'>
       <View style={styles.container}>
 
 
+        {/* CIRCLE PROGRESS - PRIMARY ACCOUNT */}
         <View>
           <Text
             style={styles.circle}
@@ -17,6 +18,7 @@ export default function StatisticsScreen() {
           <View>
             <CircularProgress
               radius={50}
+              // DUMMY DATA
               value={85}
               textColor='#222'
               fontSize={20}
@@ -30,6 +32,7 @@ export default function StatisticsScreen() {
         </View>
 
 
+        {/* CIRCLE PROGRESS - EVERY EXPENSE */}
         <View>
           <Text
             style={styles.circle}
@@ -37,6 +40,7 @@ export default function StatisticsScreen() {
           <View>
             <CircularProgress
               radius={50}
+              // DUMMY DATA
               value={50}
               textColor='#222'
               fontSize={20}
@@ -50,6 +54,7 @@ export default function StatisticsScreen() {
         </View>
 
 
+        {/* CIRCLE PROGRESS - CASH REMAINING */}
         <View>
           <Text
             style={styles.circle}
@@ -57,6 +62,7 @@ export default function StatisticsScreen() {
           <View>
             <CircularProgress
               radius={50}
+              // DUMMY DATA
               value={40}
               textColor='#222'
               fontSize={20}
@@ -71,12 +77,15 @@ export default function StatisticsScreen() {
       </View>
 
 
+      {/* WEEKLY EXPENDITURES LINE CHART */}
       <Text
         style={styles.title}
       >Weekly</Text>
       <View style={styles.container}>
         <LineChart
+
           data={{
+            // DUMMY DATA
             labels: ['1', '7', '14', '21', '28', '30'],
             datasets: [
               {
@@ -91,6 +100,7 @@ export default function StatisticsScreen() {
               },
             ],
           }}
+
           width={Dimensions.get('window').width - 16} // from react-native
           height={220}
           // yAxisLabel={'Rs'}
@@ -105,22 +115,24 @@ export default function StatisticsScreen() {
             },
           }}
           bezier
-          style={{
-            marginVertical: 5,
-            borderRadius: 16,
-          }}
+          style={styles.chart}
         />
       </View>
 
 
+      {/* MOTHLY EXPENDITURES BAR CHART */}
       <Text
         style={styles.title}
       >Monthly by Category</Text>
 
-      <View style={{flexDirection: 'row'}}>
-          <View style={{width: 8}} />
+      <View style={{ flexDirection: 'row' }}>
+        {/* VIEW HACK TO CENTER BAR CHART */}
+        <View style={{ width: 8 }} />
+
         <BarChart
+
           data={{
+            // DUMMY DATA
             labels: [
               'Groceries',
               'Rent',
@@ -152,6 +164,7 @@ export default function StatisticsScreen() {
               },
             ],
           }}
+
           width={Dimensions.get('window').width - 16}
           height={220}
           // yAxisLabel={'Rs'}
@@ -165,10 +178,7 @@ export default function StatisticsScreen() {
               borderRadius: 16,
             },
           }}
-          style={{
-            marginVertical: 5,
-            borderRadius: 16,
-          }}
+          style={styles.chart}
           withCustomBarColorFromData={true}
           flatColor={true}
           showBarTops={true}
@@ -180,6 +190,9 @@ export default function StatisticsScreen() {
 }
 
 const styles = StyleSheet.create({
+  scrollViewBackground: {
+    backgroundColor: '#eee',
+  },
   container: {
     flex: 1,
     flexDirection: 'row',
@@ -189,10 +202,14 @@ const styles = StyleSheet.create({
   circle: {
     paddingTop: 20,
     paddingBottom: 10,
-    color: 'grey'
+    color: 'grey',
   },
   title: {
     paddingLeft: 20,
-    color: 'grey'
-  }
+    color: 'grey',
+  },
+  chart: {
+    marginVertical: 5,
+    borderRadius: 16,
+  },
 });

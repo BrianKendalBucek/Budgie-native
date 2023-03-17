@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ScrollView, SafeAreaView, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -11,6 +11,8 @@ import { StatisticsScreen, ExpendituresScreen, CategoriesScreen, ConverterScreen
 const Tab = createMaterialBottomTabNavigator();
 
 function BottomTabNavigator() {
+
+  // CATEGORIES LIST PASSED IN TO COMPONENTS THROUGH NAVIGATION BAR
   const { categoryItems, setCategoryItems } = useCategoryItems();
 
   return (
@@ -19,22 +21,25 @@ function BottomTabNavigator() {
       activeColor="#1976d2"
       barStyle={{ backgroundColor: 'lightblue', height: 80 }}
     >
+
+      {/* STATISTICS TAB */}
       <Tab.Screen
-        // style={styles.tabs}
         name={ROUTES.STATISTICS}
         component={StatisticsScreen}
         options={{
           tabBarLabel: false,
-          tabBarIcon: ({ color }) => (
+          tabBarIcon: () => (
             <MaterialCommunityIcons name="chart-box" color={"grey"} size={26} />
           ),
         }}
       />
+
+      {/* EXPENDITURES TAB */}
       <Tab.Screen
         name={ROUTES.EXPENDITURES}
         options={{
           tabBarLabel: false,
-          tabBarIcon: ({ color }) => (
+          tabBarIcon: () => (
             <MaterialCommunityIcons name="wallet" color={"grey"} size={26} />
           ),
         }}
@@ -43,11 +48,13 @@ function BottomTabNavigator() {
           categoryItems={categoryItems}
         />}
       </Tab.Screen>
+
+      {/* CATEGORIES TAB */}
       <Tab.Screen
         name={ROUTES.CATEGORIES}
         options={{
           tabBarLabel: false,
-          tabBarIcon: ({ color }) => (
+          tabBarIcon: () => (
             <MaterialIcons name="category" color={"grey"} size={26} />
           ),
         }}
@@ -57,33 +64,38 @@ function BottomTabNavigator() {
           setCategoryItems={setCategoryItems}
         />}
       </Tab.Screen>
+
+      {/* CONVERTER TAB */}
       <Tab.Screen
         name={ROUTES.CONVERTER}
         component={ConverterScreen}
         options={{
           tabBarLabel: false,
-          tabBarIcon: ({ color }) => (
+          tabBarIcon: () => (
             <Ionicons name="sync-circle" color={"grey"} size={26} />
           ),
         }}
       />
+
+      {/* USER TAB */}
       <Tab.Screen
         name={ROUTES.USER}
         component={UsersScreen}
         options={{
           tabBarLabel: false,
-          tabBarIcon: ({ color }) => (
+          tabBarIcon: () => (
             <MaterialCommunityIcons name="account" color={"grey"} size={26} />
           ),
         }}
       />
+
+      {/* EXPERIMENTAL TAB */}
       <Tab.Screen
-        // style={styles.tabs}
         name={ROUTES.PLAY}
         component={Play}
         options={{
           tabBarLabel: false,
-          tabBarIcon: ({ color }) => (
+          tabBarIcon: () => (
             <MaterialCommunityIcons name="bird" color={"grey"} size={26} />
           ),
         }}
@@ -93,7 +105,3 @@ function BottomTabNavigator() {
 }
 
 export default BottomTabNavigator;
-
-const styles = StyleSheet.create({
-
-})

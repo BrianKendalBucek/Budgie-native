@@ -22,6 +22,7 @@ export default function Play() {
   const [primaryAmount, setPrimaryAmount] = useState('');
   const [secondaryAmount, setSecondaryAmount] = useState('');
 
+  // AXIOS REQUEST FOR API - LIMITED USE
   // useEffect(() => {
   //   axios.get(BASE_URL)
   //     .then(response => {
@@ -34,6 +35,55 @@ export default function Play() {
 
   // console.log("**********countries", countries.data.ADA.code);
 
+  // Conversion between currencies
+  // Factor in reference currency = USD 1
+  // const fromCurrency = ***
+  // const referenceCurrency = ***
+  // const toCurrency = ***
+  // from currency divided by same currency value in reference to USD
+  // result will be USD value of from currency
+  // it will not be an exact number. No rounding
+  // must multiply by toCurrency value of resulting USD amount
+  // 
+  // will need to reference data.___.value of chosen from currency
+  // once fromCurrency is selected, gives 1USD value of that currency to work with
+  // With input below fromCurrency, we are to divide input by fromCurrency value.
+  // This will give us the calculated USD number for the second calculation
+  // selected toCurrency will give is the value of second currency related to 1USD.
+  // Now just multiply fromCurrency in USD by toCurrency single USD value
+  // 
+  // const from = (input value);
+  // const fromUSD = (USD value related to fromCurrency input)
+  // const ref = data.USD.value;
+  // const to = (input value);
+  // 
+  // **************************
+  // 
+  // const fromValue = data.____.value
+  // const fromInput = input value
+  // const usdOfFrom = inputValue/fromValue
+  // const toInput = input value
+  // 
+  // const calculation = (usdOfFrom, toInput) {
+  //    
+  //    if (fromInput > 0) {
+  //        return usdOfFrom * toInput;
+  //    } else {
+  //        return 'Input amount';
+  //    }
+  // }
+  // 
+  // **************************
+  // const converison = (from, to, ref) => {
+  // 
+  // const result = 0;
+  //  if (from > 0) {
+  // 
+  // }
+  // }
+
+
+  // CONVERTS CURRENCY API OBJ OF OBJS INTO ARRAY OF OBJS
   useEffect(() => {
     function convert_to_objects(data) {
       const obj_list = [];
@@ -51,7 +101,7 @@ export default function Play() {
     setSecondaryCountryData(arrayOfObj);
   }, []);
 
-
+  // PRIMARY CURRENCY PICKER SEARCH FUNCTION
   const filteredPrimaryData = useMemo(() => {
     if (primaryCountryData && primaryCountryData.length > 0) {
       return primaryCountryData.filter((item) =>
@@ -62,6 +112,11 @@ export default function Play() {
     }
   }, [primaryCountryData, primaryQuery]);
 
+  const onPrimarySearch = (text) => {
+    setPrimaryQuery(text);
+  };
+
+  // SECONDARY CURRENCY PICKER SEARCH FUNCTION
   const filteredSecondaryData = useMemo(() => {
     if (secondaryCountryData && secondaryCountryData.length > 0) {
       return secondaryCountryData.filter((item) =>
@@ -72,6 +127,11 @@ export default function Play() {
     }
   }, [secondaryCountryData, secondaryQuery]);
 
+  const onSecondarySearch = (text) => {
+    setSecondaryQuery(text);
+  }
+
+  // PRIMARY PICKER TITLE FUNCTION
   const verifyPrimary = () => {
     if (primarySelected) {
       return `Chosen Currency: ${String(primarySelected)}`
@@ -79,20 +139,14 @@ export default function Play() {
       return "Choose Currency";
     }
   }
+
+  // SECONDARY PICKER TITLE FUNCTION
   const verifySecondary = () => {
     if (secondarySelected) {
       return `Chosen Currency: ${String(secondarySelected)}`;
     } else {
       return "Choose Currency"
     }
-  }
-
-  const onPrimarySearch = (text) => {
-    setPrimaryQuery(text);
-  };
-
-  const onSecondarySearch = (text) => {
-    setSecondaryQuery(text);
   }
 
   const handlePrimaryAmountChange = (text) => {
@@ -140,7 +194,7 @@ export default function Play() {
       />
 
 
-      {/* FIRST BUTTON AND INPUT */}
+      {/* SECOND BUTTON AND INPUT */}
       <Button
         title={verifySecondary(secondarySelected)}
         tintColor='grey'

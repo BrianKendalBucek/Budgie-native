@@ -3,25 +3,29 @@ import { ListItem, TextInput, Switch, Button } from "@react-native-material/core
 import { ScrollView, View, Text, SafeAreaView, TouchableOpacity, Keyboard, StyleSheet, Modal, KeyboardAvoidingView } from 'react-native';
 import { Picker, onOpen } from 'react-native-actions-sheet-picker';
 
-
 import countries from './countries2.json';
 
 export default function User() {
+
+  // STATES FOR PRIMARY CURRENCY SEARCH AND SELECTION SHEET MODAL
   const [primaryCountryData, setPrimaryCountryData] = useState([]);
   const [primarySelected, setPrimarySelected] = useState(undefined);
   const [primaryQuery, setPrimaryQuery] = useState('');
 
+  // STATES FOR SECONDARY CURRENCY SEARCH AND SELECTION SHEET MODAL
   const [secondaryCountryData, setSecondaryCountryData] = useState([]);
   const [secondarySelected, setSecondarySelected] = useState(undefined);
   const [secondaryQuery, setSecondaryQuery] = useState('');
 
-  const [enabled, setEnabled] = useState(true);
-  const [enabledDark, setEnabledDark] = useState(true);
+  // STATES FOR NOTIFICATION SWITCH
+  const [enabledNotifications, setEnabledNotifications] = useState(true);
 
+  // SETSTATE FOR PRIMARY CURRENCY PICKER
   useEffect(() => {
     setPrimaryCountryData(countries);
   }, []);
 
+  // SETSTATE FOR SECONDARY CURRENCY PICKER
   useEffect(() => {
     setSecondaryCountryData(countries);
   }, []);
@@ -34,6 +38,7 @@ export default function User() {
   //   setSecondary(text)
   // }
 
+  // SEARCH FUNCTION USING QUERY FOR PRIMARY CURRENCY PICKER 
   const filteredPrimaryData = useMemo(() => {
     if (primaryCountryData && primaryCountryData.length > 0) {
       return primaryCountryData.filter((item) =>
@@ -44,6 +49,11 @@ export default function User() {
     }
   }, [primaryCountryData, primaryQuery]);
 
+  const onPrimarySearch = (text) => {
+    setPrimaryQuery(text);
+  };
+
+  // SEARCH FUNCTION USING QUERY FOR SECONDARY CURRENCY PICKER
   const filteredSecondaryData = useMemo(() => {
     if (secondaryCountryData && secondaryCountryData.length > 0) {
       return secondaryCountryData.filter((item) =>
@@ -54,6 +64,11 @@ export default function User() {
     }
   }, [secondaryCountryData, secondaryQuery]);
 
+  const onSecondarySearch = (text) => {
+    setSecondaryQuery(text);
+  }
+
+  // PRIMARY PICKER TITLE FUNCTION
   const verifyPrimary = () => {
     if (primarySelected) {
       return `${String(primarySelected)}`
@@ -61,6 +76,8 @@ export default function User() {
       return "Select";
     }
   }
+
+  // SECONDARY PICKER TITLE FUNCTION
   const verifySecondary = () => {
     if (secondarySelected) {
       return `${String(secondarySelected)}`;
@@ -69,23 +86,17 @@ export default function User() {
     }
   }
 
-  const onPrimarySearch = (text) => {
-    setPrimaryQuery(text);
-  };
-
-  const onSecondarySearch = (text) => {
-    setSecondaryQuery(text);
-  }
 
   return (
-    <ScrollView style={{ backgroundColor: '#eee' }}>
+    <ScrollView style={styles.scrollViewBackground}>
 
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 20 }}>
+      {/* PRIMARY BUDGET SETTER */}
+      <View style={styles.primaryBudgetView}>
         <Text
-          style={{ fontSize: 16, marginTop: 18, marginLeft: 15 }}
+          style={styles.primaryBudgetText}
         >Primary Budget</Text>
         <TextInput
-          style={{ width: 220, paddingRight: 20, borderColor: 'lightgrey' }}
+          style={styles.primaryBudgetInput}
           variant='outlined'
           placeholder='Enter here'
           placeholderTextColor="grey"
@@ -94,8 +105,8 @@ export default function User() {
         />
       </View>
 
-
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+      {/* PRIMARY CURRENCY PICKER */}
+      <View style={styles.primaryPickerView}>
         <View style={styles.currencyText}>
           <Text style={styles.currencyFont}>Primary Currency</Text>
         </View>
@@ -118,8 +129,8 @@ export default function User() {
         />
       </View>
 
-
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 15 }}>
+      {/* SECONDARY CURRENCY PICKER */}
+      <View style={styles.secondaryPickerView}>
         <View style={styles.currencyText}>
           <Text style={styles.currencyFont}>Secondary Currency</Text>
         </View>
@@ -142,66 +153,88 @@ export default function User() {
         onSearch={onSecondarySearch}
       />
 
-
+      {/* USERNAME */}
       <ListItem
         title="Username"
         secondaryText="Briankendalbucek"
       />
 
-
+      {/* FIRST NAME */}
       <ListItem
         title="First name"
         secondaryText="Brian"
       />
 
-
+      {/* LAST NAME */}
       <ListItem
         title="Last name"
         secondaryText="Bucek"
       />
 
-
+      {/* CHANGE PASSWORD */}
       <ListItem
         title="Change password"
       />
 
+      {/* NOTIFICATIONS SWITCH */}
       <ListItem
         title="Notifications"
         trailing={
-          <Switch style={styles.switch} value={enabled} onValueChange={() => setEnabled(!enabled)} />
+          <Switch
+            style={styles.switch}
+            value={enabledNotifications}
+            onValueChange={() => setEnabledNotifications(!enabledNotifications)} />
         }
-        onPress={() => setEnabled(!enabled)}
+        onPress={() => setEnabledNotifications(!enabledNotifications)}
       />
 
+      {/* LOGOUT */}
       <ListItem
         title="Logout"
       />
-
 
     </ScrollView>
   )
 }
 
 const styles = StyleSheet.create({
-  input: {
-    backgroundColor: 'transparent',
-    variant: 'filled',
-    marginHorizontal: 20,
-    marginVertical: 5
+  scrollViewBackground: {
+    backgroundColor: '#eee',
+  },
+  primaryBudgetView: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 20,
+  },
+  primaryBudgetText: {
+    fontSize: 16,
+    marginTop: 18,
+    marginLeft: 15,
+  },
+  primaryBudgetInput: {
+    width: 220,
+    paddingRight: 20,
+    borderColor: 'lightgrey',
+  },
+  primaryPickerView: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  secondaryPickerView: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 15
   },
   bluebutton: {
-    marginVertical: 10,
     backgroundColor: 'lightblue',
     color: 'grey',
     width: 200,
+    marginVertical: 10,
     marginRight: 20
-    // marginHorizontal: 20,
-    // marginTop: 40,
   },
   currencyText: {
     justifyContent: 'center',
     alignItems: 'center',
-    // fontSize: 20,
     paddingLeft: 16
   },
   currencyFont: {
@@ -209,5 +242,5 @@ const styles = StyleSheet.create({
   },
   switch: {
     marginRight: 30
-  }
+  },
 })
