@@ -11,14 +11,18 @@ import countries from './currency.json';
 
 
 export default function Play() {
+
+  // PRIMARY PICKER STATES
   const [primaryCountryData, setPrimaryCountryData] = useState([]);
   const [primarySelected, setPrimarySelected] = useState(undefined);
   const [primaryQuery, setPrimaryQuery] = useState('');
 
+  // SECONDARY PICKER STATES
   const [secondaryCountryData, setSecondaryCountryData] = useState([]);
   const [secondarySelected, setSecondarySelected] = useState(undefined);
   const [secondaryQuery, setSecondaryQuery] = useState('');
 
+  // HANDLEPRIMARY/SECONDARYAMOUNTCHANGE
   const [primaryAmount, setPrimaryAmount] = useState('');
   const [secondaryAmount, setSecondaryAmount] = useState('');
 
@@ -34,54 +38,6 @@ export default function Play() {
   // }, [])
 
   // console.log("**********countries", countries.data.ADA.code);
-
-  // Conversion between currencies
-  // Factor in reference currency = USD 1
-  // const fromCurrency = ***
-  // const referenceCurrency = ***
-  // const toCurrency = ***
-  // from currency divided by same currency value in reference to USD
-  // result will be USD value of from currency
-  // it will not be an exact number. No rounding
-  // must multiply by toCurrency value of resulting USD amount
-  // 
-  // will need to reference data.___.value of chosen from currency
-  // once fromCurrency is selected, gives 1USD value of that currency to work with
-  // With input below fromCurrency, we are to divide input by fromCurrency value.
-  // This will give us the calculated USD number for the second calculation
-  // selected toCurrency will give is the value of second currency related to 1USD.
-  // Now just multiply fromCurrency in USD by toCurrency single USD value
-  // 
-  // const from = (input value);
-  // const fromUSD = (USD value related to fromCurrency input)
-  // const ref = data.USD.value;
-  // const to = (input value);
-  // 
-  // **************************
-  // 
-  // const fromValue = data.____.value
-  // const fromInput = input value
-  // const usdOfFrom = inputValue/fromValue
-  // const toInput = input value
-  // 
-  // const calculation = (usdOfFrom, toInput) {
-  //    
-  //    if (fromInput > 0) {
-  //        return usdOfFrom * toInput;
-  //    } else {
-  //        return 'Input amount';
-  //    }
-  // }
-  // 
-  // **************************
-  // const converison = (from, to, ref) => {
-  // 
-  // const result = 0;
-  //  if (from > 0) {
-  // 
-  // }
-  // }
-
 
   // CONVERTS CURRENCY API OBJ OF OBJS INTO ARRAY OF OBJS
   useEffect(() => {
@@ -149,14 +105,32 @@ export default function Play() {
     }
   }
 
+  // PRIMARY INPUT AMOUNT
   const handlePrimaryAmountChange = (text) => {
     setPrimaryAmount(text);
   };
-
+  // SECONDARY INPUT AMOUNT
   const handleSecondaryAmountChange = (text) => {
     setSecondaryAmount(text);
   }
 
+  // CONVERSION BETWEEN CURRENCIES
+  const firstValue = primarySelected ? countries.data[primarySelected].value : 0;
+  const secondValue = secondarySelected ? countries.data[secondarySelected].value : 0;
+  const firstInput = primaryAmount ? primaryAmount : 0;
+  const secondInput = secondaryAmount ? secondaryAmount : 0;
+  const usdOfFirstInput = primarySelected && primaryAmount ? firstInput / firstValue : 1;
+  const usdOfSecondInput = secondarySelected && secondaryAmount ? secondInput / secondValue : 1;
+  const resultFirstSecond =  firstInput ? usdOfFirstInput * secondValue : 0;
+  const resultSecondFirst = secondInput ? usdOfSecondInput * firstValue : 0;
+
+  const handlePrimaryInputFocus = () => {
+    setSecondaryAmount(0);
+  }
+
+  const handleSecondaryInputFocus = () => {
+    setPrimaryAmount(0);
+  }
 
   return (
     <SafeAreaView style={styles.pickerContainer}>
@@ -187,8 +161,9 @@ export default function Play() {
       <TextInput
         style={styles.input}
         value={primaryAmount}
+        onFocus={handlePrimaryInputFocus}
         onChangeText={handlePrimaryAmountChange}
-        placeholder="Enter amount"
+        placeholder={resultSecondFirst ? String(resultSecondFirst) : "Enter amount"}
         color="grey"
         variant='outlined'
       />
@@ -215,15 +190,16 @@ export default function Play() {
       <TextInput
         style={styles.input}
         value={secondaryAmount}
+        onFocus={handleSecondaryInputFocus}
         onChangeText={handleSecondaryAmountChange}
-        placeholder="Enter amount"
+        placeholder={resultFirstSecond ? String(resultFirstSecond) : "Enter amount"}
         color="grey"
         variant='outlined'
       />
 
 
       {/* SUBMIT BUTTON */}
-      <Button
+      {/* <Button
         title="Submit"
         tintColor='grey'
         style={styles.bluebutton}
@@ -231,7 +207,7 @@ export default function Play() {
           // handleSubmit({ type, price, currency, date, category, title });
           Keyboard.dismiss();
         }}
-      />
+      /> */}
     </SafeAreaView>
   );
 }
