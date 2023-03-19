@@ -6,74 +6,75 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Picker, onOpen } from 'react-native-actions-sheet-picker';
 import { SelectList } from 'react-native-dropdown-select-list'
 import moment from 'moment';
-import countries from './countries.json';
+// import countries from './countries.json';
+import countries from './currency.json';
 
 
 export default function ExpendituresScreen({ categoryItems }) {
 
-// Remember to reference Budgie original for method
-// Budgie-api country code recognition file for search?
+  // Remember to reference Budgie original for method
+  // Budgie-api country code recognition file for search?
 
-// MANAGEMENT OF EXPENDITURE DATA FOR CALCULATIONS
-// Could do backend query addition of expenditures for charts
-// 
-// -FRONTEND METHOD: (But do calculations from looping through objects)
-// With every expenditure, the charts must update immediately
-// 
-// --TOFROM CONVERSION RESULTING IN PRIMARY COST
-// const fromValue = data.____.value
-// const fromInput = input value
-// const usdOfFrom = inputValue/fromValue
-// const toInput = input value
-// 
-// const fromTo = (usdOfFrom, toInput) {
-//    
-//    if (fromInput > 0) {
-//        return usdOfFrom * toInput;
-//    } else {
-//        return 'Input amount';
-//    }
-// }
-// 
-// --PRIMARY ACCOUNT
-// const primaryBudget = (from usersScreen)
-// must subtract every credit and debit purchase including atm withdrawls
-// must not factor in secondary currency cash expenditures
-// BUILD const primaryAccountCalc = object loop function adding 'converted' !cash
-// Parameters: type !cash, converted
-// 
-// const primaryAccountCalc = (type, converted, objects, budget) => {
+  // MANAGEMENT OF EXPENDITURE DATA FOR CALCULATIONS
+  // Could do backend query addition of expenditures for charts
+  // 
+  // -FRONTEND METHOD: (But do calculations from looping through objects)
+  // With every expenditure, the charts must update immediately
+  // 
+  // --TOFROM CONVERSION RESULTING IN PRIMARY COST
+  // const fromValue = data.____.value
+  // const fromInput = input value
+  // const usdOfFrom = inputValue/fromValue
+  // const toInput = input value
+  // 
+  // const fromTo = (usdOfFrom, toInput) {
+  //    
+  //    if (fromInput > 0) {
+  //        return usdOfFrom * toInput;
+  //    } else {
+  //        return 'Input amount';
+  //    }
+  // }
+  // 
+  // --PRIMARY ACCOUNT
+  // const primaryBudget = (from usersScreen)
+  // must subtract every credit and debit purchase including atm withdrawls
+  // must not factor in secondary currency cash expenditures
+  // BUILD const primaryAccountCalc = object loop function adding 'converted' !cash
+  // Parameters: type !cash, converted
+  // 
+  // const primaryAccountCalc = (type, converted, objects, budget) => {
   //    forIn ... (Logic to loop through objects) {
   //      if (objects.type !== cash) {
   //        setPrimaryAccount += objects.converted;
-//            const primaryChart = budget - primaryAccount;
-//    }
-//    return primaryChart;
-//  }
-// }
-// Then pass primaryChart to StatisticsScreen
-// 
-// 
-// --EVERY EXPENSE
-// Same as PrimaryChart/Account except: doesn't factor atm withdrawls as an expenditure
-// ignore debit atm withdrawls
-// credit, debit, and cash purchases included in calculation
-// credit and debit are in primary, cash 
-// ???How subtract cash expense from budget if exchange rate at time of atm withdrawl???
-// Technically you'd have to subtract by original exchange value
-// Withdrawls at different dates shouldn't be combined???
-// objects will include 'converted' which could be used in this case
-// could create an array of arrays or objects of withdrawls in order including their 'converted' number, and subtract in order of earliest to latest??
-// 
-// 
-// --CASH REMAINING
-// function that recognizes every debit or credit withdrawl, and adds to const secondaryCashAvail
-// function that loops through objects, recognizes cash type, const secondaryCashExp += secondary price
-// function that subtracts secondaryCashExp from secondaryCashAvail resulting in chart data const secondaryCashSpending
-// ALL OF THESE CAN PROBABLY BE DONE IN THE SUBMIT HANDLER
+  //            const primaryChart = budget - primaryAccount;
+  //    }
+  //    return primaryChart;
+  //  }
+  // }
+  // Then pass primaryChart to StatisticsScreen
+  // 
+  // 
+  // --EVERY EXPENSE
+  // Same as PrimaryChart/Account except: doesn't factor atm withdrawls as an expenditure
+  // ignore debit atm withdrawls
+  // credit, debit, and cash purchases included in calculation
+  // credit and debit are in primary, cash 
+  // ???How subtract cash expense from budget if exchange rate at time of atm withdrawl???
+  // Technically you'd have to subtract by original exchange value
+  // Withdrawls at different dates shouldn't be combined???
+  // objects will include 'converted' which could be used in this case
+  // could create an array of arrays or objects of withdrawls in order including their 'converted' number, and subtract in order of earliest to latest??
+  // 
+  // 
+  // --CASH REMAINING
+  // function that recognizes every debit or credit withdrawl, and adds to const secondaryCashAvail
+  // function that loops through objects, recognizes cash type, const secondaryCashExp += secondary price
+  // function that subtracts secondaryCashExp from secondaryCashAvail resulting in chart data const secondaryCashSpending
+  // ALL OF THESE CAN PROBABLY BE DONE IN THE SUBMIT HANDLER
 
 
-// CATEGORY ARRAY INTO AN OBJECT
+  // CATEGORY ARRAY INTO AN OBJECT
   function createObjectArray(array) {
     return array.map((item, index) => {
       return {
@@ -83,30 +84,32 @@ export default function ExpendituresScreen({ categoryItems }) {
     });
   }
 
-// STORES OBJECT IN VARIABLE
+  // STORES OBJECT IN VARIABLE
   const dataCateg = createObjectArray(categoryItems);
 
-// CREATS ARRAY OF EXPENDITURE INFORMATION
+  // CREATES ARRAY OF EXPENDITURE INFORMATION
   const [objects, setObjects] = useState([]);
   const [type, setType] = useState('');
   const [currency, setCurrency] = useState('');
   const [price, setPrice] = useState('');
-// const [usdOf, setUsdOf] = useState('');
-// const [converted, setConverted] = useState(''); (converted to primary)
-// const [primaryAccount, setPrimaryAccount] = useState('');
-// const [everyExpense, setEveryExpense] = useState('');
-// const [cashRemaining, setCashRemaining] = useState('');
   const [date, setDate] = useState('');
   const [category, setCategory] = useState('');
   const [title, setTitle] = useState('');
 
-// MODAL
+  // const [usdOf, setUsdOf] = useState('');
+  // const [converted, setConverted] = useState(''); (converted to primary)
+  // const [primaryAccount, setPrimaryAccount] = useState('');
+  // const [everyExpense, setEveryExpense] = useState('');
+  // const [cashRemaining, setCashRemaining] = useState('');
+
+
+  // MODAL
   const [modalVisible, setModalVisible] = useState(false);
 
-// MODAL AND DELETION
+  // MODAL AND DELETION
   const [selectedItem, setSelectedItem] = useState(null);
 
-// DATE PICKER
+  // DATE PICKER
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
   const handleDateChange = (text) => {
@@ -121,33 +124,101 @@ export default function ExpendituresScreen({ categoryItems }) {
     setDatePickerVisibility(false);
   };
 
-// CURRENCY PICKER
-  const [data, setData] = useState([]);
-  const [query, setQuery] = useState('');
-  // const [selected, setSelected] = useState(undefined);
+  // CURRENCY PICKER
 
+  // SECONDARY CURRENCY PICKER STATES
+  const [secondaryCountryData, setSecondaryCountryData] = useState([]);
+  const [secondarySelected, setSecondarySelected] = useState(undefined);
+  const [secondaryQuery, setSecondaryQuery] = useState('');
+
+  // HANDLE SECONDARY AMOUNT CHANGE
+  const [secondaryAmount, setSecondaryAmount] = useState('');
+
+  // AXIOS REQUEST FOR API - LIMITED USE
+  // useEffect(() => {
+  //   axios.get(BASE_URL)
+  //     .then(response => {
+  //       console.log(response.data);
+  //     })
+  //     .catch(error => {
+  //       console.error(error);
+  //     });
+  // }, [])
+
+  // console.log("**********countries", countries.data.ADA.code);
+
+  // CONVERTS CURRENCY API OBJ OF OBJS INTO ARRAY OF OBJS
   useEffect(() => {
-    setData(countries);
+    function convert_to_objects(data) {
+      const obj_list = [];
+      for (let code in data) {
+        const values = data[code];
+        const obj = { "name": code, "value": values["value"] };
+        obj_list.push(obj);
+      }
+      return obj_list;
+    }
+
+    const arrayOfObj = convert_to_objects(countries.data);
+
+    setSecondaryCountryData(arrayOfObj);
   }, []);
 
-  const filteredData = useMemo(() => {
-    if (data && data.length > 0) {
-      return data.filter((item) =>
+  // SECONDARY CURRENCY PICKER SEARCH FUNCTION
+  const filteredSecondaryData = useMemo(() => {
+    if (secondaryCountryData && secondaryCountryData.length > 0) {
+      return secondaryCountryData.filter((item) =>
         item.name
           .toLocaleLowerCase('en')
-          .includes(query.toLocaleLowerCase('en'))
+          .includes(secondaryQuery.toLocaleLowerCase('en'))
       );
     }
-  }, [data, query]);
+  }, [secondaryCountryData, secondaryQuery]);
 
-  const onSearch = (text) => {
-    setQuery(text);
+  const onSecondarySearch = (text) => {
+    setSecondaryQuery(text);
+  }
+
+  // SECONDARY PICKER TITLE FUNCTION
+  const verifySecondary = () => {
+    if (secondarySelected) {
+      return `Chosen Currency: ${String(secondarySelected)}`
+    } else {
+      return "Choose Currency";
+    }
+  }
+
+  // SECONDARY INPUT AMOUNT
+  const handleSecondaryAmountChange = (text) => {
+    setSecondaryAmount(text);
   };
 
-// PAYMENT TYPE
-const [cashButton, setCashButton] = useState(false);
-const [creditButton, setCreditButton] = useState(false);
-const [debitButton, setDebitButton] = useState(false);
+  // const [data, setData] = useState([]);
+  // const [query, setQuery] = useState('');
+  // // const [selected, setSelected] = useState(undefined);
+
+  // useEffect(() => {
+  //   setData(countries);
+  // }, []);
+
+  // const filteredData = useMemo(() => {
+  //   if (data && data.length > 0) {
+  //     return data.filter((item) =>
+  //       item.name
+  //         .toLocaleLowerCase('en')
+  //         .includes(query.toLocaleLowerCase('en'))
+  //     );
+  //   }
+  // }, [data, query]);
+
+  // const onSearch = (text) => {
+  //   setQuery(text);
+  // };
+
+  // PAYMENT TYPE
+  const [cashButton, setCashButton] = useState(false);
+  const [creditButton, setCreditButton] = useState(false);
+  const [debitButton, setDebitButton] = useState(false);
 
   const handleTypeChange = (text) => {
     setType('');
@@ -169,25 +240,25 @@ const [debitButton, setDebitButton] = useState(false);
     }
   };
 
-// PRICE
+  // PRICE
   const handlePriceChange = (text) => {
     setPrice(text);
   };
 
-// TITLE
+  // TITLE
   const handleTitleChange = (text) => {
     setTitle(text);
   };
 
-// FINAL SUBMIT
+  // FINAL SUBMIT
   const handleSubmit = ({ type, price, currency, date, category, title }) => {
     if (!type || !price || !currency || !date || !category || !title) {
       alert("Please fill in all the required fields.");
       return;
     }
 
-// this is where the conversion function can go, and can setConverted to += ###
-// the converted # must be added to the expenditure object BECAUSE this will be the accurate conversion at time of purchase
+    // this is where the conversion function can go, and can setConverted to += ###
+    // the converted # must be added to the expenditure object BECAUSE this will be the accurate conversion at time of purchase
 
     const newObject = { key: Date.now(), type, price, currency, date, category, title };
     setObjects([...objects, newObject]);
@@ -203,7 +274,7 @@ const [debitButton, setDebitButton] = useState(false);
 
   };
 
-// CATEGORY DELETION (Change name to expenditure deletion)
+  // CATEGORY DELETION (Change name to expenditure deletion)
   const deleteCategory = (index) => {
     let itemsCopy = [...objects];
     itemsCopy.splice(index, 1);
@@ -212,7 +283,7 @@ const [debitButton, setDebitButton] = useState(false);
   }
 
   return (
-    <ScrollView style={{backgroundColor: '#eee'}} keyboardShouldPersistTaps='handled'>
+    <ScrollView style={{ backgroundColor: '#eee' }} keyboardShouldPersistTaps='handled'>
       <View>
 
 
@@ -239,9 +310,7 @@ const [debitButton, setDebitButton] = useState(false);
         {/* CURRENCY PICKER */}
         <SafeAreaView style={styles.pickerContainer}>
           <Button
-            title={"Currency:  "
-              + String(currency)
-            }
+            title={verifySecondary(secondarySelected)}
             tintColor='grey'
             style={styles.bluebutton}
             onPress={() => {
@@ -251,12 +320,12 @@ const [debitButton, setDebitButton] = useState(false);
           {/* <Text style={{ padding: 10 }}>Chosen : {JSON.stringify(selected.name)}</Text> */}
           <Picker
             id="country"
-            data={filteredData}
-            inputValue={query}
+            data={filteredSecondaryData}
+            inputValue={secondaryQuery}
             searchable={true}
             label="Currency"
-            setSelected={(val) => setCurrency(val.name)}
-            onSearch={onSearch}
+            setSelected={(val) => setSecondarySelected(val.name)}
+            onSearch={onSecondarySearch}
           />
         </SafeAreaView>
 

@@ -22,7 +22,7 @@ export default function Play() {
   const [secondarySelected, setSecondarySelected] = useState(undefined);
   const [secondaryQuery, setSecondaryQuery] = useState('');
 
-  // HANDLEPRIMARY/SECONDARYAMOUNTCHANGE
+  // HANDLE PRIMARY/SECONDARY AMOUNT CHANGE
   const [primaryAmount, setPrimaryAmount] = useState('');
   const [secondaryAmount, setSecondaryAmount] = useState('');
 
@@ -121,7 +121,7 @@ export default function Play() {
   const secondInput = secondaryAmount ? secondaryAmount : 0;
   const usdOfFirstInput = primarySelected && primaryAmount ? firstInput / firstValue : 1;
   const usdOfSecondInput = secondarySelected && secondaryAmount ? secondInput / secondValue : 1;
-  const resultFirstSecond =  firstInput ? usdOfFirstInput * secondValue : 0;
+  const resultFirstSecond = firstInput ? usdOfFirstInput * secondValue : 0;
   const resultSecondFirst = secondInput ? usdOfSecondInput * firstValue : 0;
 
   const handlePrimaryInputFocus = () => {
@@ -198,7 +198,7 @@ export default function Play() {
       />
 
 
-      {/* SUBMIT BUTTON */}
+      {/* SUBMIT BUTTON *
       {/* <Button
         title="Submit"
         tintColor='grey'
