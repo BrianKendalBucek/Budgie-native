@@ -92,6 +92,9 @@ export default function ExpendituresScreen({ categoryItems }) {
   const [type, setType] = useState('');
   const [currency, setCurrency] = useState('');
   const [price, setPrice] = useState('');
+  console.log("original state price", price);
+  const [usd, setUsd] = useState('');
+  console.log("original state usd", usd);
   const [date, setDate] = useState('');
   const [category, setCategory] = useState('');
   const [title, setTitle] = useState('');
@@ -101,7 +104,6 @@ export default function ExpendituresScreen({ categoryItems }) {
   // const [primaryAccount, setPrimaryAccount] = useState('');
   // const [everyExpense, setEveryExpense] = useState('');
   // const [cashRemaining, setCashRemaining] = useState('');
-
 
   // MODAL
   const [modalVisible, setModalVisible] = useState(false);
@@ -128,11 +130,10 @@ export default function ExpendituresScreen({ categoryItems }) {
 
   // SECONDARY CURRENCY PICKER STATES
   const [secondaryCountryData, setSecondaryCountryData] = useState([]);
-  const [secondarySelected, setSecondarySelected] = useState(undefined);
   const [secondaryQuery, setSecondaryQuery] = useState('');
 
   // HANDLE SECONDARY AMOUNT CHANGE
-  const [secondaryAmount, setSecondaryAmount] = useState('');
+  // const [secondaryAmount, setSecondaryAmount] = useState('');
 
   // AXIOS REQUEST FOR API - LIMITED USE
   // useEffect(() => {
@@ -179,20 +180,20 @@ export default function ExpendituresScreen({ categoryItems }) {
     setSecondaryQuery(text);
   }
 
-  // SECONDARY PICKER TITLE FUNCTION
+  // SECONDARY CURRENCY PICKER TITLE FUNCTION
   const verifySecondary = () => {
-    if (secondarySelected) {
-      return `Chosen Currency: ${String(secondarySelected)}`
+    if (currency) {
+      return `Chosen Currency: ${String(currency)}`
     } else {
       return "Choose Currency";
     }
   }
 
-  // SECONDARY INPUT AMOUNT
-  const handleSecondaryAmountChange = (text) => {
-    setSecondaryAmount(text);
-  };
-
+  // SECONDARY CURRENCY INPUT AMOUNT
+  // const handleSecondaryAmountChange = (text) => {
+  //   setSecondaryAmount(text);
+  // };
+  // ********************************
   // const [data, setData] = useState([]);
   // const [query, setQuery] = useState('');
   // // const [selected, setSelected] = useState(undefined);
@@ -243,6 +244,12 @@ export default function ExpendituresScreen({ categoryItems }) {
   // PRICE
   const handlePriceChange = (text) => {
     setPrice(text);
+    const secondValue = currency ? countries.data[currency].value : 0;
+    const secondInput = text;
+    const usdOfSecondInput = currency && text ? secondInput / secondValue : 1;
+    setUsd(usdOfSecondInput);
+    console.log("handlePriceChange usd", usd);
+    console.log("handlePriceChange price", price);
   };
 
   // TITLE
@@ -250,20 +257,25 @@ export default function ExpendituresScreen({ categoryItems }) {
     setTitle(text);
   };
 
+  console.log("above handle submit", usd)
   // FINAL SUBMIT
-  const handleSubmit = ({ type, price, currency, date, category, title }) => {
+  const handleSubmit = ({ type, price, usd, currency, date, category, title }) => {
+
+
     if (!type || !price || !currency || !date || !category || !title) {
       alert("Please fill in all the required fields.");
       return;
     }
-
+    console.log("handleSubmit usd", usd);
+    console.log("handleSubmit price", price);
     // this is where the conversion function can go, and can setConverted to += ###
     // the converted # must be added to the expenditure object BECAUSE this will be the accurate conversion at time of purchase
 
-    const newObject = { key: Date.now(), type, price, currency, date, category, title };
+    const newObject = { key: Date.now(), type, price, usd, currency, date, category, title };
     setObjects([...objects, newObject]);
     setType('');
     setPrice('');
+    setUsd('');
     setCurrency('');
     setDate('');
     setCategory('');
@@ -310,7 +322,7 @@ export default function ExpendituresScreen({ categoryItems }) {
         {/* CURRENCY PICKER */}
         <SafeAreaView style={styles.pickerContainer}>
           <Button
-            title={verifySecondary(secondarySelected)}
+            title={verifySecondary(currency)}
             tintColor='grey'
             style={styles.bluebutton}
             onPress={() => {
@@ -324,7 +336,7 @@ export default function ExpendituresScreen({ categoryItems }) {
             inputValue={secondaryQuery}
             searchable={true}
             label="Currency"
-            setSelected={(val) => setSecondarySelected(val.name)}
+            setSelected={(val) => setCurrency(val.name)}
             onSearch={onSecondarySearch}
           />
         </SafeAreaView>
