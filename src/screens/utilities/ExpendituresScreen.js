@@ -6,7 +6,6 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Picker, onOpen } from 'react-native-actions-sheet-picker';
 import { SelectList } from 'react-native-dropdown-select-list'
 import moment from 'moment';
-// import countries from './countries.json';
 import countries from './currency.json';
 
 

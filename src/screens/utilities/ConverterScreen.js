@@ -3,8 +3,6 @@ import { View, ScrollView, SafeAreaView, StyleSheet, Text, TouchableOpacity, Key
 import { Box, TextInput, Button } from "@react-native-material/core";
 import { Picker, onOpen } from 'react-native-actions-sheet-picker';
 import axios from 'axios';
-
-
 import countries from './currency.json';
 
 // const BASE_URL = "https://api.currencyapi.com/v3/latest?apikey=vLzph0kSqJvRoCI7IvIcYhBMgwgV3KkONWlMEmLi&currencies=";

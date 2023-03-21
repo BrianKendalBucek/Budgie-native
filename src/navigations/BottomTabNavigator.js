@@ -90,7 +90,7 @@ function BottomTabNavigator() {
       />
 
       {/* EXPERIMENTAL TAB */}
-      <Tab.Screen
+      {/* <Tab.Screen
         name={ROUTES.PLAY}
         component={Play}
         options={{
@@ -99,7 +99,7 @@ function BottomTabNavigator() {
             <MaterialCommunityIcons name="bird" color={"grey"} size={26} />
           ),
         }}
-      />
+      /> */}
     </Tab.Navigator>
   );
 }

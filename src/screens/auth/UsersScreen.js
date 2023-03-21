@@ -3,7 +3,8 @@ import { ListItem, TextInput, Switch, Button } from "@react-native-material/core
 import { ScrollView, View, Text, SafeAreaView, TouchableOpacity, Keyboard, StyleSheet, Modal, KeyboardAvoidingView } from 'react-native';
 import { Picker, onOpen } from 'react-native-actions-sheet-picker';
 
-import countries from './countries2.json';
+// import countries from './countries2.json';
+import countries from '../utilities/currency.json'
 
 export default function User() {
 
@@ -37,6 +38,24 @@ export default function User() {
   // const onChangeSecondary = async (text = '') => {
   //   setSecondary(text)
   // }
+
+  // CONVERTS CURRENCY API OBJ OF OBJS INTO ARRAY OF OBJS
+  useEffect(() => {
+    function convert_to_objects(data) {
+      const obj_list = [];
+      for (let code in data) {
+        const values = data[code];
+        const obj = { "name": code, "value": values["value"] };
+        obj_list.push(obj);
+      }
+      return obj_list;
+    }
+
+    const arrayOfObj = convert_to_objects(countries.data);
+
+    setPrimaryCountryData(arrayOfObj);
+    setSecondaryCountryData(arrayOfObj);
+  }, []);
 
   // SEARCH FUNCTION USING QUERY FOR PRIMARY CURRENCY PICKER 
   const filteredPrimaryData = useMemo(() => {
@@ -223,13 +242,13 @@ const styles = StyleSheet.create({
   secondaryPickerView: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 15
+    marginBottom: 5
   },
   bluebutton: {
     backgroundColor: 'lightblue',
     color: 'grey',
-    width: 200,
-    marginVertical: 10,
+    width: 100,
+    marginVertical: 5,
     marginRight: 20
   },
   currencyText: {
