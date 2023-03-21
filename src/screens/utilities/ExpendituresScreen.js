@@ -92,9 +92,7 @@ export default function ExpendituresScreen({ categoryItems }) {
   const [type, setType] = useState('');
   const [currency, setCurrency] = useState('');
   const [price, setPrice] = useState('');
-  console.log("original state price", price);
   const [usd, setUsd] = useState('');
-  console.log("original state usd", usd);
   const [date, setDate] = useState('');
   const [category, setCategory] = useState('');
   const [title, setTitle] = useState('');
@@ -118,7 +116,6 @@ export default function ExpendituresScreen({ categoryItems }) {
     setDate(String(text));
     hideDatePicker();
   };
-
   const showDatePicker = () => {
     setDatePickerVisibility(true);
   };
@@ -248,28 +245,19 @@ export default function ExpendituresScreen({ categoryItems }) {
     const secondInput = text;
     const usdOfSecondInput = currency && text ? secondInput / secondValue : 1;
     setUsd(usdOfSecondInput);
-    console.log("handlePriceChange usd", usd);
-    console.log("handlePriceChange price", price);
   };
-
   // TITLE
   const handleTitleChange = (text) => {
     setTitle(text);
   };
 
-  console.log("above handle submit", usd)
   // FINAL SUBMIT
   const handleSubmit = ({ type, price, usd, currency, date, category, title }) => {
-
 
     if (!type || !price || !currency || !date || !category || !title) {
       alert("Please fill in all the required fields.");
       return;
     }
-    console.log("handleSubmit usd", usd);
-    console.log("handleSubmit price", price);
-    // this is where the conversion function can go, and can setConverted to += ###
-    // the converted # must be added to the expenditure object BECAUSE this will be the accurate conversion at time of purchase
 
     const newObject = { key: Date.now(), type, price, usd, currency, date, category, title };
     setObjects([...objects, newObject]);
@@ -401,7 +389,7 @@ export default function ExpendituresScreen({ categoryItems }) {
             tintColor='grey'
             style={styles.bluebutton}
             onPress={() => {
-              handleSubmit({ type, price, currency, date, category, title });
+              handleSubmit({ type, price, usd, currency, date, category, title });
               Keyboard.dismiss();
             }}
           />
