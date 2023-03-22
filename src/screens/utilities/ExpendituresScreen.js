@@ -216,6 +216,7 @@ export default function ExpendituresScreen({ categoryItems }) {
   const [cashButton, setCashButton] = useState(false);
   const [creditButton, setCreditButton] = useState(false);
   const [debitButton, setDebitButton] = useState(false);
+  const [atmButton, setAtmButton] = useState(false);
 
   const handleTypeChange = (text) => {
     setType('');
@@ -223,17 +224,26 @@ export default function ExpendituresScreen({ categoryItems }) {
     if (text === 'Cash') {
       setCreditButton(false);
       setDebitButton(false);
+      setAtmButton(false);
       setCashButton(true);
     }
     if (text === 'Credit') {
       setCashButton(false);
       setDebitButton(false);
+      setAtmButton(false);
       setCreditButton(true);
     }
     if (text === 'Debit') {
       setCashButton(false);
       setCreditButton(false);
+      setAtmButton(false);
       setDebitButton(true);
+    }
+    if (text === 'ATM') {
+      setCashButton(false);
+      setCreditButton(false);
+      setDebitButton(false);
+      setAtmButton(true);
     }
   };
 
@@ -270,7 +280,7 @@ export default function ExpendituresScreen({ categoryItems }) {
     setCashButton(false);
     setCreditButton(false);
     setDebitButton(false);
-
+    setAtmButton(false);
   };
 
   // CATEGORY DELETION (Change name to expenditure deletion)
@@ -291,6 +301,11 @@ export default function ExpendituresScreen({ categoryItems }) {
           <Button title="Cash" tintColor='grey' style={cashButton ? styles.selectedbutton : styles.bluebutton}
             onPress={() => {
               handleTypeChange('Cash');
+            }
+            } />
+          <Button title="ATM" tintColor='grey' style={atmButton ? styles.selectedbutton : styles.bluebutton}
+            onPress={() => {
+              handleTypeChange('ATM');
             }
             } />
           <Button title="Debit" tintColor='grey' style={debitButton ? styles.selectedbutton : styles.bluebutton}
