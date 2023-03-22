@@ -3,12 +3,14 @@ import { View, ScrollView, SafeAreaView, StyleSheet, Text, TouchableOpacity, Key
 import { Box, TextInput, Button } from "@react-native-material/core";
 import { Picker, onOpen } from 'react-native-actions-sheet-picker';
 import axios from 'axios';
-import countries from './currency.json';
 
-// const BASE_URL = "https://api.currencyapi.com/v3/latest?apikey=vLzph0kSqJvRoCI7IvIcYhBMgwgV3KkONWlMEmLi&currencies=";
+const BASE_URL = "https://api.currencyapi.com/v3/latest?apikey=vLzph0kSqJvRoCI7IvIcYhBMgwgV3KkONWlMEmLi&currencies=";
 
 
-export default function Play() {
+export default function Converter() {
+
+  // DATA STATE
+  const [countries, setCountries] = useState([]);
 
   // PRIMARY PICKER STATES
   const [primaryCountryData, setPrimaryCountryData] = useState([]);
@@ -25,16 +27,15 @@ export default function Play() {
   const [secondaryAmount, setSecondaryAmount] = useState('');
 
   // AXIOS REQUEST FOR API - LIMITED USE
-  // useEffect(() => {
-  //   axios.get(BASE_URL)
-  //     .then(response => {
-  //       console.log(response.data);
-  //     })
-  //     .catch(error => {
-  //       console.error(error);
-  //     });
-  // }, [])
+  useEffect(() => {
+    axios.get(BASE_URL)
+      .then((res) => setCountries(res.data))
+      .catch(error => {
+        console.error(error);
+      });
+  }, [])
 
+  // console.log("Countries State", countries)
   // console.log("**********countries", countries.data.ADA.code);
 
   // CONVERTS CURRENCY API OBJ OF OBJS INTO ARRAY OF OBJS
@@ -54,6 +55,7 @@ export default function Play() {
     setPrimaryCountryData(arrayOfObj);
     setSecondaryCountryData(arrayOfObj);
   }, []);
+  console.log("array of objects", primaryCountryData)
 
   // PRIMARY CURRENCY PICKER SEARCH FUNCTION
   const filteredPrimaryData = useMemo(() => {
@@ -121,6 +123,8 @@ export default function Play() {
   const usdOfSecondInput = secondarySelected && secondaryAmount ? secondInput / secondValue : 1;
   const resultFirstSecond = firstInput ? usdOfFirstInput * secondValue : 0;
   const resultSecondFirst = secondInput ? usdOfSecondInput * firstValue : 0;
+  const resultOneDec = resultFirstSecond.toFixed(2);
+  const resultTwoDec = resultSecondFirst.toFixed(2);
 
   const handlePrimaryInputFocus = () => {
     setSecondaryAmount(0);
@@ -161,7 +165,7 @@ export default function Play() {
         value={primaryAmount}
         onFocus={handlePrimaryInputFocus}
         onChangeText={handlePrimaryAmountChange}
-        placeholder={resultSecondFirst ? String(resultSecondFirst) : "Enter amount"}
+        placeholder={resultSecondFirst ? String(resultTwoDec) : "Enter amount"}
         color="grey"
         variant='outlined'
       />
@@ -190,7 +194,7 @@ export default function Play() {
         value={secondaryAmount}
         onFocus={handleSecondaryInputFocus}
         onChangeText={handleSecondaryAmountChange}
-        placeholder={resultFirstSecond ? String(resultFirstSecond) : "Enter amount"}
+        placeholder={resultFirstSecond ? String(resultOneDec) : "Enter amount"}
         color="grey"
         variant='outlined'
       />
