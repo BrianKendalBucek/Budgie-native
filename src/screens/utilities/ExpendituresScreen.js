@@ -36,6 +36,20 @@ export default function ExpendituresScreen({ categoryItems }) {
   // }
   // 
   // --PRIMARY ACCOUNT
+// 
+// const primaryAccount = () => {
+// 
+// if ()
+// 
+// }
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+//   
   // const primaryBudget = (from usersScreen)
   // must subtract every credit and debit purchase including atm withdrawls
   // must not factor in secondary currency cash expenditures

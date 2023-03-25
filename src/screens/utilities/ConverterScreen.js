@@ -3,6 +3,9 @@ import { View, ScrollView, SafeAreaView, StyleSheet, Text, TouchableOpacity, Key
 import { Box, TextInput, Button } from "@react-native-material/core";
 import { Picker, onOpen } from 'react-native-actions-sheet-picker';
 import axios from 'axios';
+// const countries = require('countries');
+// const emojiFlag = require('emoji-flag');
+
 
 const BASE_URL = "https://api.currencyapi.com/v3/latest?apikey=vLzph0kSqJvRoCI7IvIcYhBMgwgV3KkONWlMEmLi&currencies=";
 
@@ -27,13 +30,13 @@ export default function Converter() {
   const [secondaryAmount, setSecondaryAmount] = useState('');
 
   // AXIOS REQUEST FOR API - LIMITED USE
-  useEffect(() => {
-    axios.get(BASE_URL)
-      .then((res) => setCountries(res.data))
-      .catch(error => {
-        console.error(error);
-      });
-  }, [])
+  // useEffect(() => {
+  //   axios.get(BASE_URL)
+  //     .then((res) => setCountries(res.data))
+  //     .catch(error => {
+  //       console.error(error);
+  //     });
+  // }, [])
 
   // console.log("Countries State", countries)
   // console.log("**********countries", countries.data.ADA.code);
