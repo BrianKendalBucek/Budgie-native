@@ -3,11 +3,13 @@ import { View, ScrollView, SafeAreaView, StyleSheet, Text, TouchableOpacity, Key
 import { Box, TextInput, Button } from "@react-native-material/core";
 import { Picker, onOpen } from 'react-native-actions-sheet-picker';
 import axios from 'axios';
+import pickerData from '../utilities/picker-object.json'
+import currencyApi from '../utilities/currency.json'
 // const countries = require('countries');
 // const emojiFlag = require('emoji-flag');
 
 
-const BASE_URL = "https://api.currencyapi.com/v3/latest?apikey=vLzph0kSqJvRoCI7IvIcYhBMgwgV3KkONWlMEmLi&currencies=";
+// const BASE_URL = "https://api.currencyapi.com/v3/latest?apikey=vLzph0kSqJvRoCI7IvIcYhBMgwgV3KkONWlMEmLi&currencies=";
 
 
 export default function Converter() {
@@ -15,13 +17,19 @@ export default function Converter() {
   // DATA STATE
   const [countries, setCountries] = useState([]);
 
+  // PRIMARY API STATES
+  const [primaryApiData, setPrimaryApiData] = useState(undefined);
+  const [secondaryApiData, setSecondaryApiData] = useState(undefined)
+
+  // SECONDARY API STATES
+
   // PRIMARY PICKER STATES
-  const [primaryCountryData, setPrimaryCountryData] = useState([]);
+  const [primaryPickerData, setPrimaryPickerData] = useState([]);
   const [primarySelected, setPrimarySelected] = useState(undefined);
   const [primaryQuery, setPrimaryQuery] = useState('');
 
   // SECONDARY PICKER STATES
-  const [secondaryCountryData, setSecondaryCountryData] = useState([]);
+  const [secondaryPickerData, setSecondaryPickerData] = useState([]);
   const [secondarySelected, setSecondarySelected] = useState(undefined);
   const [secondaryQuery, setSecondaryQuery] = useState('');
 
@@ -30,46 +38,54 @@ export default function Converter() {
   const [secondaryAmount, setSecondaryAmount] = useState('');
 
   // AXIOS REQUEST FOR API - LIMITED USE
-  // useEffect(() => {
-  //   axios.get(BASE_URL)
-  //     .then((res) => setCountries(res.data))
-  //     .catch(error => {
-  //       console.error(error);
-  //     });
-  // }, [])
-
+  useEffect(() => {
+    // axios.get(BASE_URL)
+    //   .then((res) => setCountries(res.data))
+    //   .catch(error => {
+    //     console.error(error);
+    //   });
+  }, [])
+// console.log(countries.data)
   // console.log("Countries State", countries)
   // console.log("**********countries", countries.data.ADA.code);
 
   // CONVERTS CURRENCY API OBJ OF OBJS INTO ARRAY OF OBJS
   useEffect(() => {
-    function convert_to_objects(data) {
-      const obj_list = [];
-      for (let code in data) {
-        const values = data[code];
-        const obj = { "name": code, "value": values["value"] };
-        obj_list.push(obj);
-      }
-      return obj_list;
-    }
+    // FUNCTION FOR REAL API******
+    // function convert_to_objects(data) {
+    //   const obj_list = [];
+    //   for (let code in data) {
+    //     const values = data[code];
+    //     const obj = { "name": code, "value": values["value"] };
+    //     obj_list.push(obj);
+    //   }
+    //   return obj_list;
+    // }
+    // // FOR REAL API
+    // const arrayOfObj = convert_to_objects(countries.data);
 
-    const arrayOfObj = convert_to_objects(countries.data);
+    // FOR FAKE API
+    const arrayOfObj = currencyApi;
 
-    setPrimaryCountryData(arrayOfObj);
-    setSecondaryCountryData(arrayOfObj);
+    setPrimaryApiData(arrayOfObj);
+    setSecondaryApiData(arrayOfObj);
+
+    setPrimaryPickerData(pickerData);
+    setSecondaryPickerData(pickerData);
   }, []);
-  console.log("array of objects", primaryCountryData)
+console.log("Primary Picker Data", primaryPickerData);
+console.log("Primary Api Data", primaryApiData);
 
   // PRIMARY CURRENCY PICKER SEARCH FUNCTION
   const filteredPrimaryData = useMemo(() => {
-    if (primaryCountryData && primaryCountryData.length > 0) {
-      return primaryCountryData.filter((item) =>
+    if (primaryPickerData && primaryPickerData.length > 0) {
+      return primaryPickerData.filter((item) =>
         item.name
           .toLocaleLowerCase('en')
           .includes(primaryQuery.toLocaleLowerCase('en'))
       );
     }
-  }, [primaryCountryData, primaryQuery]);
+  }, [primaryPickerData, primaryQuery]);
 
   const onPrimarySearch = (text) => {
     setPrimaryQuery(text);
@@ -77,14 +93,14 @@ export default function Converter() {
 
   // SECONDARY CURRENCY PICKER SEARCH FUNCTION
   const filteredSecondaryData = useMemo(() => {
-    if (secondaryCountryData && secondaryCountryData.length > 0) {
-      return secondaryCountryData.filter((item) =>
+    if (secondaryPickerData && secondaryPickerData.length > 0) {
+      return secondaryPickerData.filter((item) =>
         item.name
           .toLocaleLowerCase('en')
           .includes(secondaryQuery.toLocaleLowerCase('en'))
       );
     }
-  }, [secondaryCountryData, secondaryQuery]);
+  }, [secondaryPickerData, secondaryQuery]);
 
   const onSecondarySearch = (text) => {
     setSecondaryQuery(text);

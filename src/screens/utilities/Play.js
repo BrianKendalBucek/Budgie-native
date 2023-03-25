@@ -47,16 +47,8 @@ import countriesList from '../utilities/countries-list.json'
 //   }
 //   }
 // 
-// CREATE ONE USE FUNCTION THAT ... LOOPS API, 
 // 
 // THIS OBJECT IS ONLY TO CREATE HARD CODED ARRAY OF OBJS FOR THE PICKER
-// STEP 1: Loop through api, targeting the currency code
-// 
-// STEP 2: Target every currency code outside each nested object
-// 
-// STEP 3: With every currency code, use that to search countries-list for that currency code
-// 
-// STEP 4: Take the flag and country name and build a new object that adds those to the api currency code
 // 
 // ONCE SELECTED, NEEDS TO GET CURRENCY VALUE FROM API
 // 
@@ -74,25 +66,34 @@ import countriesList from '../utilities/countries-list.json'
 
 
 export default function Play() {
-// console.log(countriesList)
+
   function processCurrencyData(currencyApi, countriesList) {
+    const matchingCountries = [];
+
     for (const code in currencyApi.data) {
-      // console.log(`Processing ${code}`);
       for (let countryCode in countriesList.countries) {
-        // console.log(countryCode)
         const country = countriesList.countries[countryCode];
-// console.log(country.currency)
         if (country.currency === code) {
-          console.log(country.name);
+
+          const matchingCountry = {
+            emoji: country.emoji,
+            name: country.name,
+            currency: country.currency
+          };
+
+          matchingCountries.push(matchingCountry);
         }
       }
       // Access the value for this currency
-      const value = currencyApi.data[code].value;
+      // const value = currencyApi.data[code].value;
+      // console.log(value)
       // Do something with the value...
     }
+    console.log(matchingCountries)
+    return matchingCountries;
   }
   
-  console.log(processCurrencyData(currencyApi, countriesList));
+processCurrencyData(currencyApi, countriesList);
   // const [primaryCountryData, setPrimaryCountryData] = useState([]);
   // const [primarySelected, setPrimarySelected] = useState(undefined);
   // const [primaryQuery, setPrimaryQuery] = useState('');
