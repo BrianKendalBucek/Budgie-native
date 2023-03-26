@@ -19,9 +19,11 @@ export default function Converter() {
 
   // PRIMARY API STATES
   const [primaryApiData, setPrimaryApiData] = useState(undefined);
-  const [secondaryApiData, setSecondaryApiData] = useState(undefined)
+  const [primaryApiMatch, setPrimaryApiMatch] = useState(undefined);
 
   // SECONDARY API STATES
+  const [secondaryApiData, setSecondaryApiData] = useState(undefined)
+  const [secondaryApiMatch, setSecondaryApiMatch] = useState(undefined);
 
   // PRIMARY PICKER STATES
   const [primaryPickerData, setPrimaryPickerData] = useState([]);
@@ -45,7 +47,7 @@ export default function Converter() {
     //     console.error(error);
     //   });
   }, [])
-// console.log(countries.data)
+  // console.log(countries.data)
   // console.log("Countries State", countries)
   // console.log("**********countries", countries.data.ADA.code);
 
@@ -73,8 +75,8 @@ export default function Converter() {
     setPrimaryPickerData(pickerData);
     setSecondaryPickerData(pickerData);
   }, []);
-// console.log("Primary Picker Data", primaryPickerData);
-// console.log("Primary Api Data", primaryApiData);
+  // console.log("Primary Picker Data", primaryPickerData);
+  // console.log("Primary Api Data", primaryApiData);
 
   // PRIMARY CURRENCY PICKER SEARCH FUNCTION
   const filteredPrimaryData = useMemo(() => {
@@ -105,8 +107,8 @@ export default function Converter() {
   const onSecondarySearch = (text) => {
     setSecondaryQuery(text);
   }
-console.log(primarySelected)
-console.log(secondarySelected)
+  console.log("Primary Selected: ", primarySelected)
+  console.log("Secondary Selected: ", secondarySelected)
   // PRIMARY PICKER TITLE FUNCTION
   const verifyPrimary = () => {
     if (primarySelected) {
@@ -133,6 +135,42 @@ console.log(secondarySelected)
   const handleSecondaryAmountChange = (text) => {
     setSecondaryAmount(text);
   }
+
+  // MATCHING SELECTED WITH API FOR VALUE
+  useEffect(() => {
+
+    const primaryCurrencyValueMatch = () => {
+      if (primarySelected) {
+
+        for (let i = 0; i < currencyApi.length; i++) {
+          if (currencyApi[i].name === primarySelected.currency) {
+            const primaryApiMatch = currencyApi[i].value;
+            // console.log("Found it! The value is:", primaryApiMatch);
+            return setPrimaryApiMatch(primaryApiMatch);
+            break; // stop looping once the match is found
+          }
+        }
+      }
+    }
+
+    const secondaryCurrencyValueMatch = () => {
+      if (secondarySelected) {
+
+        for (let x = 0; x < currencyApi.length; x++) {
+          if (currencyApi[x].name === secondarySelected.currency) {
+            const secondaryApiMatch = currencyApi[x].value;
+            return setSecondaryApiMatch(secondaryApiMatch);
+            break;
+          }
+        }
+      }
+    }
+    primaryCurrencyValueMatch();
+    secondaryCurrencyValueMatch();
+  }, [])
+
+  console.log("Primary Api Match", primaryApiMatch);
+  console.log("Secondary Api Match", secondaryApiMatch);
 
   // CONVERSION BETWEEN CURRENCIES
   // // const firstValue = primarySelected ? countries.data[primarySelected].value : 0;
