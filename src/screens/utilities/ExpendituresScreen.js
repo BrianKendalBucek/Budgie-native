@@ -4,6 +4,8 @@ import { TextInput, Button, ListItem } from "@react-native-material/core";
 import { Flex } from 'react-native-flex-layout';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Picker, onOpen } from 'react-native-actions-sheet-picker';
+import pickerData from '../utilities/picker-object.json'
+// import axios from 'axios';
 import { SelectList } from 'react-native-dropdown-select-list'
 import moment from 'moment';
 import countries from './currency.json';
@@ -36,20 +38,13 @@ export default function ExpendituresScreen({ categoryItems }) {
   // }
   // 
   // --PRIMARY ACCOUNT
-// 
-// const primaryAccount = () => {
-// 
-// if ()
-// 
-// }
-// 
-// 
-// 
-// 
-// 
-// 
-// 
-//   
+  // 
+  // const primaryAccount = () => {
+  // 
+  // if ()
+  // 
+  // }
+
   // const primaryBudget = (from usersScreen)
   // must subtract every credit and debit purchase including atm withdrawls
   // must not factor in secondary currency cash expenditures
@@ -124,6 +119,16 @@ export default function ExpendituresScreen({ categoryItems }) {
 
   // DATE PICKER
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  
+  // SECONDARY CURRENCY PICKER STATES
+  const [secondaryPickerData, setSecondaryPickerData] = useState([]);
+  const [secondarySelected, setSecondarySelected] = useState(undefined);
+  const [secondaryQuery, setSecondaryQuery] = useState('');
+
+  // SETTING PICKER DATA
+  useEffect(() => {
+    setSecondaryPickerData(pickerData);
+  }, [])
 
   const handleDateChange = (text) => {
     setDate(String(text));
@@ -138,9 +143,6 @@ export default function ExpendituresScreen({ categoryItems }) {
 
   // CURRENCY PICKER
 
-  // SECONDARY CURRENCY PICKER STATES
-  const [secondaryCountryData, setSecondaryCountryData] = useState([]);
-  const [secondaryQuery, setSecondaryQuery] = useState('');
 
   // HANDLE SECONDARY AMOUNT CHANGE
   // const [secondaryAmount, setSecondaryAmount] = useState('');
@@ -158,33 +160,17 @@ export default function ExpendituresScreen({ categoryItems }) {
 
   // console.log("**********countries", countries.data.ADA.code);
 
-  // CONVERTS CURRENCY API OBJ OF OBJS INTO ARRAY OF OBJS
-  useEffect(() => {
-    function convert_to_objects(data) {
-      const obj_list = [];
-      for (let code in data) {
-        const values = data[code];
-        const obj = { "name": code, "value": values["value"] };
-        obj_list.push(obj);
-      }
-      return obj_list;
-    }
-
-    const arrayOfObj = convert_to_objects(countries.data);
-
-    setSecondaryCountryData(arrayOfObj);
-  }, []);
 
   // SECONDARY CURRENCY PICKER SEARCH FUNCTION
   const filteredSecondaryData = useMemo(() => {
-    if (secondaryCountryData && secondaryCountryData.length > 0) {
-      return secondaryCountryData.filter((item) =>
+    if (secondaryPickerData && secondaryPickerData.length > 0) {
+      return secondaryPickerData.filter((item) =>
         item.name
           .toLocaleLowerCase('en')
           .includes(secondaryQuery.toLocaleLowerCase('en'))
       );
     }
-  }, [secondaryCountryData, secondaryQuery]);
+  }, [secondaryPickerData, secondaryQuery]);
 
   const onSecondarySearch = (text) => {
     setSecondaryQuery(text);
@@ -193,7 +179,7 @@ export default function ExpendituresScreen({ categoryItems }) {
   // SECONDARY CURRENCY PICKER TITLE FUNCTION
   const verifySecondary = () => {
     if (currency) {
-      return `Chosen Currency: ${String(currency)}`
+      return `Chosen Currency: ${String(currency.currency)}`
     } else {
       return "Choose Currency";
     }
@@ -352,7 +338,7 @@ export default function ExpendituresScreen({ categoryItems }) {
             inputValue={secondaryQuery}
             searchable={true}
             label="Currency"
-            setSelected={(val) => setCurrency(val.name)}
+            setSelected={(val) => setCurrency(val)}
             onSearch={onSecondarySearch}
           />
         </SafeAreaView>
