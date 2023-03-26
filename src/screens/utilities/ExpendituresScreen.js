@@ -8,7 +8,7 @@ import pickerData from '../utilities/picker-object.json'
 // import axios from 'axios';
 import { SelectList } from 'react-native-dropdown-select-list'
 import moment from 'moment';
-import countries from './currency.json';
+import currencyApi from './currency.json';
 
 
 export default function ExpendituresScreen({ categoryItems }) {
@@ -82,6 +82,9 @@ export default function ExpendituresScreen({ categoryItems }) {
   // ALL OF THESE CAN PROBABLY BE DONE IN THE SUBMIT HANDLER
 
 
+  // API DATA STATE
+  const [countries, setCountries] = useState([]);
+
   // CATEGORY ARRAY INTO AN OBJECT
   function createObjectArray(array) {
     return array.map((item, index) => {
@@ -105,12 +108,6 @@ export default function ExpendituresScreen({ categoryItems }) {
   const [category, setCategory] = useState('');
   const [title, setTitle] = useState('');
 
-  // const [usdOf, setUsdOf] = useState('');
-  // const [converted, setConverted] = useState(''); (converted to primary)
-  // const [primaryAccount, setPrimaryAccount] = useState('');
-  // const [everyExpense, setEveryExpense] = useState('');
-  // const [cashRemaining, setCashRemaining] = useState('');
-
   // MODAL
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -119,17 +116,19 @@ export default function ExpendituresScreen({ categoryItems }) {
 
   // DATE PICKER
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-  
+
   // SECONDARY CURRENCY PICKER STATES
   const [secondaryPickerData, setSecondaryPickerData] = useState([]);
-  const [secondarySelected, setSecondarySelected] = useState(undefined);
+  // const [secondarySelected, setSecondarySelected] = useState(undefined);
+  // CURRENCY AND SETCURRENCY IN PLACE OF THESE
   const [secondaryQuery, setSecondaryQuery] = useState('');
 
-  // SETTING PICKER DATA
+  // SETTING CURRENCY PICKER DATA
   useEffect(() => {
     setSecondaryPickerData(pickerData);
   }, [])
 
+  // DATE PICKER HANDELING
   const handleDateChange = (text) => {
     setDate(String(text));
     hideDatePicker();
@@ -146,19 +145,6 @@ export default function ExpendituresScreen({ categoryItems }) {
 
   // HANDLE SECONDARY AMOUNT CHANGE
   // const [secondaryAmount, setSecondaryAmount] = useState('');
-
-  // AXIOS REQUEST FOR API - LIMITED USE
-  // useEffect(() => {
-  //   axios.get(BASE_URL)
-  //     .then(response => {
-  //       console.log(response.data);
-  //     })
-  //     .catch(error => {
-  //       console.error(error);
-  //     });
-  // }, [])
-
-  // console.log("**********countries", countries.data.ADA.code);
 
 
   // SECONDARY CURRENCY PICKER SEARCH FUNCTION
@@ -190,27 +176,7 @@ export default function ExpendituresScreen({ categoryItems }) {
   //   setSecondaryAmount(text);
   // };
   // ********************************
-  // const [data, setData] = useState([]);
-  // const [query, setQuery] = useState('');
-  // // const [selected, setSelected] = useState(undefined);
 
-  // useEffect(() => {
-  //   setData(countries);
-  // }, []);
-
-  // const filteredData = useMemo(() => {
-  //   if (data && data.length > 0) {
-  //     return data.filter((item) =>
-  //       item.name
-  //         .toLocaleLowerCase('en')
-  //         .includes(query.toLocaleLowerCase('en'))
-  //     );
-  //   }
-  // }, [data, query]);
-
-  // const onSearch = (text) => {
-  //   setQuery(text);
-  // };
 
   // PAYMENT TYPE
   const [cashButton, setCashButton] = useState(false);
@@ -246,12 +212,15 @@ export default function ExpendituresScreen({ categoryItems }) {
       setAtmButton(true);
     }
   };
+console.log("objects", objects)
 
   // PRICE
   const handlePriceChange = (text) => {
     setPrice(text);
-    const secondValue = currency ? countries.data[currency].value : 0;
+    const secondValue = currency ? currencyApi.data[currency.currency].value : 0;
+    console.log("secondValue", secondValue)
     const secondInput = text;
+    console.log("text", text);
     const usdOfSecondInput = currency && text ? secondInput / secondValue : 1;
     setUsd(usdOfSecondInput);
   };
@@ -267,6 +236,15 @@ export default function ExpendituresScreen({ categoryItems }) {
       alert("Please fill in all the required fields.");
       return;
     }
+    // HERE MUST BE ACTUAL CONVERSION TO USD AT TIME OF SUBMIT
+    // const BASE_URL = "https://api.currencyapi.com/v3/latest?apikey=vLzph0kSqJvRoCI7IvIcYhBMgwgV3KkONWlMEmLi&currencies=";
+
+    // axios.get(BASE_URL)
+    //   .then((res) => setCountries(res.data))
+    //   .catch(error => {
+    //       console.error(error);
+    //     });
+    setCountries(currencyApi);
 
     const newObject = { key: Date.now(), type, price, usd, currency, date, category, title };
     setObjects([...objects, newObject]);
@@ -281,6 +259,7 @@ export default function ExpendituresScreen({ categoryItems }) {
     setCreditButton(false);
     setDebitButton(false);
     setAtmButton(false);
+
   };
 
   // CATEGORY DELETION (Change name to expenditure deletion)
