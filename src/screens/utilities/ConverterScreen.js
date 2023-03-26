@@ -5,8 +5,6 @@ import { Picker, onOpen } from 'react-native-actions-sheet-picker';
 import axios from 'axios';
 import pickerData from '../utilities/picker-object.json'
 import currencyApi from '../utilities/currency.json'
-// const countries = require('countries');
-// const emojiFlag = require('emoji-flag');
 
 
 // const BASE_URL = "https://api.currencyapi.com/v3/latest?apikey=vLzph0kSqJvRoCI7IvIcYhBMgwgV3KkONWlMEmLi&currencies=";
@@ -169,23 +167,28 @@ export default function Converter() {
     secondaryCurrencyValueMatch();
   }, [])
 
-  console.log("Primary Api Match", primaryApiMatch);
-  console.log("Secondary Api Match", secondaryApiMatch);
 
   // CONVERSION BETWEEN CURRENCIES
-  // // const firstValue = primarySelected ? countries.data[primarySelected].value : 0;
-  // const firstValue = primarySelected ? currencyApi[primarySelected].value : 0;
-  // // const secondValue = secondarySelected ? countries.data[secondarySelected].value : 0;
-  // const secondValue = secondarySelected ? currencyApi[secondarySelected].value : 0;
+  // const firstValue = primarySelected ? countries.data[primarySelected].value : 0;
+  const firstValue = primarySelected ? primaryApiMatch : 0;
+  // const secondValue = secondarySelected ? countries.data[secondarySelected].value : 0;
+  const secondValue = secondarySelected ? secondaryApiMatch : 0;
 
-  // const firstInput = primaryAmount ? primaryAmount : 0;
-  // const secondInput = secondaryAmount ? secondaryAmount : 0;
-  // const usdOfFirstInput = primarySelected && primaryAmount ? firstInput / firstValue : 1;
-  // const usdOfSecondInput = secondarySelected && secondaryAmount ? secondInput / secondValue : 1;
-  // const resultFirstSecond = firstInput ? usdOfFirstInput * secondValue : 0;
-  // const resultSecondFirst = secondInput ? usdOfSecondInput * firstValue : 0;
-  // const resultOneDec = resultFirstSecond.toFixed(2);
-  // const resultTwoDec = resultSecondFirst.toFixed(2);
+  const firstInput = primaryAmount ? primaryAmount : 0;
+  console.log("First Input", firstInput)
+  const secondInput = secondaryAmount ? secondaryAmount : 0;
+  console.log("Second Input", secondInput)
+  const usdOfFirstInput = primarySelected && primaryAmount ? firstInput / firstValue : 1;
+  console.log("usdOfFirstInput", usdOfFirstInput)
+  const usdOfSecondInput = secondarySelected && secondaryAmount ? secondInput / secondValue : 1;
+  console.log("usdOfSecondInput", usdOfSecondInput)
+  const resultFirstSecond = firstInput ? usdOfFirstInput * secondValue : 0;
+  console.log("result first second", resultFirstSecond)
+  const resultSecondFirst = secondInput ? usdOfSecondInput * firstValue : 0;
+  console.log("result Second First", resultSecondFirst)
+  const resultOneDec = resultFirstSecond.toFixed(2);
+  // console.log("resultOneDec", resultOneDec)
+  const resultTwoDec = resultSecondFirst.toFixed(2);
 
   const handlePrimaryInputFocus = () => {
     setSecondaryAmount(0);
@@ -226,7 +229,7 @@ export default function Converter() {
         value={primaryAmount}
         onFocus={handlePrimaryInputFocus}
         onChangeText={handlePrimaryAmountChange}
-        // placeholder={resultSecondFirst ? String(resultTwoDec) : "Enter amount"}
+        placeholder={resultSecondFirst ? String(resultTwoDec) : "Enter amount"}
         color="grey"
         variant='outlined'
       />
@@ -255,7 +258,7 @@ export default function Converter() {
         value={secondaryAmount}
         onFocus={handleSecondaryInputFocus}
         onChangeText={handleSecondaryAmountChange}
-        // placeholder={resultFirstSecond ? String(resultOneDec) : "Enter amount"}
+        placeholder={resultFirstSecond ? String(resultOneDec) : "Enter amount"}
         color="grey"
         variant='outlined'
       />
