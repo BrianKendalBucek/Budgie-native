@@ -1,210 +1,175 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { View, ScrollView, SafeAreaView, StyleSheet, Text, TouchableOpacity, Keyboard } from 'react-native';
-import { Box, TextInput, Button } from "@react-native-material/core";
+import { SafeAreaView, StyleSheet, Keyboard } from 'react-native';
+import { TextInput, Button } from "@react-native-material/core";
 import { Picker, onOpen } from 'react-native-actions-sheet-picker';
-import axios from 'axios';
 import pickerData from '../utilities/picker-object.json'
+// import axios from 'axios';
 import currencyApi from '../utilities/currency.json'
 
 
-// const BASE_URL = "https://api.currencyapi.com/v3/latest?apikey=vLzph0kSqJvRoCI7IvIcYhBMgwgV3KkONWlMEmLi&currencies=";
-
-
 export default function Converter() {
-
-  // DATA STATE
+  
+  // API DATA STATE
   const [countries, setCountries] = useState([]);
-
-  // PRIMARY API STATES
-  const [primaryApiData, setPrimaryApiData] = useState(undefined);
+  
+  // SELECTED-CURRENCY-TO-API-VALUE MATCHING STATES
   const [primaryApiMatch, setPrimaryApiMatch] = useState(undefined);
-
-  // SECONDARY API STATES
-  const [secondaryApiData, setSecondaryApiData] = useState(undefined)
   const [secondaryApiMatch, setSecondaryApiMatch] = useState(undefined);
-
+  
   // PRIMARY PICKER STATES
   const [primaryPickerData, setPrimaryPickerData] = useState([]);
   const [primarySelected, setPrimarySelected] = useState(undefined);
   const [primaryQuery, setPrimaryQuery] = useState('');
-
+  
   // SECONDARY PICKER STATES
   const [secondaryPickerData, setSecondaryPickerData] = useState([]);
   const [secondarySelected, setSecondarySelected] = useState(undefined);
   const [secondaryQuery, setSecondaryQuery] = useState('');
-
+  
   // HANDLE PRIMARY/SECONDARY AMOUNT CHANGE
   const [primaryAmount, setPrimaryAmount] = useState('');
   const [secondaryAmount, setSecondaryAmount] = useState('');
-
-  // AXIOS REQUEST FOR API - LIMITED USE
+  
+  // CONVERSION RESULT STATES
+  const [resultOne, setResultOne] = useState('');
+  const [resultTwo, setResultTwo] = useState('');
+  
+  
   useEffect(() => {
-    // axios.get(BASE_URL)
-    //   .then((res) => setCountries(res.data))
-    //   .catch(error => {
-    //     console.error(error);
-    //   });
-  }, [])
-  // console.log(countries.data)
-  // console.log("Countries State", countries)
-  // console.log("**********countries", countries.data.ADA.code);
-
-  // CONVERTS CURRENCY API OBJ OF OBJS INTO ARRAY OF OBJS
-  useEffect(() => {
-    // FUNCTION FOR REAL API******
-    // function convert_to_objects(data) {
-    //   const obj_list = [];
-    //   for (let code in data) {
-    //     const values = data[code];
-    //     const obj = { "name": code, "value": values["value"] };
-    //     obj_list.push(obj);
-    //   }
-    //   return obj_list;
-    // }
-    // // FOR REAL API
-    // const arrayOfObj = convert_to_objects(countries.data);
-
-    // FOR FAKE API
-    const arrayOfObj = currencyApi;
-
-    setPrimaryApiData(arrayOfObj);
-    setSecondaryApiData(arrayOfObj);
-
     setPrimaryPickerData(pickerData);
     setSecondaryPickerData(pickerData);
-  }, []);
-  // console.log("Primary Picker Data", primaryPickerData);
-  // console.log("Primary Api Data", primaryApiData);
-
-  // PRIMARY CURRENCY PICKER SEARCH FUNCTION
+  }, [])
+  
+  
+  // PICKER SEARCH FUNCTION
   const filteredPrimaryData = useMemo(() => {
     if (primaryPickerData && primaryPickerData.length > 0) {
       return primaryPickerData.filter((item) =>
-        item.name
-          .toLocaleLowerCase('en')
-          .includes(primaryQuery.toLocaleLowerCase('en'))
+      item.name
+      .toLocaleLowerCase('en')
+      .includes(primaryQuery.toLocaleLowerCase('en'))
       );
     }
   }, [primaryPickerData, primaryQuery]);
-
+  
   const onPrimarySearch = (text) => {
     setPrimaryQuery(text);
   };
-
-  // SECONDARY CURRENCY PICKER SEARCH FUNCTION
+  
   const filteredSecondaryData = useMemo(() => {
     if (secondaryPickerData && secondaryPickerData.length > 0) {
       return secondaryPickerData.filter((item) =>
-        item.name
+      item.name
           .toLocaleLowerCase('en')
           .includes(secondaryQuery.toLocaleLowerCase('en'))
-      );
-    }
-  }, [secondaryPickerData, secondaryQuery]);
+          );
+        }
+      }, [secondaryPickerData, secondaryQuery]);
+      
+      const onSecondarySearch = (text) => {
+        setSecondaryQuery(text);
+      }
+      
+      
+      // PICKER TITLE FUNCTION
+      const verifyPrimary = () => {
+        if (primarySelected) {
+          return `Chosen Currency: ${String(primarySelected.currency)}`
+        } else {
+          return "Choose Currency";
+        }
+      }
+      
+      const verifySecondary = () => {
+        if (secondarySelected) {
+          return `Chosen Currency: ${String(secondarySelected.currency)}`;
+        } else {
+          return "Choose Currency"
+        }
+      }
+      
+      
+      // INPUT AMOUNT SETTERS
+      const handlePrimaryAmountChange = (text) => {
+        setPrimaryAmount(text);
+      };
 
-  const onSecondarySearch = (text) => {
-    setSecondaryQuery(text);
-  }
-  console.log("Primary Selected: ", primarySelected)
-  console.log("Secondary Selected: ", secondarySelected)
-  // PRIMARY PICKER TITLE FUNCTION
-  const verifyPrimary = () => {
-    if (primarySelected) {
-      return `Chosen Currency: ${String(primarySelected.name)}`
-    } else {
-      return "Choose Currency";
-    }
-  }
+      const handleSecondaryAmountChange = (text) => {
+        setSecondaryAmount(text);
+      }
+      
+      
+      // MATCHING SELECTED CURRENCY WITH API CURRENCY FOR VALUE
+      const primaryCurrencyValueMatch = () => {
+        if (primarySelected) {
+          for (let code in countries.data) {
+            if (countries.data[code].code === primarySelected.currency) {
+              return setPrimaryApiMatch(countries.data[code].value);
+            }
+          }
+        }
+      }
+      
+      const secondaryCurrencyValueMatch = () => {
+        if (secondarySelected) {
+          for (let code in countries.data) {
+            if (countries.data[code].code === secondarySelected.currency) {
+              return setSecondaryApiMatch(countries.data[code].value);
+            }
+          }
+        }
+      }
+      
+      
+      // EMPTIES AMOUNT STATE OF OPPOSING INPUT
+      const handlePrimaryInputFocus = () => {
+        setSecondaryAmount(null);
+      }
+      
+      const handleSecondaryInputFocus = () => {
+        setPrimaryAmount(null);
+      }
+      
+      const handleSubmit = () => {
+        // const BASE_URL = "https://api.currencyapi.com/v3/latest?apikey=vLzph0kSqJvRoCI7IvIcYhBMgwgV3KkONWlMEmLi&currencies=";
+        
+        // axios.get(BASE_URL)
+        //   .then((res) => setCountries(res.data))
+        //   .catch(error => {
+        //       console.error(error);
+        //     });
+          setCountries(currencyApi);
+          
+          const firstValue = primarySelected ? primaryApiMatch : 0;
+          const secondValue = secondarySelected ? secondaryApiMatch : 0;
+          const firstInput = primaryAmount ? primaryAmount : 0;
+          const secondInput = secondaryAmount ? secondaryAmount : 0;
+          const usdOfFirstInput = primarySelected && primaryAmount ? firstInput / firstValue : 1;
+          const usdOfSecondInput = secondarySelected && secondaryAmount ? secondInput / secondValue : 1;
+          const resultFirstSecond = firstInput ? usdOfFirstInput * secondValue : 0;
+          const resultSecondFirst = secondInput ? usdOfSecondInput * firstValue : 0;
+          
+          if (primarySelected) {
+            primaryCurrencyValueMatch();
+            const firstConvert = () => {
+              const resultOneDec = resultFirstSecond.toFixed(2);
+              return setResultOne(resultOneDec);
+            }
+            firstConvert();
+          }
 
-  // SECONDARY PICKER TITLE FUNCTION
-  const verifySecondary = () => {
     if (secondarySelected) {
-      return `Chosen Currency: ${String(secondarySelected.name)}`;
-    } else {
-      return "Choose Currency"
-    }
-  }
-
-  // PRIMARY INPUT AMOUNT
-  const handlePrimaryAmountChange = (text) => {
-    setPrimaryAmount(text);
-  };
-  // SECONDARY INPUT AMOUNT
-  const handleSecondaryAmountChange = (text) => {
-    setSecondaryAmount(text);
-  }
-
-  // MATCHING SELECTED WITH API FOR VALUE
-  useEffect(() => {
-
-    const primaryCurrencyValueMatch = () => {
-      if (primarySelected) {
-
-        for (let i = 0; i < currencyApi.length; i++) {
-          if (currencyApi[i].name === primarySelected.currency) {
-            const primaryApiMatch = currencyApi[i].value;
-            // console.log("Found it! The value is:", primaryApiMatch);
-            return setPrimaryApiMatch(primaryApiMatch);
-            break; // stop looping once the match is found
-          }
-        }
+      secondaryCurrencyValueMatch();
+      const secondConvert = () => {
+        const resultTwoDec = resultSecondFirst.toFixed(2);
+        return setResultTwo(resultTwoDec);
       }
+      secondConvert()
     }
-
-    const secondaryCurrencyValueMatch = () => {
-      if (secondarySelected) {
-
-        for (let x = 0; x < currencyApi.length; x++) {
-          if (currencyApi[x].name === secondarySelected.currency) {
-            const secondaryApiMatch = currencyApi[x].value;
-            return setSecondaryApiMatch(secondaryApiMatch);
-            break;
-          }
-        }
-      }
-    }
-    primaryCurrencyValueMatch();
-    secondaryCurrencyValueMatch();
-  }, [])
-
-
-  // CONVERSION BETWEEN CURRENCIES
-  // const firstValue = primarySelected ? countries.data[primarySelected].value : 0;
-  const firstValue = primarySelected ? primaryApiMatch : 0;
-  // const secondValue = secondarySelected ? countries.data[secondarySelected].value : 0;
-  const secondValue = secondarySelected ? secondaryApiMatch : 0;
-
-  const firstInput = primaryAmount ? primaryAmount : 0;
-  console.log("First Input", firstInput)
-  const secondInput = secondaryAmount ? secondaryAmount : 0;
-  console.log("Second Input", secondInput)
-  const usdOfFirstInput = primarySelected && primaryAmount ? firstInput / firstValue : 1;
-  console.log("usdOfFirstInput", usdOfFirstInput)
-  const usdOfSecondInput = secondarySelected && secondaryAmount ? secondInput / secondValue : 1;
-  console.log("usdOfSecondInput", usdOfSecondInput)
-  const resultFirstSecond = firstInput ? usdOfFirstInput * secondValue : 0;
-  console.log("result first second", resultFirstSecond)
-  const resultSecondFirst = secondInput ? usdOfSecondInput * firstValue : 0;
-  console.log("result Second First", resultSecondFirst)
-  const resultOneDec = resultFirstSecond.toFixed(2);
-  // console.log("resultOneDec", resultOneDec)
-  const resultTwoDec = resultSecondFirst.toFixed(2);
-
-  const handlePrimaryInputFocus = () => {
-    setSecondaryAmount(0);
-  }
-
-  const handleSecondaryInputFocus = () => {
-    setPrimaryAmount(0);
   }
 
   return (
     <SafeAreaView style={styles.pickerContainer}>
-
-      {/* RESULTS BOX
-      <View style={styles.boxposition}>
-        <Box style={styles.box} />
-      </View> */}
 
       {/* FIRST BUTTON AND INPUT */}
       <Button
@@ -229,7 +194,7 @@ export default function Converter() {
         value={primaryAmount}
         onFocus={handlePrimaryInputFocus}
         onChangeText={handlePrimaryAmountChange}
-        placeholder={resultSecondFirst ? String(resultTwoDec) : "Enter amount"}
+        placeholder={resultTwo ? resultTwo : "Enter amount"}
         color="grey"
         variant='outlined'
       />
@@ -258,7 +223,7 @@ export default function Converter() {
         value={secondaryAmount}
         onFocus={handleSecondaryInputFocus}
         onChangeText={handleSecondaryAmountChange}
-        placeholder={resultFirstSecond ? String(resultOneDec) : "Enter amount"}
+        placeholder={resultOne ? resultOne : "Enter amount"}
         color="grey"
         variant='outlined'
       />
@@ -270,7 +235,7 @@ export default function Converter() {
         tintColor='grey'
         style={styles.bluebutton}
         onPress={() => {
-          // handleSubmit({ type, price, currency, date, category, title });
+          handleSubmit();
           Keyboard.dismiss();
         }}
       />
@@ -278,12 +243,10 @@ export default function Converter() {
   );
 }
 
+
 const styles = StyleSheet.create({
   pickerContainer: {
     backgroundColor: '#eee',
-    // flex: 1,
-    // alignItems: 'center',
-    // marginHorizontal: 20
   },
   pickerButton: {
     backgroundColor: '#8B93A5',

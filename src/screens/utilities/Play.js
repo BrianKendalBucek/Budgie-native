@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { View, ScrollView, SafeAreaView, StyleSheet, Text, TouchableOpacity, Keyboard } from 'react-native';
 import { Box, TextInput, Button } from "@react-native-material/core";
 import { Picker, onOpen } from 'react-native-actions-sheet-picker';
-import axios from 'axios';
+// import axios from 'axios';
 // import countries from 'countries-list';
 import currencyApi from '../utilities/currency.json'
 import countriesList from '../utilities/countries-list.json'
