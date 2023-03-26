@@ -73,8 +73,8 @@ export default function Converter() {
     setPrimaryPickerData(pickerData);
     setSecondaryPickerData(pickerData);
   }, []);
-console.log("Primary Picker Data", primaryPickerData);
-console.log("Primary Api Data", primaryApiData);
+// console.log("Primary Picker Data", primaryPickerData);
+// console.log("Primary Api Data", primaryApiData);
 
   // PRIMARY CURRENCY PICKER SEARCH FUNCTION
   const filteredPrimaryData = useMemo(() => {
@@ -105,11 +105,12 @@ console.log("Primary Api Data", primaryApiData);
   const onSecondarySearch = (text) => {
     setSecondaryQuery(text);
   }
-
+console.log(primarySelected)
+console.log(secondarySelected)
   // PRIMARY PICKER TITLE FUNCTION
   const verifyPrimary = () => {
     if (primarySelected) {
-      return `Chosen Currency: ${String(primarySelected)}`
+      return `Chosen Currency: ${String(primarySelected.name)}`
     } else {
       return "Choose Currency";
     }
@@ -118,7 +119,7 @@ console.log("Primary Api Data", primaryApiData);
   // SECONDARY PICKER TITLE FUNCTION
   const verifySecondary = () => {
     if (secondarySelected) {
-      return `Chosen Currency: ${String(secondarySelected)}`;
+      return `Chosen Currency: ${String(secondarySelected.name)}`;
     } else {
       return "Choose Currency"
     }
@@ -134,16 +135,19 @@ console.log("Primary Api Data", primaryApiData);
   }
 
   // CONVERSION BETWEEN CURRENCIES
-  const firstValue = primarySelected ? countries.data[primarySelected].value : 0;
-  const secondValue = secondarySelected ? countries.data[secondarySelected].value : 0;
-  const firstInput = primaryAmount ? primaryAmount : 0;
-  const secondInput = secondaryAmount ? secondaryAmount : 0;
-  const usdOfFirstInput = primarySelected && primaryAmount ? firstInput / firstValue : 1;
-  const usdOfSecondInput = secondarySelected && secondaryAmount ? secondInput / secondValue : 1;
-  const resultFirstSecond = firstInput ? usdOfFirstInput * secondValue : 0;
-  const resultSecondFirst = secondInput ? usdOfSecondInput * firstValue : 0;
-  const resultOneDec = resultFirstSecond.toFixed(2);
-  const resultTwoDec = resultSecondFirst.toFixed(2);
+  // // const firstValue = primarySelected ? countries.data[primarySelected].value : 0;
+  // const firstValue = primarySelected ? currencyApi[primarySelected].value : 0;
+  // // const secondValue = secondarySelected ? countries.data[secondarySelected].value : 0;
+  // const secondValue = secondarySelected ? currencyApi[secondarySelected].value : 0;
+
+  // const firstInput = primaryAmount ? primaryAmount : 0;
+  // const secondInput = secondaryAmount ? secondaryAmount : 0;
+  // const usdOfFirstInput = primarySelected && primaryAmount ? firstInput / firstValue : 1;
+  // const usdOfSecondInput = secondarySelected && secondaryAmount ? secondInput / secondValue : 1;
+  // const resultFirstSecond = firstInput ? usdOfFirstInput * secondValue : 0;
+  // const resultSecondFirst = secondInput ? usdOfSecondInput * firstValue : 0;
+  // const resultOneDec = resultFirstSecond.toFixed(2);
+  // const resultTwoDec = resultSecondFirst.toFixed(2);
 
   const handlePrimaryInputFocus = () => {
     setSecondaryAmount(0);
@@ -176,7 +180,7 @@ console.log("Primary Api Data", primaryApiData);
         inputValue={primaryQuery}
         searchable={true}
         label="Select Primary Currency"
-        setSelected={(val) => setPrimarySelected(val.name)}
+        setSelected={(val) => setPrimarySelected(val)}
         onSearch={onPrimarySearch}
       />
       <TextInput
@@ -184,7 +188,7 @@ console.log("Primary Api Data", primaryApiData);
         value={primaryAmount}
         onFocus={handlePrimaryInputFocus}
         onChangeText={handlePrimaryAmountChange}
-        placeholder={resultSecondFirst ? String(resultTwoDec) : "Enter amount"}
+        // placeholder={resultSecondFirst ? String(resultTwoDec) : "Enter amount"}
         color="grey"
         variant='outlined'
       />
@@ -205,7 +209,7 @@ console.log("Primary Api Data", primaryApiData);
         inputValue={secondaryQuery}
         searchable={true}
         label="Select Secondary Currency"
-        setSelected={(val) => setSecondarySelected(val.name)}
+        setSelected={(val) => setSecondarySelected(val)}
         onSearch={onSecondarySearch}
       />
       <TextInput
@@ -213,14 +217,14 @@ console.log("Primary Api Data", primaryApiData);
         value={secondaryAmount}
         onFocus={handleSecondaryInputFocus}
         onChangeText={handleSecondaryAmountChange}
-        placeholder={resultFirstSecond ? String(resultOneDec) : "Enter amount"}
+        // placeholder={resultFirstSecond ? String(resultOneDec) : "Enter amount"}
         color="grey"
         variant='outlined'
       />
 
 
-      {/* SUBMIT BUTTON *
-      {/* <Button
+      {/* SUBMIT BUTTON */}
+      <Button
         title="Submit"
         tintColor='grey'
         style={styles.bluebutton}
@@ -228,7 +232,7 @@ console.log("Primary Api Data", primaryApiData);
           // handleSubmit({ type, price, currency, date, category, title });
           Keyboard.dismiss();
         }}
-      /> */}
+      />
     </SafeAreaView>
   );
 }
