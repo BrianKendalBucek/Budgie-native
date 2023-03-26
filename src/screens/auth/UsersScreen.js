@@ -2,6 +2,8 @@ import React, { useState, useMemo, useEffect } from "react";
 import { ListItem, TextInput, Switch, Button } from "@react-native-material/core";
 import { ScrollView, View, Text, SafeAreaView, TouchableOpacity, Keyboard, StyleSheet, Modal, KeyboardAvoidingView } from 'react-native';
 import { Picker, onOpen } from 'react-native-actions-sheet-picker';
+import pickerData from '../utilities/picker-object.json'
+
 
 // import countries from './countries2.json';
 import countries from '../utilities/currency.json'
@@ -9,27 +11,24 @@ import countries from '../utilities/currency.json'
 export default function User() {
 
   // STATES FOR PRIMARY CURRENCY SEARCH AND SELECTION SHEET MODAL
-  const [primaryCountryData, setPrimaryCountryData] = useState([]);
+  const [primaryPickerData, setPrimaryPickerData] = useState([]);
   const [primarySelected, setPrimarySelected] = useState(undefined);
   const [primaryQuery, setPrimaryQuery] = useState('');
 
   // STATES FOR SECONDARY CURRENCY SEARCH AND SELECTION SHEET MODAL
-  const [secondaryCountryData, setSecondaryCountryData] = useState([]);
+  const [secondaryPickerData, setSecondaryPickerData] = useState([]);
   const [secondarySelected, setSecondarySelected] = useState(undefined);
   const [secondaryQuery, setSecondaryQuery] = useState('');
 
   // STATES FOR NOTIFICATION SWITCH
   const [enabledNotifications, setEnabledNotifications] = useState(true);
 
-  // SETSTATE FOR PRIMARY CURRENCY PICKER
+  // SETTING PICKER DATA
   useEffect(() => {
-    setPrimaryCountryData(countries);
+    setPrimaryPickerData(pickerData);
+    setSecondaryPickerData(pickerData);
   }, []);
 
-  // SETSTATE FOR SECONDARY CURRENCY PICKER
-  useEffect(() => {
-    setSecondaryCountryData(countries);
-  }, []);
 
   // const onChangePrimary = async (text = '') => {
   //   setPrimary(text)
@@ -39,34 +38,16 @@ export default function User() {
   //   setSecondary(text)
   // }
 
-  // CONVERTS CURRENCY API OBJ OF OBJS INTO ARRAY OF OBJS
-  useEffect(() => {
-    function convert_to_objects(data) {
-      const obj_list = [];
-      for (let code in data) {
-        const values = data[code];
-        const obj = { "name": code, "value": values["value"] };
-        obj_list.push(obj);
-      }
-      return obj_list;
-    }
-
-    const arrayOfObj = convert_to_objects(countries.data);
-
-    setPrimaryCountryData(arrayOfObj);
-    setSecondaryCountryData(arrayOfObj);
-  }, []);
-
   // SEARCH FUNCTION USING QUERY FOR PRIMARY CURRENCY PICKER 
   const filteredPrimaryData = useMemo(() => {
-    if (primaryCountryData && primaryCountryData.length > 0) {
-      return primaryCountryData.filter((item) =>
+    if (primaryPickerData && primaryPickerData.length > 0) {
+      return primaryPickerData.filter((item) =>
         item.name
           .toLocaleLowerCase('en')
           .includes(primaryQuery.toLocaleLowerCase('en'))
       );
     }
-  }, [primaryCountryData, primaryQuery]);
+  }, [primaryPickerData, primaryQuery]);
 
   const onPrimarySearch = (text) => {
     setPrimaryQuery(text);
@@ -74,14 +55,14 @@ export default function User() {
 
   // SEARCH FUNCTION USING QUERY FOR SECONDARY CURRENCY PICKER
   const filteredSecondaryData = useMemo(() => {
-    if (secondaryCountryData && secondaryCountryData.length > 0) {
-      return secondaryCountryData.filter((item) =>
+    if (secondaryPickerData && secondaryPickerData.length > 0) {
+      return secondaryPickerData.filter((item) =>
         item.name
           .toLocaleLowerCase('en')
           .includes(secondaryQuery.toLocaleLowerCase('en'))
       );
     }
-  }, [secondaryCountryData, secondaryQuery]);
+  }, [secondaryPickerData, secondaryQuery]);
 
   const onSecondarySearch = (text) => {
     setSecondaryQuery(text);
@@ -90,7 +71,7 @@ export default function User() {
   // PRIMARY PICKER TITLE FUNCTION
   const verifyPrimary = () => {
     if (primarySelected) {
-      return `${String(primarySelected)}`
+      return `${String(primarySelected.currency)}`
     } else {
       return "Select";
     }
@@ -99,7 +80,7 @@ export default function User() {
   // SECONDARY PICKER TITLE FUNCTION
   const verifySecondary = () => {
     if (secondarySelected) {
-      return `${String(secondarySelected)}`;
+      return `${String(secondarySelected.currency)}`;
     } else {
       return "Select"
     }
@@ -143,7 +124,7 @@ export default function User() {
           inputValue={primaryQuery}
           searchable={true}
           label="Select Primary Currency"
-          setSelected={(val) => setPrimarySelected(val.name)}
+          setSelected={(val) => setPrimarySelected(val)}
           onSearch={onPrimarySearch}
         />
       </View>
@@ -168,7 +149,7 @@ export default function User() {
         inputValue={secondaryQuery}
         searchable={true}
         label="Select Secondary Currency"
-        setSelected={(val) => setSecondarySelected(val.name)}
+        setSelected={(val) => setSecondarySelected(val)}
         onSearch={onSecondarySearch}
       />
 

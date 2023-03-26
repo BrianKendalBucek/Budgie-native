@@ -34,7 +34,7 @@ export default function Converter() {
   const [resultOne, setResultOne] = useState('');
   const [resultTwo, setResultTwo] = useState('');
   
-  
+  // SETTING PICKER DATA
   useEffect(() => {
     setPrimaryPickerData(pickerData);
     setSecondaryPickerData(pickerData);
