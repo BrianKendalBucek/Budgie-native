@@ -238,7 +238,7 @@ export default function ExpendituresScreen({
   };
 
   // MAKE SURE TO CHECK THAT CASH EXPENSE IS IN SECONDARY CURRENCY
-  function cashChartCalc(objects) {
+  function chartCalc(objects) {
     let atm = 0;
     let cash = 0;
     let credit = 0;
@@ -263,7 +263,6 @@ export default function ExpendituresScreen({
     let expensePercent = ((budget - (credit + debit + cash)) / budget) * 100;
     let primaryPercent = ((budget - (credit + debit + atm)) / budget) * 100;
 
-    console.log("budget", budget)
     return setCashChart(cashPercent), setExpenseChart(expensePercent), setPrimaryChart(primaryPercent);
   }
 
@@ -298,7 +297,7 @@ export default function ExpendituresScreen({
     setDebitButton(false);
     setAtmButton(false);
 
-    cashChartCalc([...objects, newObject]);
+    chartCalc([...objects, newObject]);
   };
 
   // CATEGORY DELETION (Change name to expenditure deletion)
