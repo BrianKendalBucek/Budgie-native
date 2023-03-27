@@ -243,7 +243,7 @@ export default function ExpendituresScreen({ categoryItems, cashChart, setCashCh
       }
     }
 
-    let percent = (cash / atm) * 100;
+    let percent = ((atm - cash) / atm) * 100;
 
     console.log("Expenditures atm", atm)
     console.log("Expenditures cash", cash)

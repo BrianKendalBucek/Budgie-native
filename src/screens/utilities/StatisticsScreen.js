@@ -58,7 +58,7 @@ console.log("StatisticsScreen cashChart", cashChart)
         <View>
           <Text
             style={styles.circle}
-          >Cash Remaining</Text>
+          >Cash Available</Text>
           <View>
             <CircularProgress
               radius={50}
