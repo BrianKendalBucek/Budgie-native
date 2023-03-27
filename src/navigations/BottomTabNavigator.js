@@ -7,15 +7,17 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import { ROUTES } from '../constants';
 import useCategoryItems from '../screens/categoryItems';
 import useChartUpdater from '../screens/chartState';
+import useBudget from '../screens/budgetState';
 import { StatisticsScreen, ExpendituresScreen, CategoriesScreen, ConverterScreen, UsersScreen, Play } from '../screens';
 
 const Tab = createMaterialBottomTabNavigator();
 
 function BottomTabNavigator() {
 
-  // CATEGORIES LIST PASSED IN TO COMPONENTS THROUGH NAVIGATION BAR
+  // LIFTED STATES
   const { categoryItems, setCategoryItems } = useCategoryItems();
   const { cashChart, setCashChart } = useChartUpdater();
+  const { budget, setBudget, primaryDefault, setPrimaryDefault,  secondaryDefault, setSecondaryDefault  } = useBudget();
 
   return (
     <Tab.Navigator
@@ -54,6 +56,9 @@ function BottomTabNavigator() {
           categoryItems={categoryItems}
           cashChart={cashChart}
           setCashChart={setCashChart}
+          budget={budget}
+          primaryDefault={primaryDefault}
+          secondaryDefault={secondaryDefault}
         />}
       </Tab.Screen>
 
@@ -76,29 +81,43 @@ function BottomTabNavigator() {
       {/* CONVERTER TAB */}
       <Tab.Screen
         name={ROUTES.CONVERTER}
-        component={ConverterScreen}
+        // component={ConverterScreen}
         options={{
           tabBarLabel: false,
           tabBarIcon: () => (
             <Ionicons name="sync-circle" color={"grey"} size={26} />
           ),
         }}
-      />
+        >
+        {() => <ConverterScreen
+          primaryDefault={primaryDefault}
+          secondaryDefault={secondaryDefault}
+        />}
+      </Tab.Screen>
 
       {/* USER TAB */}
       <Tab.Screen
         name={ROUTES.USER}
-        component={UsersScreen}
+        // component={UsersScreen}
         options={{
           tabBarLabel: false,
           tabBarIcon: () => (
             <MaterialCommunityIcons name="account" color={"grey"} size={26} />
           ),
         }}
-      />
+      >
+      {() => <UsersScreen
+          budget={budget}
+          setBudget={setBudget}
+          primaryDefault={primaryDefault}
+          setPrimaryDefault={setPrimaryDefault}
+          secondaryDefault={secondaryDefault}
+          setSecondaryDefault={setSecondaryDefault}
+        />}
+      </Tab.Screen>
 
       {/* EXPERIMENTAL TAB */}
-      <Tab.Screen
+      {/* <Tab.Screen
         name={ROUTES.PLAY}
         component={Play}
         options={{
@@ -107,7 +126,7 @@ function BottomTabNavigator() {
             <MaterialCommunityIcons name="bird" color={"grey"} size={26} />
           ),
         }}
-      />
+      /> */}
     </Tab.Navigator>
   );
 }

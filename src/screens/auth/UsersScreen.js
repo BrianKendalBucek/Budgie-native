@@ -6,18 +6,16 @@ import pickerData from '../utilities/picker-object.json'
 
 
 // import countries from './countries2.json';
-import countries from '../utilities/currency.json'
+// import countries from '../utilities/currency.json'
 
-export default function User() {
+export default function User({ budget, setBudget, primaryDefault, setPrimaryDefault, secondaryDefault, setSecondaryDefault }) {
 
   // STATES FOR PRIMARY CURRENCY SEARCH AND SELECTION SHEET MODAL
   const [primaryPickerData, setPrimaryPickerData] = useState([]);
-  const [primarySelected, setPrimarySelected] = useState(undefined);
   const [primaryQuery, setPrimaryQuery] = useState('');
 
   // STATES FOR SECONDARY CURRENCY SEARCH AND SELECTION SHEET MODAL
   const [secondaryPickerData, setSecondaryPickerData] = useState([]);
-  const [secondarySelected, setSecondarySelected] = useState(undefined);
   const [secondaryQuery, setSecondaryQuery] = useState('');
 
   // STATES FOR NOTIFICATION SWITCH
@@ -70,8 +68,8 @@ export default function User() {
 
   // PRIMARY PICKER TITLE FUNCTION
   const verifyPrimary = () => {
-    if (primarySelected) {
-      return `${String(primarySelected.currency)}`
+    if (primaryDefault) {
+      return `${String(primaryDefault.currency)}`
     } else {
       return "Select";
     }
@@ -79,12 +77,17 @@ export default function User() {
 
   // SECONDARY PICKER TITLE FUNCTION
   const verifySecondary = () => {
-    if (secondarySelected) {
-      return `${String(secondarySelected.currency)}`;
+    if (secondaryDefault) {
+      return `${String(secondaryDefault.currency)}`;
     } else {
       return "Select"
     }
   }
+
+  // HANDLER FOR BUDGET
+  const handleBudgetChange = (text) => {
+    setBudget(text);
+  };
 
 
   return (
@@ -101,7 +104,7 @@ export default function User() {
           placeholder='Enter here'
           placeholderTextColor="grey"
           color='grey'
-        // onChangeText={onChangeSecondary}
+        onChangeText={handleBudgetChange}
         />
       </View>
 
@@ -111,7 +114,7 @@ export default function User() {
           <Text style={styles.currencyFont}>Primary Currency</Text>
         </View>
         <Button
-          title={verifyPrimary(primarySelected)}
+          title={verifyPrimary(primaryDefault)}
           tintColor='grey'
           style={styles.bluebutton}
           onPress={() => {
@@ -124,7 +127,7 @@ export default function User() {
           inputValue={primaryQuery}
           searchable={true}
           label="Select Primary Currency"
-          setSelected={(val) => setPrimarySelected(val)}
+          setSelected={(val) => setPrimaryDefault(val)}
           onSearch={onPrimarySearch}
         />
       </View>
@@ -135,7 +138,7 @@ export default function User() {
           <Text style={styles.currencyFont}>Secondary Currency</Text>
         </View>
         <Button
-          title={verifySecondary(secondarySelected)}
+          title={verifySecondary(secondaryDefault)}
           tintColor='grey'
           style={styles.bluebutton}
           onPress={() => {
@@ -149,7 +152,7 @@ export default function User() {
         inputValue={secondaryQuery}
         searchable={true}
         label="Select Secondary Currency"
-        setSelected={(val) => setSecondarySelected(val)}
+        setSelected={(val) => setSecondaryDefault(val)}
         onSearch={onSecondarySearch}
       />
 

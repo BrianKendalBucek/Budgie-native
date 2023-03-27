@@ -11,8 +11,9 @@ import moment from 'moment';
 import currencyApi from './currency.json';
 
 
-export default function ExpendituresScreen({ categoryItems, cashChart, setCashChart }) {
-
+export default function ExpendituresScreen({ categoryItems, cashChart, setCashChart, budget, primaryDefault, secondaryDefault }) {
+console.log("Primary Default", primaryDefault)
+console.log("Secondary Default", secondaryDefault)
   // Remember to reference Budgie original for method
   // Budgie-api country code recognition file for search?
 
@@ -292,7 +293,7 @@ console.log("cashChart", cashChart)
     setObjects(itemsCopy);
     setSelectedItem(null);
   }
-
+console.log("Expenditures Budget Print", budget)
 
   return (
     <ScrollView style={{ backgroundColor: '#eee' }} keyboardShouldPersistTaps='handled'>
