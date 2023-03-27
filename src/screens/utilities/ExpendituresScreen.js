@@ -165,11 +165,12 @@ export default function ExpendituresScreen({ categoryItems }) {
   // SECONDARY CURRENCY PICKER TITLE FUNCTION
   const verifySecondary = () => {
     if (currency) {
-      return `Chosen Currency: ${String(currency.currency)}`
+      return `Chosen Currency: ${String(currency)}`
     } else {
       return "Choose Currency";
     }
   }
+
 
   // SECONDARY CURRENCY INPUT AMOUNT
   // const handleSecondaryAmountChange = (text) => {
@@ -212,15 +213,12 @@ export default function ExpendituresScreen({ categoryItems }) {
       setAtmButton(true);
     }
   };
-console.log("objects", objects)
 
   // PRICE
   const handlePriceChange = (text) => {
     setPrice(text);
-    const secondValue = currency ? currencyApi.data[currency.currency].value : 0;
-    console.log("secondValue", secondValue)
+    const secondValue = currency ? currencyApi.data[currency].value : 0;
     const secondInput = text;
-    console.log("text", text);
     const usdOfSecondInput = currency && text ? secondInput / secondValue : 1;
     setUsd(usdOfSecondInput);
   };
@@ -228,6 +226,15 @@ console.log("objects", objects)
   const handleTitleChange = (text) => {
     setTitle(text);
   };
+
+  function printATMItems(objects) {
+    for (let i = 0; i < objects.length; i++) {
+      // console.log("PRINTATMITEMS", objects[i].type)
+      if (objects[i].type === "ATM") {
+        console.log("PRINTATMITEMS", objects[i].title);
+      }
+    }
+  }
 
   // FINAL SUBMIT
   const handleSubmit = ({ type, price, usd, currency, date, category, title }) => {
@@ -260,8 +267,9 @@ console.log("objects", objects)
     setDebitButton(false);
     setAtmButton(false);
 
+    printATMItems([...objects, newObject]);
   };
-
+// console.log("OBJECTS", objects)
   // CATEGORY DELETION (Change name to expenditure deletion)
   const deleteCategory = (index) => {
     let itemsCopy = [...objects];
@@ -269,6 +277,7 @@ console.log("objects", objects)
     setObjects(itemsCopy);
     setSelectedItem(null);
   }
+
 
   return (
     <ScrollView style={{ backgroundColor: '#eee' }} keyboardShouldPersistTaps='handled'>
@@ -303,7 +312,7 @@ console.log("objects", objects)
         {/* CURRENCY PICKER */}
         <SafeAreaView style={styles.pickerContainer}>
           <Button
-            title={verifySecondary(currency)}
+            title={verifySecondary()}
             tintColor='grey'
             style={styles.bluebutton}
             onPress={() => {
@@ -317,7 +326,7 @@ console.log("objects", objects)
             inputValue={secondaryQuery}
             searchable={true}
             label="Currency"
-            setSelected={(val) => setCurrency(val)}
+            setSelected={(val) => setCurrency(val.currency)}
             onSearch={onSecondarySearch}
           />
         </SafeAreaView>
