@@ -6,6 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { ROUTES } from '../constants';
 import useCategoryItems from '../screens/categoryItems';
+import useChartUpdater from '../screens/chartState';
 import { StatisticsScreen, ExpendituresScreen, CategoriesScreen, ConverterScreen, UsersScreen, Play } from '../screens';
 
 const Tab = createMaterialBottomTabNavigator();
@@ -14,6 +15,7 @@ function BottomTabNavigator() {
 
   // CATEGORIES LIST PASSED IN TO COMPONENTS THROUGH NAVIGATION BAR
   const { categoryItems, setCategoryItems } = useCategoryItems();
+  const { cashChart, setCashChart } = useChartUpdater();
 
   return (
     <Tab.Navigator
@@ -25,14 +27,18 @@ function BottomTabNavigator() {
       {/* STATISTICS TAB */}
       <Tab.Screen
         name={ROUTES.STATISTICS}
-        component={StatisticsScreen}
+        // component={StatisticsScreen}
         options={{
           tabBarLabel: false,
           tabBarIcon: () => (
             <MaterialCommunityIcons name="chart-box" color={"grey"} size={26} />
           ),
         }}
-      />
+      >
+        {() => <StatisticsScreen 
+          cashChart={cashChart}
+        />}
+      </Tab.Screen>
 
       {/* EXPENDITURES TAB */}
       <Tab.Screen
@@ -46,6 +52,8 @@ function BottomTabNavigator() {
       >
         {() => <ExpendituresScreen
           categoryItems={categoryItems}
+          cashChart={cashChart}
+          setCashChart={setCashChart}
         />}
       </Tab.Screen>
 

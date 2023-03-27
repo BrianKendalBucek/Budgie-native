@@ -3,8 +3,8 @@ import { StyleSheet, View, Text, Dimensions, ScrollView } from 'react-native';
 import { LineChart, BarChart } from "react-native-chart-kit";
 import CircularProgress from 'react-native-circular-progress-indicator';
 
-export default function StatisticsScreen() {
-
+export default function StatisticsScreen({ cashChart }) {
+console.log("StatisticsScreen cashChart", cashChart)
   return (
     <ScrollView style={styles.scrollViewBackground} keyboardShouldPersistTaps='handled'>
       <View style={styles.container}>

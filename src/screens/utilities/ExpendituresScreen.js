@@ -11,7 +11,7 @@ import moment from 'moment';
 import currencyApi from './currency.json';
 
 
-export default function ExpendituresScreen({ categoryItems }) {
+export default function ExpendituresScreen({ categoryItems, cashChart, setCashChart }) {
 
   // Remember to reference Budgie original for method
   // Budgie-api country code recognition file for search?
@@ -122,9 +122,6 @@ export default function ExpendituresScreen({ categoryItems }) {
   // const [secondarySelected, setSecondarySelected] = useState(undefined);
   // CURRENCY AND SETCURRENCY IN PLACE OF THESE
   const [secondaryQuery, setSecondaryQuery] = useState('');
-
-  // CASH CHART STATE
-  const [cashChart, setCashChart] = useState(0);
 
   // SETTING CURRENCY PICKER DATA
   useEffect(() => {
