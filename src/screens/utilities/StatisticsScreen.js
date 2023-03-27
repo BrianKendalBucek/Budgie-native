@@ -63,7 +63,7 @@ console.log("StatisticsScreen cashChart", cashChart)
             <CircularProgress
               radius={50}
               // DUMMY DATA
-              value={40}
+              value={cashChart}
               textColor='#222'
               fontSize={20}
               valueSuffix={'%'}

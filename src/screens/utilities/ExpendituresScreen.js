@@ -228,19 +228,27 @@ export default function ExpendituresScreen({ categoryItems, cashChart, setCashCh
   };
 
   // MAKE SURE TO CHECK THAT CASH EXPENSE IS IN SECONDARY CURRENCY
-  function printATMItems(objects) {
-    let totalUSD = 0;
+  function cashChartCalc(objects) {
+    let atm = 0;
+    let cash = 0;
+    
     for (let i = 0; i < objects.length; i++) {
       // console.log("PRINTATMITEMS", objects[i].type)
       if (objects[i].type === "ATM") {
         // console.log("PRINTATMITEMS", objects[i].title);
-        totalUSD += objects[i].usd;
+        atm += objects[i].usd;
       }
       if (objects[i].type === "Cash") {
-        totalUSD -= objects[i].usd;
+        cash += objects[i].usd;
       }
     }
-    return setCashChart(totalUSD);
+
+    let percent = (cash / atm) * 100;
+
+    console.log("Expenditures atm", atm)
+    console.log("Expenditures cash", cash)
+    console.log("Expenditures Percent", percent)
+    return setCashChart(percent);
   }
 console.log("cashChart", cashChart)
   // FINAL SUBMIT
@@ -274,7 +282,7 @@ console.log("cashChart", cashChart)
     setDebitButton(false);
     setAtmButton(false);
 
-    printATMItems([...objects, newObject]);
+    cashChartCalc([...objects, newObject]);
   };
 // console.log("OBJECTS", objects)
   // CATEGORY DELETION (Change name to expenditure deletion)
@@ -361,7 +369,7 @@ console.log("cashChart", cashChart)
             style={styles.input}
             value={price}
             onChangeText={handlePriceChange}
-            placeholder="Price of item"
+            placeholder="Amount"
             color="grey"
             variant='outlined'
           />
