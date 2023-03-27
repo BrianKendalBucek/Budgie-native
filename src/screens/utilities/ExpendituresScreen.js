@@ -123,6 +123,9 @@ export default function ExpendituresScreen({ categoryItems }) {
   // CURRENCY AND SETCURRENCY IN PLACE OF THESE
   const [secondaryQuery, setSecondaryQuery] = useState('');
 
+  // CASH CHART STATE
+  const [cashChart, setCashChart] = useState(0);
+
   // SETTING CURRENCY PICKER DATA
   useEffect(() => {
     setSecondaryPickerData(pickerData);
@@ -171,7 +174,6 @@ export default function ExpendituresScreen({ categoryItems }) {
     }
   }
 
-
   // SECONDARY CURRENCY INPUT AMOUNT
   // const handleSecondaryAmountChange = (text) => {
   //   setSecondaryAmount(text);
@@ -218,6 +220,7 @@ export default function ExpendituresScreen({ categoryItems }) {
   const handlePriceChange = (text) => {
     setPrice(text);
     const secondValue = currency ? currencyApi.data[currency].value : 0;
+    console.log("secondvalue", secondValue)
     const secondInput = text;
     const usdOfSecondInput = currency && text ? secondInput / secondValue : 1;
     setUsd(usdOfSecondInput);
@@ -227,15 +230,22 @@ export default function ExpendituresScreen({ categoryItems }) {
     setTitle(text);
   };
 
+  // MAKE SURE TO CHECK THAT CASH EXPENSE IS IN SECONDARY CURRENCY
   function printATMItems(objects) {
+    let totalUSD = 0;
     for (let i = 0; i < objects.length; i++) {
       // console.log("PRINTATMITEMS", objects[i].type)
       if (objects[i].type === "ATM") {
-        console.log("PRINTATMITEMS", objects[i].title);
+        // console.log("PRINTATMITEMS", objects[i].title);
+        totalUSD += objects[i].usd;
+      }
+      if (objects[i].type === "Cash") {
+        totalUSD -= objects[i].usd;
       }
     }
+    return setCashChart(totalUSD);
   }
-
+console.log("cashChart", cashChart)
   // FINAL SUBMIT
   const handleSubmit = ({ type, price, usd, currency, date, category, title }) => {
 
