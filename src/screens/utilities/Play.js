@@ -67,31 +67,31 @@ import countriesList from '../utilities/countries-list.json'
 
 export default function Play() {
 
-  function processCurrencyData(currencyApi, countriesList) {
-    const matchingCountries = [];
+  // function processCurrencyData(currencyApi, countriesList) {
+  //   const matchingCountries = [];
 
-    for (const code in currencyApi.data) {
-      for (let countryCode in countriesList.countries) {
-        const country = countriesList.countries[countryCode];
-        if (country.currency === code) {
+  //   for (const code in currencyApi.data) {
+  //     for (let countryCode in countriesList.countries) {
+  //       const country = countriesList.countries[countryCode];
+  //       if (country.currency === code) {
 
-          const matchingCountry = {
-            emoji: country.emoji,
-            name: country.name,
-            currency: country.currency
-          };
+  //         const matchingCountry = {
+  //           emoji: country.emoji,
+  //           name: country.name,
+  //           currency: country.currency
+  //         };
 
-          matchingCountries.push(matchingCountry);
-        }
-      }
-      // Access the value for this currency
-      // const value = currencyApi.data[code].value;
-      // console.log(value)
-      // Do something with the value...
-    }
-    console.log(matchingCountries)
-    return matchingCountries;
-  }
+  //         matchingCountries.push(matchingCountry);
+  //       }
+  //     }
+  //     // Access the value for this currency
+  //     // const value = currencyApi.data[code].value;
+  //     // console.log(value)
+  //     // Do something with the value...
+  //   }
+  //   console.log(matchingCountries)
+  //   return matchingCountries;
+  // }
   
 processCurrencyData(currencyApi, countriesList);
 }

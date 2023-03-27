@@ -11,9 +11,19 @@ import moment from 'moment';
 import currencyApi from './currency.json';
 
 
-export default function ExpendituresScreen({ categoryItems, cashChart, setCashChart, budget, primaryDefault, secondaryDefault }) {
-console.log("Primary Default", primaryDefault)
-console.log("Secondary Default", secondaryDefault)
+export default function ExpendituresScreen({
+  categoryItems,
+  cashChart,
+  setCashChart,
+  budget,
+  primaryDefault,
+  secondaryDefault,
+  expenseChart,
+  setExpenseChart,
+  primaryChart,
+  setPrimaryChart,
+}) {
+
   // Remember to reference Budgie original for method
   // Budgie-api country code recognition file for search?
 
@@ -218,7 +228,6 @@ console.log("Secondary Default", secondaryDefault)
   const handlePriceChange = (text) => {
     setPrice(text);
     const secondValue = currency ? currencyApi.data[currency].value : 0;
-    console.log("secondvalue", secondValue)
     const secondInput = text;
     const usdOfSecondInput = currency && text ? secondInput / secondValue : 1;
     setUsd(usdOfSecondInput);
@@ -232,26 +241,32 @@ console.log("Secondary Default", secondaryDefault)
   function cashChartCalc(objects) {
     let atm = 0;
     let cash = 0;
-    
+    let credit = 0;
+    let debit = 0;
+
     for (let i = 0; i < objects.length; i++) {
-      // console.log("PRINTATMITEMS", objects[i].type)
       if (objects[i].type === "ATM") {
-        // console.log("PRINTATMITEMS", objects[i].title);
         atm += objects[i].usd;
       }
       if (objects[i].type === "Cash") {
         cash += objects[i].usd;
       }
+      if (objects[i].type === "Debit") {
+        debit += objects[i].usd;
+      }
+      if (objects[i].type === "Credit") {
+        credit += objects[i].usd;
+      }
     }
 
-    let percent = ((atm - cash) / atm) * 100;
+    let cashPercent = ((atm - cash) / atm) * 100;
+    let expensePercent = ((budget - (credit + debit + cash)) / budget) * 100;
+    let primaryPercent = ((budget - (credit + debit + atm)) / budget) * 100;
 
-    console.log("Expenditures atm", atm)
-    console.log("Expenditures cash", cash)
-    console.log("Expenditures Percent", percent)
-    return setCashChart(percent);
+    console.log("budget", budget)
+    return setCashChart(cashPercent), setExpenseChart(expensePercent), setPrimaryChart(primaryPercent);
   }
-console.log("cashChart", cashChart)
+
   // FINAL SUBMIT
   const handleSubmit = ({ type, price, usd, currency, date, category, title }) => {
 
@@ -285,7 +300,7 @@ console.log("cashChart", cashChart)
 
     cashChartCalc([...objects, newObject]);
   };
-// console.log("OBJECTS", objects)
+
   // CATEGORY DELETION (Change name to expenditure deletion)
   const deleteCategory = (index) => {
     let itemsCopy = [...objects];
@@ -293,7 +308,6 @@ console.log("cashChart", cashChart)
     setObjects(itemsCopy);
     setSelectedItem(null);
   }
-console.log("Expenditures Budget Print", budget)
 
   return (
     <ScrollView style={{ backgroundColor: '#eee' }} keyboardShouldPersistTaps='handled'>

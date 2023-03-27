@@ -3,8 +3,10 @@ import { StyleSheet, View, Text, Dimensions, ScrollView } from 'react-native';
 import { LineChart, BarChart } from "react-native-chart-kit";
 import CircularProgress from 'react-native-circular-progress-indicator';
 
-export default function StatisticsScreen({ cashChart }) {
-console.log("StatisticsScreen cashChart", cashChart)
+export default function StatisticsScreen({ cashChart, expenseChart, primaryChart }) {
+console.log("Cash Chart", cashChart)
+console.log("Expense Chart", expenseChart)
+console.log("Primary Chart", primaryChart)
   return (
     <ScrollView style={styles.scrollViewBackground} keyboardShouldPersistTaps='handled'>
       <View style={styles.container}>
@@ -19,7 +21,7 @@ console.log("StatisticsScreen cashChart", cashChart)
             <CircularProgress
               radius={50}
               // DUMMY DATA
-              value={85}
+              value={primaryChart}
               textColor='#222'
               fontSize={20}
               valueSuffix={'%'}
@@ -41,7 +43,7 @@ console.log("StatisticsScreen cashChart", cashChart)
             <CircularProgress
               radius={50}
               // DUMMY DATA
-              value={50}
+              value={expenseChart}
               textColor='#222'
               fontSize={20}
               valueSuffix={'%'}

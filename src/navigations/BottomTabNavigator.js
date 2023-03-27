@@ -16,7 +16,7 @@ function BottomTabNavigator() {
 
   // LIFTED STATES
   const { categoryItems, setCategoryItems } = useCategoryItems();
-  const { cashChart, setCashChart } = useChartUpdater();
+  const { cashChart, setCashChart, expenseChart, setExpenseChart, primaryChart, setPrimaryChart } = useChartUpdater();
   const { budget, setBudget, primaryDefault, setPrimaryDefault,  secondaryDefault, setSecondaryDefault  } = useBudget();
 
   return (
@@ -39,6 +39,8 @@ function BottomTabNavigator() {
       >
         {() => <StatisticsScreen 
           cashChart={cashChart}
+          expenseChart={expenseChart}
+          primaryChart={primaryChart}
         />}
       </Tab.Screen>
 
@@ -56,6 +58,10 @@ function BottomTabNavigator() {
           categoryItems={categoryItems}
           cashChart={cashChart}
           setCashChart={setCashChart}
+          expenseChart={expenseChart}
+          setExpenseChart={setExpenseChart}
+          primaryChart={primaryChart}
+          setPrimaryChart={setPrimaryChart}
           budget={budget}
           primaryDefault={primaryDefault}
           secondaryDefault={secondaryDefault}
