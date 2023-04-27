@@ -197,6 +197,7 @@ export default function Converter() {
         placeholder={resultTwo ? resultTwo : "Enter amount"}
         color="grey"
         variant='outlined'
+        keyboardType='numeric'
       />
 
 
@@ -221,6 +222,7 @@ export default function Converter() {
       <TextInput
         style={styles.input}
         value={secondaryAmount}
+        keyboardType='numeric'
         onFocus={handleSecondaryInputFocus}
         onChangeText={handleSecondaryAmountChange}
         placeholder={resultOne ? resultOne : "Enter amount"}

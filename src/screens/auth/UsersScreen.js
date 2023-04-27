@@ -93,21 +93,6 @@ export default function User({ budget, setBudget, primaryDefault, setPrimaryDefa
   return (
     <ScrollView style={styles.scrollViewBackground}>
 
-      {/* PRIMARY BUDGET SETTER */}
-      <View style={styles.primaryBudgetView}>
-        <Text
-          style={styles.primaryBudgetText}
-        >Primary Budget</Text>
-        <TextInput
-          style={styles.primaryBudgetInput}
-          variant='outlined'
-          placeholder='Enter here'
-          placeholderTextColor="grey"
-          color='grey'
-        onChangeText={handleBudgetChange}
-        />
-      </View>
-
       {/* PRIMARY CURRENCY PICKER */}
       <View style={styles.primaryPickerView}>
         <View style={styles.currencyText}>
@@ -155,6 +140,29 @@ export default function User({ budget, setBudget, primaryDefault, setPrimaryDefa
         setSelected={(val) => setSecondaryDefault(val)}
         onSearch={onSecondarySearch}
       />
+
+          {/* PRIMARY BUDGET SETTER */}
+          <View style={styles.primaryBudgetView}>
+        <Text
+          style={styles.primaryBudgetText}
+        >Primary Budget</Text>
+        <View>
+        <Button
+          style={styles.bluebutton}
+          title="Set"
+          tintColor='grey'
+        />
+        <TextInput
+          style={styles.primaryBudgetInput}
+          variant='outlined'
+          placeholder='Amount'
+          placeholderTextColor="grey"
+          color='grey'
+          keyboardType="numeric"
+          onChangeText={handleBudgetChange}
+        />
+        </View>
+      </View>
 
       {/* USERNAME */}
       <ListItem
@@ -207,32 +215,34 @@ const styles = StyleSheet.create({
   primaryBudgetView: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 20,
+    marginBottom:10,
   },
   primaryBudgetText: {
-    fontSize: 16,
-    marginTop: 18,
+    fontSize: 17,
+    marginTop: 10,
     marginLeft: 15,
   },
   primaryBudgetInput: {
-    width: 220,
-    paddingRight: 20,
+    width: 111,
+    // height: 1,
+    paddingRight: 10,
     borderColor: 'lightgrey',
   },
   primaryPickerView: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    paddingTop: 10,
   },
   secondaryPickerView: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 5
   },
   bluebutton: {
     backgroundColor: 'lightblue',
     color: 'grey',
     width: 100,
-    marginVertical: 5,
+    height: 33,
+    marginTop: 10,
     marginRight: 20
   },
   currencyText: {
