@@ -4,7 +4,7 @@ import { LineChart, BarChart } from "react-native-chart-kit";
 import CircularProgress from 'react-native-circular-progress-indicator';
 
 export default function StatisticsScreen({ cashChart, expenseChart, primaryChart }) {
-console.log("Cash Chart", cashChart)
+// console.log("Cash Chart", cashChart)
 console.log("Expense Chart", expenseChart)
 console.log("Primary Chart", primaryChart)
   return (
@@ -57,7 +57,7 @@ console.log("Primary Chart", primaryChart)
 
 
         {/* CIRCLE PROGRESS - CASH REMAINING */}
-        <View>
+        {/* <View>
           <Text
             style={styles.circle}
           >Cash Available</Text>
@@ -75,7 +75,7 @@ console.log("Primary Chart", primaryChart)
               duration={3000}
             />
           </View>
-        </View>
+        </View> */}
       </View>
 
 

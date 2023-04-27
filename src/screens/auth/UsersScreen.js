@@ -66,6 +66,14 @@ export default function User({ budget, setBudget, primaryDefault, setPrimaryDefa
     setSecondaryQuery(text);
   }
 
+  const dynamicBudgetTitle = () => {
+    if (primaryDefault) {
+      return `${String(primaryDefault.name)} Budget`
+    } else {
+      return "Primary Budget";
+    }
+  }
+
   // PRIMARY PICKER TITLE FUNCTION
   const verifyPrimary = () => {
     if (primaryDefault) {
@@ -145,7 +153,7 @@ export default function User({ budget, setBudget, primaryDefault, setPrimaryDefa
           <View style={styles.primaryBudgetView}>
         <Text
           style={styles.primaryBudgetText}
-        >Primary Budget</Text>
+        >{dynamicBudgetTitle(primaryDefault)}</Text>
         <View>
         <Button
           style={styles.bluebutton}
@@ -159,6 +167,7 @@ export default function User({ budget, setBudget, primaryDefault, setPrimaryDefa
           placeholderTextColor="grey"
           color='grey'
           keyboardType="numeric"
+          textAlign="center"
           onChangeText={handleBudgetChange}
         />
         </View>
