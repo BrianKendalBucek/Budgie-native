@@ -100,6 +100,8 @@ export default function User({ budget, setBudget, primaryDefault, setPrimaryDefa
 
   return (
     <ScrollView style={styles.scrollViewBackground}>
+      
+      <Text style={styles.pageTitle}>User Settings</Text>
 
       {/* PRIMARY CURRENCY PICKER */}
       <View style={styles.primaryPickerView}>
@@ -218,6 +220,12 @@ export default function User({ budget, setBudget, primaryDefault, setPrimaryDefa
 }
 
 const styles = StyleSheet.create({
+  pageTitle: {
+    color: 'grey',
+    textAlign: 'center',
+    fontSize: 20,
+    paddingTop: 20,
+  },
   scrollViewBackground: {
     backgroundColor: '#eee',
   },

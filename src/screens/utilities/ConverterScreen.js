@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { SafeAreaView, StyleSheet, Keyboard } from 'react-native';
+import { SafeAreaView, StyleSheet, Keyboard, Text } from 'react-native';
 import { TextInput, Button } from "@react-native-material/core";
 import { Picker, onOpen } from 'react-native-actions-sheet-picker';
 import pickerData from '../utilities/picker-object.json'
@@ -171,6 +171,9 @@ export default function Converter() {
   return (
     <SafeAreaView style={styles.pickerContainer}>
 
+      <Text style={styles.pageTitle}>Currency Converter</Text>
+
+
       {/* FIRST BUTTON AND INPUT */}
       <Button
         title={verifyPrimary(primarySelected)}
@@ -247,6 +250,12 @@ export default function Converter() {
 
 
 const styles = StyleSheet.create({
+  pageTitle: {
+    color: 'grey',
+    textAlign: 'center',
+    fontSize: 20,
+    paddingTop: 20,
+  },
   pickerContainer: {
     backgroundColor: '#eee',
   },

@@ -3,10 +3,19 @@ import { StyleSheet, View, Text, Dimensions, ScrollView } from 'react-native';
 import { LineChart, BarChart } from "react-native-chart-kit";
 import CircularProgress from 'react-native-circular-progress-indicator';
 
-export default function StatisticsScreen({ cashChart, expenseChart, primaryChart }) {
+export default function StatisticsScreen({ cashChart, expenseChart, primaryChart, primaryDefault }) {
 // console.log("Cash Chart", cashChart)
 console.log("Expense Chart", expenseChart)
 console.log("Primary Chart", primaryChart)
+
+const dynamicBudgetTitle = () => {
+  if (primaryDefault) {
+    return `${String(primaryDefault.name)} Account`
+  } else {
+    return "Primary Account";
+  }
+}
+
   return (
     <ScrollView style={styles.scrollViewBackground} keyboardShouldPersistTaps='handled'>
       <View style={styles.container}>
@@ -16,7 +25,7 @@ console.log("Primary Chart", primaryChart)
         <View>
           <Text
             style={styles.circle}
-          >Primary Account</Text>
+          >{dynamicBudgetTitle(primaryDefault)}</Text>
           <View>
             <CircularProgress
               radius={50}

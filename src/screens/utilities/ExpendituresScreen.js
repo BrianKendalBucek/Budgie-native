@@ -259,11 +259,15 @@ export default function ExpendituresScreen({
       }
     }
 
-    let cashPercent = ((atm - cash) / atm) * 100;
+    // let cashPercent = ((atm - cash) / atm) * 100;
     let expensePercent = ((budget - (credit + debit + cash)) / budget) * 100;
     let primaryPercent = ((budget - (credit + debit + atm)) / budget) * 100;
 
-    return setCashChart(cashPercent), setExpenseChart(expensePercent), setPrimaryChart(primaryPercent);
+    setExpenseChart(expensePercent),
+    setPrimaryChart(primaryPercent);
+
+    return;
+      // setCashChart(cashPercent),
   }
 
   // FINAL SUBMIT
@@ -310,6 +314,9 @@ export default function ExpendituresScreen({
 
   return (
     <ScrollView style={{ backgroundColor: '#eee' }} keyboardShouldPersistTaps='handled'>
+
+      <Text style={styles.pageTitle}>Expenditure Creator</Text>
+
       <View>
 
 
@@ -500,6 +507,12 @@ export default function ExpendituresScreen({
 }
 
 const styles = StyleSheet.create({
+  pageTitle: {
+    color: 'grey',
+    textAlign: 'center',
+    fontSize: 20,
+    paddingTop: 20,
+  },
   listcontainer: {
     flexDirection: 'row',
     width: window.width,

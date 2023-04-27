@@ -41,6 +41,7 @@ function BottomTabNavigator() {
           cashChart={cashChart}
           expenseChart={expenseChart}
           primaryChart={primaryChart}
+          primaryDefault={primaryDefault}
         />}
       </Tab.Screen>
 

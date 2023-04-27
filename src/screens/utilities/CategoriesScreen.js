@@ -55,6 +55,8 @@ export default function CategoriesScreen({ categoryItems, setCategoryItems }) {
 
     <ScrollView style={styles.scrollViewBackground} keyboardShouldPersistTaps='handled'>
 
+      <Text style={styles.pageTitle}>Category Creator</Text>
+
       {/* CATEGORY CREATION INPUT */}
       <View>
         <TextInput
@@ -171,6 +173,12 @@ export default function CategoriesScreen({ categoryItems, setCategoryItems }) {
 }
 
 const styles = StyleSheet.create({
+  pageTitle: {
+    color: 'grey',
+    textAlign: 'center',
+    fontSize: 20,
+    paddingTop: 20,
+  },
   scrollViewBackground: {
     backgroundColor: '#eee',
   },
